@@ -20324,7 +20324,7 @@
   },
   {
     "source": "scripts/build_gallery.py",
-    "line": 132,
+    "line": 164,
     "arguments": [
       "'--registry'"
     ],

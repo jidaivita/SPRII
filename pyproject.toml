@@ -13,7 +13,7 @@ dependencies = ["numpy>=1.26", "PyYAML>=6"]
 [project.urls]
 Homepage = "https://jidaivita.github.io/sprii/"
 Repository = "https://github.com/jidaivita/SPRII"
-Paper = "https://arxiv.org/abs/2609.34604"
+Paper = "https://jidaivita.github.io/sprii/SPRII.pdf"
 Issues = "https://github.com/jidaivita/SPRII/issues"
 
 [project.optional-dependencies]

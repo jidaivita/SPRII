@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-message: "If you use SPRII, please cite the accompanying paper."
+message: "If you use SPRII, please cite the author manuscript linked below."
 type: software
 title: "SPRII: Shaping Persistent Representations from Independent Interactions"
 version: 0.2.0
@@ -21,7 +21,7 @@ authors:
   - family-names: Li
     given-names: Yongxi
 preferred-citation:
-  type: article
+  type: generic
   title: "Shaping Persistent Representations from Independent Interactions"
   authors:
     - family-names: Dai
@@ -38,7 +38,6 @@ preferred-citation:
       given-names: Yiping
     - family-names: Li
       given-names: Yongxi
-  journal: arXiv
   year: 2026
-  doi: "10.48550/arXiv.2609.34604"
-  url: "https://arxiv.org/abs/2609.34604"
+  notes: "Author manuscript, October 2026"
+  url: "https://jidaivita.github.io/sprii/SPRII.pdf"

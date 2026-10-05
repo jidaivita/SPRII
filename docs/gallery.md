@@ -1,10 +1,15 @@
 # Environment gallery
 
-The README covers thirteen settings with ten image previews and three text-only
-CoPhy implementation links. Each image uses the same 720 × 480 SVG frame; its
-thumbnail retains its aspect ratio. Transformations and attribution are described
-in [media credits](media-credits.md). Select an image to inspect the preview, or
-an environment name to open its implementation guide.
+The README begins with a numbered, thirteen-row setting index. Every setting has
+a project-page detail link plus implementation, recipe, and data-preparation
+links. The ten image previews are
+in a separate collapsible gallery, arranged in five complete two-image rows.
+CoPhy Collision, Balls, and Blocktower remain text-only entries in the setting
+index, so image availability does not determine how environments are counted.
+
+Each image uses the same 720 × 480 SVG frame and retains its aspect ratio.
+Transformations and attribution are described in [media credits](media-credits.md).
+Select an image to inspect the preview, or its name to open the implementation guide.
 
 | Preview | Content | Implementation |
 |---|---|---|
@@ -40,7 +45,7 @@ The ten retained PNGs are byte-for-byte copies of the registry's
 `assets.thumbnail.png`. CoPhy entries contain only the environment name and
 implementation-guide mapping; they have no image path or image hash.
 From the repository root, verify those local copies and regenerate the frames
-and README gallery with the Python standard library:
+and the README setting index and collapsible gallery with the Python standard library:
 
 ```sh
 python scripts/build_gallery.py
@@ -58,3 +63,8 @@ reading or copying those files; the three CoPhy entries remain text-only.
 It records the registry version and hash without retaining local source paths.
 The SVGs embed their local source images and make no requests to external image
 hosts. The frames preserve the environment colors and source aspect ratios.
+
+The setting order and implementation links are generated from `ENVIRONMENTS` and
+`SETTING_DETAILS` in [`scripts/build_gallery.py`](../scripts/build_gallery.py).
+Update that mapping when changing a public entry point; rebuilding must retain
+exactly thirteen numbered setting rows and ten preview images.

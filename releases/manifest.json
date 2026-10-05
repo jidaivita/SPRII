@@ -1,6 +1,6 @@
 {
   "version": "0.2.0",
-  "scope": "Public source distribution accompanying arXiv:2609.34604; model weights, datasets and historical logs excluded; CoPhy gallery entries are text-only",
+  "scope": "Public source distribution for the SPRII author manuscript with thirteen-setting reviewer navigation; model weights, datasets and historical logs excluded; CoPhy gallery entries are text-only",
   "files": [
     {
       "path": ".gitignore",
@@ -14,8 +14,8 @@
     },
     {
       "path": "CITATION.cff",
-      "bytes": 1198,
-      "sha256": "e6d7d89f478094217c078f2e1b10b4ca8e70bc0045db1d65161635947953a5f5"
+      "bytes": 1212,
+      "sha256": "57d371b6f10cc255f494fc62d10246816f6382bd332d026896a5ef022435f038"
     },
     {
       "path": "CONTRIBUTING.md",
@@ -29,8 +29,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 9715,
-      "sha256": "e5496cb72fba2807334d10fcedc7ad82cda44fcd8cd7475ea5f89dd368f29323"
+      "bytes": 12781,
+      "sha256": "717b16a50d09a56d17a8713a68422e2b68e27b48e2e9132ed13755815b9067cc"
     },
     {
       "path": "THIRD_PARTY_NOTICES.md",
@@ -3245,7 +3245,7 @@
     {
       "path": "docs/cli_defaults.json",
       "bytes": 451461,
-      "sha256": "cbaba0329355244134fe520e0e9cafc2bac5c4b691c9894d541022444494e89b"
+      "sha256": "1d4b6d78cd78d0efd52adee8c9fb57423853a799e9db48e54cc9afe759d50ab3"
     },
     {
       "path": "docs/core.md",
@@ -3259,8 +3259,8 @@
     },
     {
       "path": "docs/gallery.md",
-      "bytes": 3401,
-      "sha256": "2e375c5db2069b2748d77fe9dbacbd181c3c1d585be097af5ff70c08c2089b30"
+      "bytes": 4036,
+      "sha256": "030c4358153ba713b5413dbed7c4ed6f251a94460edb99d408f70dd9887c160c"
     },
     {
       "path": "docs/hyperparameters.md",
@@ -3294,8 +3294,13 @@
     },
     {
       "path": "docs/reproduce.md",
-      "bytes": 4205,
-      "sha256": "fb656ef721deb2efbae0b573f7f02e32d407b97308abf861811d163ccf5eb6bb"
+      "bytes": 4198,
+      "sha256": "bf04c8fd59f5cb75b17b6648d5d975a8c5cb3c57e0dbc20827ec28f7517cda99"
+    },
+    {
+      "path": "docs/reviewer-guide.md",
+      "bytes": 5902,
+      "sha256": "6149ce1e2dc88f1f7638f247184bd5993d1013c4387251cdbf136b32aab68c8f"
     },
     {
       "path": "docs/source_privacy.md",
@@ -3484,8 +3489,8 @@
     },
     {
       "path": "pyproject.toml",
-      "bytes": 974,
-      "sha256": "bd6a639d764c4183ca1e17b0103833777741364e765e0432a95c143c470ba0cf"
+      "bytes": 985,
+      "sha256": "67c985567a7bd48f8dd94453c1f45e50d1b9c9a6d66c50ae52b59c70d862c418"
     },
     {
       "path": "requirements/cophy.txt",
@@ -3509,8 +3514,8 @@
     },
     {
       "path": "scripts/build_gallery.py",
-      "bytes": 9394,
-      "sha256": "0e6c397646bb8cbd0e2bae4d9dca330d7f07f3afb8686ddd9e3743d990f3e1eb"
+      "bytes": 12554,
+      "sha256": "004d2efb3f30c14f9be056fccdba93538bffb44fee52a72e16ca2a6219a8146c"
     },
     {
       "path": "scripts/fetch_external_sources.py",

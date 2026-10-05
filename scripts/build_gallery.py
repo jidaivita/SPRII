@@ -1,4 +1,4 @@
-"""Rebuild ten environment previews and three text-only CoPhy guide links."""
+"""Rebuild the thirteen-setting index and its collapsible ten-image gallery."""
 from __future__ import annotations
 
 import argparse
@@ -95,34 +95,66 @@ def import_registry(path: Path) -> tuple[dict, dict[str, bytes]]:
     return manifest, images
 
 
+# One scientific setting per row; dependencies and generated data are linked explicitly.
+SETTING_DETAILS = {
+    "springworld": ("benchmarks/formation_use/scripts/train_spring_source.py", "springworld", "benchmarks/springworld/README.md"),
+    "pokeworld": ("benchmarks/pokeworld/revision/scripts/train_pokeworld_revision.py", "d-clean-and-pokeworld", "benchmarks/pokeworld/revision/scripts/prepare_pokeworld_factorized.py"),
+    "dclean": ("benchmarks/core/scripts/train.py", "d-clean-and-pokeworld", "benchmarks/core/scripts/generate_dclean.py"),
+    "cophy_collision": ("benchmarks/cophy/code/cophy_complete_v7/cpc/train.py", "cophy-balls-collision-and-blocktower", "docs/datasets.md#cophy"),
+    "cophy_balls": ("benchmarks/cophy/code/cophy_complete_v7/rssm/train.py", "cophy-balls-collision-and-blocktower", "docs/datasets.md#cophy"),
+    "cophy_blocktower": ("benchmarks/cophy/code/cophy_complete_v7/cpc/train.py", "cophy-balls-collision-and-blocktower", "docs/datasets.md#cophy"),
+    "burgers": ("benchmarks/nod/src/nod_sprii/train_sprii_clean.py", "nod-burgers-and-fhn", "benchmarks/nod/README.md#dependencies-and-public-inputs"),
+    "fhn": ("benchmarks/nod/src/fhn_minimal/train.py", "nod-burgers-and-fhn", "benchmarks/nod/README.md#generate-the-fhn-data"),
+    "swimmer": ("benchmarks/swimmer/code/paper_c/swimmer/s2_train.py", "overcookedv2-articulated-swimmer-and-pendulum", "benchmarks/swimmer/README.md#entry-points"),
+    "overcooked": ("benchmarks/overcooked/scripts/train.py", "overcookedv2-articulated-swimmer-and-pendulum", "benchmarks/overcooked/README.md#reconstruct-the-data-and-train"),
+    "baxter": ("benchmarks/core/scripts/train_baxter_a1.py", "baxter-tactile-and-rh20t", "docs/datasets.md#baxter-tactile-hardness"),
+    "rh20t": ("benchmarks/core/scripts/train_rh20t.py", "baxter-tactile-and-rh20t", "docs/datasets.md#rh20t"),
+    "pendulum": ("benchmarks/baseline_adapters/cadm_pendulum_relation_components_v5.py", "overcookedv2-articulated-swimmer-and-pendulum", "benchmarks/baseline_adapters/README.md#pendulum"),
+}
+
+
 def readme_gallery(items: list[dict]) -> str:
-    lines = ["## Explore thirteen settings", "", "<table>"]
-    for index, item in enumerate(items):
-        if index % 3 == 0:
+    lines = [
+        "## Explore thirteen settings", "",
+        "Each row is one study setting; its name opens the corresponding project-page section.",
+        "Code links open the implementation and its guide;",
+        "data links lead to the relevant generator or input-preparation instructions.", "",
+        "| # | Setting | Code | Recipe | Data |",
+        "|---|---|---|---|---|",
+    ]
+    for index, item in enumerate(items, 1):
+        code, recipe, data = SETTING_DETAILS[item["id"]]
+        lines.append(
+            f'| {index} | [{item["label"]}](https://jidaivita.github.io/sprii/#setting-{item["environment_id"]}) '
+            f'| [Source]({code}) · [Guide]({item["guide"]}) '
+            f'| [Recipe](docs/paper_recipes.md#{recipe}) | [Inputs]({data}) |'
+        )
+    lines.extend([
+        "", "CoPhy Collision, Balls, and Blocktower are separate settings with shared",
+        "scene-selecting training entry points. Burgers and FHN, and Baxter and RH20T,",
+        "are listed separately even where they share a guide.", "",
+        "<details>", "<summary>Environment previews — 10 images</summary>", "",
+        "These previews illustrate the environments. The three CoPhy settings have",
+        "text-only implementation entries in the complete index above.", "", "<table>",
+    ])
+    previews = [item for item in items if item.get("presentation") != "text"]
+    for index, item in enumerate(previews):
+        if index % 2 == 0:
             lines.append("<tr>")
-        if item.get("presentation") == "text":
-            lines.append(
-                '<td width="33%" align="center" valign="top">'
-                f'<a href="{item["guide"]}"><strong>{html.escape(item["label"])}</strong></a>'
-                '<br/>Code and experiment guide</td>'
-            )
-        else:
-            alt = html.escape(item["label"] + ": " + item["kind"], quote=True)
-            lines.append(
-                '<td width="33%" align="center" valign="top">'
-                f'<a href="assets/environments/{item["image"]}">'
-                f'<img src="assets/environments/cards/{item["id"]}.svg" '
-                f'width="240" alt="{alt}" /></a><br/>'
-                f'<a href="{item["guide"]}">{html.escape(item["label"])}</a></td>'
-            )
-        if index % 3 == 2 or index == len(items) - 1:
+        alt = html.escape(item["label"] + ": " + item["kind"], quote=True)
+        lines.append(
+            '<td width="50%" align="center" valign="top">'
+            f'<a href="assets/environments/{item["image"]}">'
+            f'<img src="assets/environments/cards/{item["id"]}.svg" '
+            f'width="240" alt="{alt}" /></a><br/>'
+            f'<a href="{item["guide"]}">{html.escape(item["label"])}</a></td>'
+        )
+        if index % 2 == 1 or index == len(previews) - 1:
             lines.append("</tr>")
     lines.extend([
         "</table>", "",
-        "Ten environment previews and three CoPhy implementation links. Select an image",
-        "to view its preview, or an environment name to open the code guide.",
-        "See [image notes](docs/gallery.md) and",
-        "[media credits and licenses](docs/media-credits.md).", "", "",
+        "See [gallery notes](docs/gallery.md) and [media credits](docs/media-credits.md).",
+        "", "</details>", "", "",
     ])
     return "\n".join(lines)
 
@@ -143,6 +175,8 @@ def main() -> None:
                   if item["environment_id"] not in TEXT_ONLY_ENVIRONMENTS}
     if [item["environment_id"] for item in manifest["items"]] != [row[0] for row in ENVIRONMENTS]:
         raise ValueError("Gallery environment mapping does not match the shared registry")
+    if set(SETTING_DETAILS) != {item["id"] for item in manifest["items"]}:
+        raise ValueError("Every setting must have one code, recipe and data mapping")
     if not manifest.get("source_registry", {}).get("sha256"):
         raise ValueError("Import the shared registry before rebuilding")
     for item in manifest["items"]:
@@ -151,12 +185,14 @@ def main() -> None:
                 raise ValueError(f'CoPhy entries must remain text-only: {item["id"]}')
         elif sha256(images[item["image"]]) != item["thumbnail_sha256"]:
             raise ValueError(f'Thumbnail hash mismatch: {item["id"]}')
-        if not local_file(root, item["guide"].split("#")[0]).is_file():
-            raise ValueError(f'Implementation guide is missing: {item["id"]}')
+        code, _, data = SETTING_DETAILS[item["id"]]
+        for link in (item["guide"], code, data):
+            if not local_file(root, link.split("#")[0]).is_file():
+                raise ValueError(f'Setting entry point is missing: {item["id"]}: {link}')
     readme_path = root / "README.md"
     readme = readme_path.read_text()
     start = readme.index("## Explore thirteen settings\n")
-    end = readme.index("## Find an experiment\n", start)
+    end = readme.index("## Baselines and protocols\n", start)
 
     # Preserve the exact shared PNG bytes; framing never recolors or resamples them.
     if args.registry:
@@ -194,8 +230,8 @@ def main() -> None:
         )
         (cards / (item["id"] + ".svg")).write_text(svg)
     readme_path.write_text(readme[:start] + readme_gallery(manifest["items"]) + readme[end:])
-    print(f'Built {len(images)} image cards ({width} x {height}) and '
-          f'{len(manifest["items"]) - len(images)} text-only guide links.')
+    print(f'Built the {len(manifest["items"])}-setting index and '
+          f'{len(images)} image cards ({width} x {height}) in a collapsible gallery.')
 
 
 if __name__ == "__main__":

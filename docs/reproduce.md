@@ -1,6 +1,6 @@
 # Reproducing SPRII experiments
 
-The public source release accompanies [Shaping Persistent Representations from Independent Interactions](https://arxiv.org/abs/2609.34604). The [project page](https://jidaivita.github.io/sprii/) introduces the method and settings; this guide helps select an executable path through the repository.
+The public source release accompanies [Shaping Persistent Representations from Independent Interactions](https://jidaivita.github.io/sprii/SPRII.pdf). The [project page](https://jidaivita.github.io/sprii/) introduces the method and settings; this guide helps select an executable path through the repository.
 
 ## 1. Run the CPU example
 
@@ -16,7 +16,7 @@ For a small learning-and-probe check, install the `train` dependencies and run `
 | Use | Substitute context while keeping the consuming predictor fixed | [SpringWorld](../benchmarks/springworld/README.md), [CoPhy](../benchmarks/cophy/README.md), [RH20T](../benchmarks/rh20t/README.md), [Swimmer](../benchmarks/swimmer/README.md) |
 | Value | Task error under the specified reader, horizon, and information budget, paired with physical-property probes | [Spring postrun](../experiments/spring_postrun/README.md), [NOD fields](../benchmarks/nod/README.md), [Pendulum](../benchmarks/baseline_adapters/README.md), [Overcooked](../benchmarks/overcooked/README.md) |
 
-Use the benchmark's own installation and execution guide. The [recipe index](paper_recipes.md) covers thirteen settings and links to their training entry points. Its scientific recipe text records the **2026-09-25 manuscript snapshot**; the current public paper is identified by its arXiv version. Later paper revisions should be matched to their configuration and source before a result is claimed to be reproduced.
+Use the benchmark's own installation and execution guide. The [recipe index](paper_recipes.md) covers thirteen settings and links to their training entry points. Its scientific recipe text records the **2026-09-25 manuscript snapshot**; the current reading copy is the author manuscript linked above. Match a result to its manuscript revision, configuration and source before claiming reproduction.
 
 ## 3. Prepare the specified inputs
 

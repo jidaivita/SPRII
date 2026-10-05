@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-10-06 — Unified gallery presentation
+
+- All thirteen settings now have visual previews that open their project-page video or schematic.
+- Ten PNG previews are copied from the images selected by the page's environment cards; three original CoPhy schematics replace the earlier text-only presentation without redistributing upstream images.
+- PokeWorld, Swimmer and Overcooked use the page's light presentation. The Poke close-up is shared with the paper; its wide video poster is tracked separately.
+- SpringWorld follows the paper's deep-teal object 1 and copper/orange object 2, preserving the existing state/action sequence and camera.
+- Warm-white 16:9 frames, content-versioned image URLs, per-source hashes and a deterministic gallery check keep the previews synchronized.
+- Media credits distinguish display re-rendering from model observations. Training code, stored experiment inputs and numerical results are unchanged.
+
 ## 0.2.0 — Public research release
 
 - Public repository and project-page entry points for the SPRII arXiv preprint.

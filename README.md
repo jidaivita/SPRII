@@ -1,4 +1,4 @@
-<p align="center"><img src="assets/branding/logo.svg" width="760" alt="SPRII" /></p>
+<p align="center"><img src="assets/branding/logo.svg?v=3d480e066bc7" width="760" alt="SPRII" /></p>
 
 # Shaping Persistent Representations from Independent Interactions
 
@@ -35,9 +35,7 @@ Start with the [reviewer guide](docs/reviewer-guide.md) to map paper questions t
 
 ## Explore thirteen settings
 
-Each row is one study setting; its name opens the corresponding project-page section.
-Code links open the implementation and its guide;
-data links lead to the relevant generator or input-preparation instructions.
+Each setting links to its project-page demonstration or schematic, implementation, recipe, and data setup.
 
 | # | Setting | Code | Recipe | Data |
 |---|---|---|---|---|
@@ -60,31 +58,39 @@ scene-selecting training entry points. Burgers and FHN, and Baxter and RH20T,
 are listed separately even where they share a guide.
 
 <details>
-<summary>Environment previews — 10 images</summary>
+<summary>Environment previews — all 13 settings</summary>
 
-These previews illustrate the environments. The three CoPhy settings have
-text-only implementation entries in the complete index above.
+Select a preview to open its video or schematic and experiment details on the project page.
+The previews share the page's source assets. They illustrate the settings; they are not learned-model predictions.
 
 <table>
 <tr>
-<td width="50%" align="center" valign="top"><a href="assets/environments/springworld.png"><img src="assets/environments/cards/springworld.svg" width="240" alt="SpringWorld: Physics demonstration" /></a><br/><a href="benchmarks/springworld/README.md">SpringWorld</a></td>
-<td width="50%" align="center" valign="top"><a href="assets/environments/pokeworld.png"><img src="assets/environments/cards/pokeworld.svg" width="240" alt="PokeWorld: History replay" /></a><br/><a href="benchmarks/pokeworld/revision/README.md">PokeWorld</a></td>
+<td width="50%" align="center" valign="top"><a href="https://jidaivita.github.io/sprii/#setting-spring"><img src="assets/environments/cards/springworld.svg?v=344fb942be73" width="320" height="180" alt="SpringWorld: Environment demonstration" /></a><br/><a href="https://jidaivita.github.io/sprii/#setting-spring">SpringWorld</a><br/><sub>Environment demonstration</sub></td>
+<td width="50%" align="center" valign="top"><a href="https://jidaivita.github.io/sprii/#setting-poke"><img src="assets/environments/cards/pokeworld.svg?v=f98432506dde" width="320" height="180" alt="PokeWorld: Recorded histories" /></a><br/><a href="https://jidaivita.github.io/sprii/#setting-poke">PokeWorld</a><br/><sub>Recorded histories</sub></td>
 </tr>
 <tr>
-<td width="50%" align="center" valign="top"><a href="assets/environments/dclean.png"><img src="assets/environments/cards/dclean.svg" width="240" alt="D-Clean: Recorded trajectory" /></a><br/><a href="benchmarks/core/README.md">D-Clean</a></td>
-<td width="50%" align="center" valign="top"><a href="assets/environments/burgers.png"><img src="assets/environments/cards/burgers.svg" width="240" alt="Burgers: Burgers field trajectory" /></a><br/><a href="benchmarks/nod/README.md">Burgers</a></td>
+<td width="50%" align="center" valign="top"><a href="https://jidaivita.github.io/sprii/#setting-dclean"><img src="assets/environments/cards/dclean.svg?v=c8a943c4a88c" width="320" height="180" alt="D-Clean: Recorded trajectory" /></a><br/><a href="https://jidaivita.github.io/sprii/#setting-dclean">D-Clean</a><br/><sub>Recorded trajectory</sub></td>
+<td width="50%" align="center" valign="top"><a href="https://jidaivita.github.io/sprii/#setting-cophy_collision"><img src="assets/environments/cards/cophy_collision.svg?v=d2a5e5d3d34a" width="320" height="180" alt="CoPhy Collision: Original task schematic" /></a><br/><a href="https://jidaivita.github.io/sprii/#setting-cophy_collision">CoPhy Collision</a><br/><sub>Original task schematic</sub></td>
 </tr>
 <tr>
-<td width="50%" align="center" valign="top"><a href="assets/environments/fhn.png"><img src="assets/environments/cards/fhn.svg" width="240" alt="FHN: FitzHugh–Nagumo field evolution" /></a><br/><a href="benchmarks/nod/README.md">FHN</a></td>
-<td width="50%" align="center" valign="top"><a href="assets/environments/swimmer.png"><img src="assets/environments/cards/swimmer.svg" width="240" alt="Swimmer: Physics demonstration" /></a><br/><a href="benchmarks/swimmer/README.md">Swimmer</a></td>
+<td width="50%" align="center" valign="top"><a href="https://jidaivita.github.io/sprii/#setting-cophy_balls"><img src="assets/environments/cards/cophy_balls.svg?v=91703da5c1f1" width="320" height="180" alt="CoPhy Balls: Original task schematic" /></a><br/><a href="https://jidaivita.github.io/sprii/#setting-cophy_balls">CoPhy Balls</a><br/><sub>Original task schematic</sub></td>
+<td width="50%" align="center" valign="top"><a href="https://jidaivita.github.io/sprii/#setting-cophy_blocktower"><img src="assets/environments/cards/cophy_blocktower.svg?v=aee30078018d" width="320" height="180" alt="CoPhy Blocktower: Original task schematic" /></a><br/><a href="https://jidaivita.github.io/sprii/#setting-cophy_blocktower">CoPhy Blocktower</a><br/><sub>Original task schematic</sub></td>
 </tr>
 <tr>
-<td width="50%" align="center" valign="top"><a href="assets/environments/overcooked.png"><img src="assets/environments/cards/overcooked.svg" width="240" alt="Overcooked: Overcooked environment replay" /></a><br/><a href="benchmarks/overcooked/README.md">Overcooked</a></td>
-<td width="50%" align="center" valign="top"><a href="assets/environments/baxter.png"><img src="assets/environments/cards/baxter.svg" width="240" alt="Baxter: Recorded tactile signals" /></a><br/><a href="docs/datasets.md">Baxter</a></td>
+<td width="50%" align="center" valign="top"><a href="https://jidaivita.github.io/sprii/#setting-nod1d"><img src="assets/environments/cards/burgers.svg?v=4659b1a6a26a" width="320" height="180" alt="Burgers: Released numerical trajectory" /></a><br/><a href="https://jidaivita.github.io/sprii/#setting-nod1d">Burgers</a><br/><sub>Released numerical trajectory</sub></td>
+<td width="50%" align="center" valign="top"><a href="https://jidaivita.github.io/sprii/#setting-nod2d"><img src="assets/environments/cards/fhn.svg?v=502b5270cb1a" width="320" height="180" alt="FHN: Solver demonstration" /></a><br/><a href="https://jidaivita.github.io/sprii/#setting-nod2d">FHN</a><br/><sub>Solver demonstration</sub></td>
 </tr>
 <tr>
-<td width="50%" align="center" valign="top"><a href="assets/environments/rh20t.png"><img src="assets/environments/cards/rh20t.svg" width="240" alt="RH20T: RH20T dataset example" /></a><br/><a href="benchmarks/rh20t/README.md">RH20T</a></td>
-<td width="50%" align="center" valign="top"><a href="assets/environments/pendulum.png"><img src="assets/environments/cards/pendulum.svg" width="240" alt="Pendulum: Torque demonstration" /></a><br/><a href="benchmarks/baseline_adapters/README.md#pendulum">Pendulum</a></td>
+<td width="50%" align="center" valign="top"><a href="https://jidaivita.github.io/sprii/#setting-swimmer"><img src="assets/environments/cards/swimmer.svg?v=dcfe8c9dcfb5" width="320" height="180" alt="Swimmer: Environment demonstration" /></a><br/><a href="https://jidaivita.github.io/sprii/#setting-swimmer">Swimmer</a><br/><sub>Environment demonstration</sub></td>
+<td width="50%" align="center" valign="top"><a href="https://jidaivita.github.io/sprii/#setting-overcooked"><img src="assets/environments/cards/overcooked.svg?v=3022951deb54" width="320" height="180" alt="Overcooked: Scripted environment demonstration" /></a><br/><a href="https://jidaivita.github.io/sprii/#setting-overcooked">Overcooked</a><br/><sub>Scripted environment demonstration</sub></td>
+</tr>
+<tr>
+<td width="50%" align="center" valign="top"><a href="https://jidaivita.github.io/sprii/#setting-baxter"><img src="assets/environments/cards/baxter.svg?v=9e654de7f14a" width="320" height="180" alt="Baxter: Recorded tactile data" /></a><br/><a href="https://jidaivita.github.io/sprii/#setting-baxter">Baxter</a><br/><sub>Recorded tactile data</sub></td>
+<td width="50%" align="center" valign="top"><a href="https://jidaivita.github.io/sprii/#setting-rh20t"><img src="assets/environments/cards/rh20t.svg?v=4fb6a5df3817" width="320" height="180" alt="RH20T: Official website demonstration" /></a><br/><a href="https://jidaivita.github.io/sprii/#setting-rh20t">RH20T</a><br/><sub>Official website demonstration</sub></td>
+</tr>
+<tr>
+<td width="50%" align="center" valign="top"><a href="https://jidaivita.github.io/sprii/#setting-pendulum"><img src="assets/environments/cards/pendulum.svg?v=24b070450549" width="320" height="180" alt="Pendulum: Environment demonstration" /></a><br/><a href="https://jidaivita.github.io/sprii/#setting-pendulum">Pendulum</a><br/><sub>Environment demonstration</sub></td>
+<td width="50%"></td>
 </tr>
 </table>
 
@@ -106,7 +112,7 @@ appropriate entry points.
 
 ## Release scope
 
-Public source version **0.2.0** supports the [SPRII author manuscript](https://jidaivita.github.io/sprii/SPRII.pdf). It builds on the verified 0.1.2 source snapshot with public documentation, citation metadata, and stable project links. Training code, experimental configurations, and scientific results are unchanged by this publication update. The gallery keeps CoPhy as text-only implementation links.
+Public source version **0.2.0** supports the [SPRII author manuscript](https://jidaivita.github.io/sprii/SPRII.pdf). It builds on the verified 0.1.2 source snapshot with public documentation, citation metadata, and stable project links. Training code, experimental configurations, and scientific results are unchanged by this publication update. The thirteen-setting gallery shares the project page’s previews, including original CoPhy task schematics; presentation changes leave model observations and experiment code unchanged.
 
 The package contains code, configuration, tests, and source provenance. Generated simulation data can be recreated with the included generators. External datasets and dependencies are acquired through their official sources; trained checkpoints and historical training logs are not bundled. Some frozen-checkpoint analyses require those separately specified inputs. The [reproduction guide](docs/reproduce.md) explains this scope, and [verification](docs/verification.md) records the checks actually performed. The recipe document identifies its manuscript snapshot; this release does not claim a new rerun or a complete audit of every number in a later manuscript revision.
 

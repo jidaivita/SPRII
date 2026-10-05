@@ -26,4 +26,8 @@ and [external data sources](docs/datasets.md). Baxter-derived previews retain
 CC BY 4.0; RH20T website-demo-derived previews and their SVG wrappers retain
 CC BY-SA 4.0. The root MIT code license does not replace those media terms.
 
-The public gallery contains no CoPhy media; its Collision, Balls, and Blocktower entries are text-only implementation links. This presentation change leaves the CoPhy-derived GPL-3.0 code and experiment recipes in place.
+The public gallery includes original author-drawn task schematics for CoPhy
+Collision, Balls, and Blocktower. It includes no upstream CoPhy textures,
+screenshots or videos. These original drawings fall under the root MIT license;
+the CoPhy-derived implementation retains GPL-3.0. The experiment code and recipes
+are unchanged by this presentation update.

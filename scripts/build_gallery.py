@@ -1,15 +1,24 @@
-"""Rebuild the thirteen-setting index and its collapsible ten-image gallery."""
+"""Build thirteen same-source environment previews and verify their project-page provenance."""
 from __future__ import annotations
 
 import argparse
 import base64
 import hashlib
 import html
+from html.parser import HTMLParser
 import json
+import re
 from pathlib import Path
+from urllib.parse import urlsplit
+import xml.etree.ElementTree as ET
 
+PROJECT_URL = "https://jidaivita.github.io/sprii/"
+CARD_SIZE = (1280, 720)
+CARD_PADDING = 16
+PALETTE = {"canvas": "#F7F4EE", "border": "#C7C1B7"}
+SVG_NS = "http://www.w3.org/2000/svg"
+ET.register_namespace("", SVG_NS)
 
-# Public filenames and implementation guides stay stable across media updates.
 ENVIRONMENTS = (
     ("spring", "springworld", "SpringWorld", "benchmarks/springworld/README.md"),
     ("poke", "pokeworld", "PokeWorld", "benchmarks/pokeworld/revision/README.md"),
@@ -26,76 +35,6 @@ ENVIRONMENTS = (
     ("pendulum", "pendulum", "Pendulum", "benchmarks/baseline_adapters/README.md#pendulum"),
 )
 
-# Keep implementation coverage without redistributing unverified upstream media.
-TEXT_ONLY_ENVIRONMENTS = frozenset({
-    "cophy_collision", "cophy_balls", "cophy_blocktower",
-})
-
-
-def text_only_item(environment_id: str, public_id: str, label: str, guide: str) -> dict:
-    return {
-        "id": public_id,
-        "environment_id": environment_id,
-        "label": label,
-        "guide": guide,
-        "kind": "Implementation guide",
-        "presentation": "text",
-    }
-
-
-def sha256(data: bytes) -> str:
-    return hashlib.sha256(data).hexdigest()
-
-
-def local_file(root: Path, relative: str) -> Path:
-    path = root / relative
-    if Path(relative).is_absolute() or not path.resolve().is_relative_to(root.resolve()):
-        raise ValueError("Media paths must stay inside their source directory")
-    return path
-
-
-def import_registry(path: Path) -> tuple[dict, dict[str, bytes]]:
-    raw = path.read_bytes()
-    registry = json.loads(raw)
-    if registry["schema_version"] != 1 or registry["status"] != "frozen":
-        raise ValueError("Expected a frozen shared environment media registry")
-    entries = registry["environments"]
-    sources = {entry["id"]: entry for entry in entries}
-    expected = {entry[0] for entry in ENVIRONMENTS}
-    if len(entries) != len(expected) or set(sources) != expected:
-        raise ValueError("The registry must contain all 13 gallery environments exactly once")
-    manifest = {
-        "schema_version": 2,
-        "card_size": [720, 480],
-        "source_registry": {"version": registry["version"], "sha256": sha256(raw)},
-        "items": [],
-    }
-    images = {}
-    for environment_id, public_id, label, guide in ENVIRONMENTS:
-        if environment_id in TEXT_ONLY_ENVIRONMENTS:
-            manifest["items"].append(text_only_item(environment_id, public_id, label, guide))
-            continue
-        source = sources[environment_id]
-        thumbnail = source["assets"]["thumbnail.png"]
-        data = local_file(path.parent, thumbnail["file"]).read_bytes()
-        if sha256(data) != thumbnail["sha256"] or not data.startswith(b"\x89PNG\r\n\x1a\n"):
-            raise ValueError(f"Registry thumbnail verification failed: {environment_id}")
-        image = public_id + ".png"
-        images[image] = data
-        manifest["items"].append({
-            "id": public_id,
-            "environment_id": environment_id,
-            "label": label,
-            "image": image,
-            "guide": guide,
-            "kind": source["caption"].split(" · ")[0],
-            "caption": source["caption"],
-            "thumbnail_sha256": thumbnail["sha256"],
-        })
-    return manifest, images
-
-
-# One scientific setting per row; dependencies and generated data are linked explicitly.
 SETTING_DETAILS = {
     "springworld": ("benchmarks/formation_use/scripts/train_spring_source.py", "springworld", "benchmarks/springworld/README.md"),
     "pokeworld": ("benchmarks/pokeworld/revision/scripts/train_pokeworld_revision.py", "d-clean-and-pokeworld", "benchmarks/pokeworld/revision/scripts/prepare_pokeworld_factorized.py"),
@@ -112,126 +51,247 @@ SETTING_DETAILS = {
     "pendulum": ("benchmarks/baseline_adapters/cadm_pendulum_relation_components_v5.py", "overcookedv2-articulated-swimmer-and-pendulum", "benchmarks/baseline_adapters/README.md#pendulum"),
 }
 
+MEDIA = {
+    "spring": ("Environment demonstration", "Force and release in SpringWorld"),
+    "poke": ("Recorded histories", "PokeWorld histories with applied-action overlays"),
+    "dclean": ("Recorded trajectory", "D-Clean motion, velocity and applied forces"),
+    "cophy_collision": ("Original task schematic", "Contact under related object properties"),
+    "cophy_balls": ("Original task schematic", "Related four-ball interactions"),
+    "cophy_blocktower": ("Original task schematic", "Contact and stability in block towers"),
+    "nod1d": ("Released numerical trajectory", "Burgers spatial profile and space-time field"),
+    "nod2d": ("Solver demonstration", "Coupled FitzHugh-Nagumo fields"),
+    "baxter": ("Recorded tactile data", "Sixteen-channel grasp recording"),
+    "rh20t": ("Official website demonstration", "RH20T drawer manipulation"),
+    "swimmer": ("Environment demonstration", "Joint drive and reversal in Swimmer"),
+    "overcooked": ("Scripted environment demonstration", "Two scripted cooks prepare and deliver food"),
+    "pendulum": ("Environment demonstration", "Pendulum torque and angular response"),
+}
+
+
+def sha256(data: bytes) -> str:
+    return hashlib.sha256(data).hexdigest()
+
+
+def local_file(root: Path, relative: str) -> Path:
+    path = root / relative
+    if Path(relative).is_absolute() or not path.resolve().is_relative_to(root.resolve()):
+        raise ValueError("Media paths must stay inside their source directory")
+    return path
+
+
+def image_size(data: bytes, suffix: str) -> tuple[float, float]:
+    if suffix == ".png":
+        if not data.startswith(b"\x89PNG\r\n\x1a\n"):
+            raise ValueError("Expected a PNG poster")
+        return int.from_bytes(data[16:20], "big"), int.from_bytes(data[20:24], "big")
+    svg = ET.fromstring(data)
+    if svg.tag != f"{{{SVG_NS}}}svg":
+        raise ValueError("Expected an SVG task schematic")
+    for element in svg.iter():
+        if element.tag.rsplit("}", 1)[-1] in {"script", "foreignObject", "image"}:
+            raise ValueError("Task schematics must contain original vector geometry only")
+        for key, value in element.attrib.items():
+            if key.rsplit("}", 1)[-1] == "href" and not value.startswith("#"):
+                raise ValueError("External SVG resources are not permitted")
+    _, _, width, height = map(float, svg.attrib["viewBox"].split())
+    return width, height
+
+
+def source_digest(items: list[dict]) -> str:
+    record = [{"id": item["environment_id"], "asset": item["source_asset"],
+               "sha256": item["source_sha256"], "poster_sha256": item.get("source_poster_sha256"),
+               "video_sha256": item.get("source_video_sha256"), "url": item["source_url"],
+               "poster_url": item.get("source_poster_url"), "video_url": item.get("source_video_url")}
+              for item in items]
+    return sha256(json.dumps(record, sort_keys=True, separators=(",", ":")).encode())
+
+
+class SummaryImages(HTMLParser):
+    """Read the exact image selected by each project-page environment summary."""
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.environment = None
+        self.in_summary = False
+        self.images = {}
+        self.posters = {}
+        self.videos = {}
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        attrs = dict(attrs)
+        if tag == "details" and attrs.get("id", "").startswith("setting-"):
+            self.environment = attrs["id"].removeprefix("setting-")
+        elif tag == "summary":
+            self.in_summary = True
+        elif tag == "img" and self.in_summary and self.environment:
+            if self.environment in self.images:
+                raise ValueError(f"Multiple summary images for {self.environment}")
+            self.images[self.environment] = attrs["src"]
+        elif tag == "video" and self.environment:
+            self.posters[self.environment] = attrs["poster"]
+        elif tag == "source" and attrs.get("type") == "video/mp4" and self.environment:
+            self.videos[self.environment] = attrs["src"]
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag == "summary":
+            self.in_summary = False
+
+
+def import_site(site: Path) -> tuple[dict, dict[str, bytes]]:
+    items, images = [], {}
+    summary = SummaryImages()
+    summary.feed((site / "index.html").read_text())
+    if set(summary.images) != {row[0] for row in ENVIRONMENTS}:
+        raise ValueError("The project page must supply one summary image for each of the thirteen settings")
+    for environment_id, public_id, label, guide in ENVIRONMENTS:
+        schematic = environment_id.startswith("cophy_")
+        source_url = summary.images[environment_id]
+        relative = urlsplit(source_url).path
+        filename = Path(relative).name
+        expected_suffix = ".svg" if schematic else ".png"
+        if Path(relative).suffix != expected_suffix:
+            raise ValueError(f"Unexpected summary image format for {environment_id}")
+        data = local_file(site, relative).read_bytes()
+        image_size(data, Path(filename).suffix)
+        image = public_id + Path(filename).suffix
+        kind, caption = MEDIA[environment_id]
+        item = {"id": public_id, "environment_id": environment_id, "label": label,
+                "guide": guide, "kind": kind, "caption": caption, "image": image,
+                "card": f"cards/{public_id}.svg", "project_url": f"{PROJECT_URL}#setting-{environment_id}",
+                "source_asset": relative, "source_url": PROJECT_URL + source_url,
+                "source_sha256": sha256(data), "image_sha256": sha256(data),
+                "presentation": "Original project-page schematic" if schematic else "Exact project-page summary-image bytes"}
+        if not schematic:
+            poster_url = summary.posters[environment_id]
+            poster_relative = urlsplit(poster_url).path
+            item["source_poster"] = poster_relative
+            item["source_poster_url"] = PROJECT_URL + poster_url
+            item["source_poster_sha256"] = sha256(local_file(site, poster_relative).read_bytes())
+            video_url = summary.videos[environment_id]
+            video_relative = urlsplit(video_url).path
+            item["source_video"] = video_relative
+            item["source_video_url"] = PROJECT_URL + video_url
+            item["source_video_sha256"] = sha256(local_file(site, video_relative).read_bytes())
+        items.append(item)
+        images[image] = data
+    manifest = {"schema_version": 3, "card_size": list(CARD_SIZE), "card_padding": CARD_PADDING,
+                "palette": PALETTE, "source": {"kind": "project-page-assets", "base_url": PROJECT_URL,
+                "snapshot_sha256": source_digest(items)}, "items": items}
+    return manifest, images
+
+
+def card_svg(item: dict, data: bytes) -> bytes:
+    width, height = CARD_SIZE
+    sw, sh = image_size(data, Path(item["image"]).suffix)
+    scale = min((width - 2 * CARD_PADDING) / sw, (height - 2 * CARD_PADDING) / sh)
+    iw, ih = sw * scale, sh * scale
+    x, y = (width - iw) / 2, (height - ih) / 2
+    if item["image"].endswith(".svg"):
+        nested = ET.fromstring(data)
+        nested.attrib.update({"x": f"{x:.6f}", "y": f"{y:.6f}", "width": f"{iw:.6f}",
+                              "height": f"{ih:.6f}", "preserveAspectRatio": "xMidYMid meet"})
+        content = ET.tostring(nested, encoding="unicode")
+    else:
+        encoded = base64.b64encode(data).decode("ascii")
+        content = (f'<image x="{x:.6f}" y="{y:.6f}" width="{iw:.6f}" height="{ih:.6f}" '
+                   f'preserveAspectRatio="xMidYMid meet" href="data:image/png;base64,{encoded}"/>')
+    title = html.escape(item["label"] + ": " + item["kind"])
+    return (f'<svg xmlns="{SVG_NS}" width="{width}" height="{height}" '
+            f'viewBox="0 0 {width} {height}" role="img" aria-labelledby="card-title">\n'
+            f'<title id="card-title">{title}</title>\n'
+            f'<rect width="{width}" height="{height}" rx="12" fill="{PALETTE["canvas"]}"/>\n'
+            f'{content}\n</svg>\n').encode()
+
 
 def readme_gallery(items: list[dict]) -> str:
-    lines = [
-        "## Explore thirteen settings", "",
-        "Each row is one study setting; its name opens the corresponding project-page section.",
-        "Code links open the implementation and its guide;",
-        "data links lead to the relevant generator or input-preparation instructions.", "",
-        "| # | Setting | Code | Recipe | Data |",
-        "|---|---|---|---|---|",
-    ]
+    lines = ["## Explore thirteen settings", "",
+             "Each setting links to its project-page demonstration or schematic, implementation, recipe, and data setup.", "",
+             "| # | Setting | Code | Recipe | Data |", "|---|---|---|---|---|"]
     for index, item in enumerate(items, 1):
         code, recipe, data = SETTING_DETAILS[item["id"]]
-        lines.append(
-            f'| {index} | [{item["label"]}](https://jidaivita.github.io/sprii/#setting-{item["environment_id"]}) '
-            f'| [Source]({code}) · [Guide]({item["guide"]}) '
-            f'| [Recipe](docs/paper_recipes.md#{recipe}) | [Inputs]({data}) |'
-        )
-    lines.extend([
-        "", "CoPhy Collision, Balls, and Blocktower are separate settings with shared",
-        "scene-selecting training entry points. Burgers and FHN, and Baxter and RH20T,",
-        "are listed separately even where they share a guide.", "",
-        "<details>", "<summary>Environment previews — 10 images</summary>", "",
-        "These previews illustrate the environments. The three CoPhy settings have",
-        "text-only implementation entries in the complete index above.", "", "<table>",
-    ])
-    previews = [item for item in items if item.get("presentation") != "text"]
-    for index, item in enumerate(previews):
+        lines.append(f'| {index} | [{item["label"]}]({item["project_url"]}) '
+                     f'| [Source]({code}) · [Guide]({item["guide"]}) '
+                     f'| [Recipe](docs/paper_recipes.md#{recipe}) | [Inputs]({data}) |')
+    lines.extend(["", "CoPhy Collision, Balls, and Blocktower are separate settings with shared",
+                  "scene-selecting training entry points. Burgers and FHN, and Baxter and RH20T,",
+                  "are listed separately even where they share a guide.", "",
+                  "<details>", "<summary>Environment previews — all 13 settings</summary>", "",
+                  "Select a preview to open its video or schematic and experiment details on the project page.",
+                  "The previews share the page's source assets. They illustrate the settings; they are not learned-model predictions.",
+                  "", "<table>"])
+    for index, item in enumerate(items):
         if index % 2 == 0:
             lines.append("<tr>")
         alt = html.escape(item["label"] + ": " + item["kind"], quote=True)
-        lines.append(
-            '<td width="50%" align="center" valign="top">'
-            f'<a href="assets/environments/{item["image"]}">'
-            f'<img src="assets/environments/cards/{item["id"]}.svg" '
-            f'width="240" alt="{alt}" /></a><br/>'
-            f'<a href="{item["guide"]}">{html.escape(item["label"])}</a></td>'
-        )
-        if index % 2 == 1 or index == len(previews) - 1:
+        lines.append('<td width="50%" align="center" valign="top">'
+                     f'<a href="{item["project_url"]}"><img src="assets/environments/{item["card"]}?v={item["card_sha256"][:12]}" '
+                     f'width="320" height="180" alt="{alt}" /></a><br/>'
+                     f'<a href="{item["project_url"]}">{html.escape(item["label"])}</a><br/>'
+                     f'<sub>{html.escape(item["kind"])}</sub></td>')
+        if index % 2 == 1 or index == len(items) - 1:
+            if index == len(items) - 1 and index % 2 == 0:
+                lines.append('<td width="50%"></td>')
             lines.append("</tr>")
-    lines.extend([
-        "</table>", "",
-        "See [gallery notes](docs/gallery.md) and [media credits](docs/media-credits.md).",
-        "", "</details>", "", "",
-    ])
+    lines.extend(["</table>", "", "See [gallery notes](docs/gallery.md) and [media credits](docs/media-credits.md).",
+                  "", "</details>", "", ""])
     return "\n".join(lines)
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--registry", type=Path,
-                        help="Import ten previews from a frozen shared media registry; keep CoPhy text-only")
+    parser.add_argument("--site-root", type=Path, help="Import the current public project-page asset directory")
+    parser.add_argument("--check", action="store_true", help="Verify bundled sources, cards and README without writing")
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[1]
     assets = root / "assets" / "environments"
-    if args.registry:
-        manifest, images = import_registry(args.registry)
+    if args.site_root:
+        manifest, images = import_site(args.site_root)
     else:
         manifest = json.loads((assets / "gallery.json").read_text())
-        images = {item["image"]: local_file(assets, item["image"]).read_bytes()
-                  for item in manifest["items"]
-                  if item["environment_id"] not in TEXT_ONLY_ENVIRONMENTS}
+        if manifest.get("schema_version") != 3:
+            raise ValueError("Import project-page assets with --site-root before rebuilding this gallery")
+        images = {item["image"]: local_file(assets, item["image"]).read_bytes() for item in manifest["items"]}
     if [item["environment_id"] for item in manifest["items"]] != [row[0] for row in ENVIRONMENTS]:
-        raise ValueError("Gallery environment mapping does not match the shared registry")
-    if set(SETTING_DETAILS) != {item["id"] for item in manifest["items"]}:
-        raise ValueError("Every setting must have one code, recipe and data mapping")
-    if not manifest.get("source_registry", {}).get("sha256"):
-        raise ValueError("Import the shared registry before rebuilding")
+        raise ValueError("The gallery must contain the thirteen settings in the declared order")
+    if source_digest(manifest["items"]) != manifest["source"]["snapshot_sha256"]:
+        raise ValueError("Source snapshot hash does not match the declared assets")
+    outputs = {}
     for item in manifest["items"]:
-        if item["environment_id"] in TEXT_ONLY_ENVIRONMENTS:
-            if item.get("presentation") != "text" or "image" in item or "thumbnail_sha256" in item:
-                raise ValueError(f'CoPhy entries must remain text-only: {item["id"]}')
-        elif sha256(images[item["image"]]) != item["thumbnail_sha256"]:
-            raise ValueError(f'Thumbnail hash mismatch: {item["id"]}')
-        code, _, data = SETTING_DETAILS[item["id"]]
-        for link in (item["guide"], code, data):
-            if not local_file(root, link.split("#")[0]).is_file():
-                raise ValueError(f'Setting entry point is missing: {item["id"]}: {link}')
+        data = images[item["image"]]
+        if sha256(data) != item["source_sha256"] or sha256(data) != item["image_sha256"]:
+            raise ValueError(f'Source image hash mismatch: {item["id"]}')
+        code, _, input_guide = SETTING_DETAILS[item["id"]]
+        for target in (item["guide"], code, input_guide):
+            if not local_file(root, target.split("#")[0]).is_file():
+                raise ValueError(f'Missing setting link: {target}')
+        outputs[local_file(assets, item["image"])] = data
+        card = card_svg(item, data)
+        item["card_sha256"] = sha256(card)
+        outputs[local_file(assets, item["card"])] = card
+    outputs[assets / "gallery.json"] = (json.dumps(manifest, indent=2, ensure_ascii=False) + "\n").encode()
     readme_path = root / "README.md"
     readme = readme_path.read_text()
+    logo_hash = sha256((root / "assets/branding/logo.svg").read_bytes())[:12]
+    readme = re.sub(r'src="assets/branding/logo\.svg(?:\?[^\"]*)?"',
+                    f'src="assets/branding/logo.svg?v={logo_hash}"', readme)
     start = readme.index("## Explore thirteen settings\n")
     end = readme.index("## Baselines and protocols\n", start)
-
-    # Preserve the exact shared PNG bytes; framing never recolors or resamples them.
-    if args.registry:
-        for image, data in images.items():
-            (assets / image).write_bytes(data)
-        (assets / "gallery.json").write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + "\n")
-    width, height = manifest["card_size"]
-    cards = assets / "cards"
-    cards.mkdir(exist_ok=True)
-    for item in manifest["items"]:
-        if item.get("presentation") == "text":
-            continue
-        data = images[item["image"]]
-        encoded = base64.b64encode(data).decode("ascii")
-        title = html.escape(item["label"] + ": " + item["kind"])
-        # Explicit fitted bounds also preserve aspect ratio in SVG renderers
-        # that interpret embedded-image intrinsic dimensions differently.
-        source_width = int.from_bytes(data[16:20], "big")
-        source_height = int.from_bytes(data[20:24], "big")
-        scale = min((width - 24) / source_width, (height - 24) / source_height)
-        image_width, image_height = source_width * scale, source_height * scale
-        image_x, image_y = (width - image_width) / 2, (height - image_height) / 2
-        svg = (
-            f'<svg xmlns="http://www.w3.org/2000/svg" '
-            f'xmlns:xlink="http://www.w3.org/1999/xlink" '
-            f'width="{width}" height="{height}" viewBox="0 0 {width} {height}" '
-            f'role="img" aria-labelledby="title">\n'
-            f'  <title id="title">{title}</title>\n'
-            f'  <rect width="{width}" height="{height}" rx="12" fill="#f3f4f5"/>\n'
-            f'  <image x="{image_x:.6f}" y="{image_y:.6f}" '
-            f'width="{image_width:.6f}" height="{image_height:.6f}" '
-            f'preserveAspectRatio="xMidYMid meet" '
-            f'xlink:href="data:image/png;base64,{encoded}"/>\n'
-            '</svg>\n'
-        )
-        (cards / (item["id"] + ".svg")).write_text(svg)
-    readme_path.write_text(readme[:start] + readme_gallery(manifest["items"]) + readme[end:])
-    print(f'Built the {len(manifest["items"])}-setting index and '
-          f'{len(images)} image cards ({width} x {height}) in a collapsible gallery.')
+    outputs[readme_path] = (readme[:start] + readme_gallery(manifest["items"]) + readme[end:]).encode()
+    old_assets = set(assets.glob("*.png")) | set(assets.glob("*.svg")) | set((assets / "cards").glob("*.svg"))
+    stale = old_assets - set(outputs)
+    if args.check:
+        changed = [str(path.relative_to(root)) for path, data in outputs.items()
+                   if not path.is_file() or path.read_bytes() != data]
+        if changed or stale:
+            raise SystemExit("Gallery verification failed: " + ", ".join(changed + [str(p.relative_to(root)) for p in sorted(stale)]))
+        print("Verified 13 source images, 13 deterministic cards, source hashes and project-page links.")
+        return
+    for path, data in outputs.items():
+        path.parent.mkdir(exist_ok=True, parents=True)
+        path.write_bytes(data)
+    for path in stale:
+        path.unlink()
+    print("Built 13 same-source environment previews (1280 x 720) and their project-page links.")
 
 
 if __name__ == "__main__":

@@ -103,3 +103,33 @@ Checks performed for this release:
 These are package and CPU implementation checks. Torch-dependent tests,
 framework-specific optional integrations, historical checkpoint analyses, and
 full-budget training were not rerun for this documentation-only publication update.
+
+## Unified thirteen-setting gallery — 2026-10-06
+
+This presentation update supersedes the earlier ten-image gallery described
+above. It uses ten exact project-page PNG previews and three original CoPhy SVG
+schematics. Every preview links to the corresponding project-page environment.
+PokeWorld uses the same close-up as the page summary and paper; the video poster
+is recorded separately. Light-background re-rendering is confined to
+human-facing PokeWorld, Swimmer and Overcooked displays.
+
+Gallery generation verifies source-image hashes, video/poster hashes when a
+project checkout is supplied, all thirteen implementation mappings, and the
+exact generated SVG/README contents. Old scene crops are replaced. The builder
+and gallery metadata change; scientific Python and experiment configurations
+remain byte-identical to the preceding public checkout. The CLI reference and
+release integrity manifest are regenerated for the final presentation files.
+
+These checks concern presentation, provenance and release integrity. They add
+no training run, model observation changes, predictions or experimental results.
+
+Checks completed for this gallery update:
+
+- `python scripts/build_gallery.py --site-root <project-page-root> --check` and the standalone `--check` both pass.
+- All thirteen source-image copies match the page; all ten PNG payloads embedded in SVG frames match the local images exactly. All thirteen cards use the same 1280 × 720 view box.
+- README has thirteen visual previews and thirteen setting rows. Preview links open the project page; local README/documentation target paths resolve.
+- The generated gallery CLI argument references point to the current source lines.
+- PokeWorld, Swimmer and Overcooked previews were visually checked after the display update. The former large black scene backgrounds are absent; real RH20T photographic shadows are preserved.
+- SpringWorld was re-imported after its two object materials were matched to the paper; its poster/video hashes and cached-image URL versions agree with the project page.
+- Scientific source/configuration paths are unchanged relative to the prior public checkout; the gallery builder is the only changed Python source.
+- The refreshed release manifest passes `python scripts/verify_release.py`.

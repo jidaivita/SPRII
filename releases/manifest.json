@@ -1,6 +1,6 @@
 {
   "version": "0.2.0",
-  "scope": "Public source distribution for the SPRII author manuscript with thirteen-setting reviewer navigation; model weights, datasets and historical logs excluded; CoPhy gallery entries are text-only",
+  "scope": "Public source distribution for the SPRII author manuscript with thirteen-setting navigation and same-source visual gallery; model weights, datasets and historical logs excluded; CoPhy previews are original author-drawn task schematics",
   "files": [
     {
       "path": ".gitignore",
@@ -9,8 +9,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 2612,
-      "sha256": "f246dbfa01faacc30d73960e78d508aee6a2757a3afdc801dd7bbbc2277d6ec5"
+      "bytes": 3552,
+      "sha256": "4d2e5132d938c374b2c4ec707262d5df4f12664ead1df4214525b45eddccb044"
     },
     {
       "path": "CITATION.cff",
@@ -29,123 +29,153 @@
     },
     {
       "path": "README.md",
-      "bytes": 12781,
-      "sha256": "717b16a50d09a56d17a8713a68422e2b68e27b48e2e9132ed13755815b9067cc"
+      "bytes": 15212,
+      "sha256": "67b1d4a1ecf0b897bcec8a41c57297ae0ead74f6ef411a87521669deee516440"
     },
     {
       "path": "THIRD_PARTY_NOTICES.md",
-      "bytes": 2374,
-      "sha256": "abb19d60776a1a8c102e0a4a330b959cd59ce35d815b663ccce0780c3bcb0cf3"
+      "bytes": 2508,
+      "sha256": "fd03ec91c1c2829b2b0f926c004043507f7268f4c5af434c444599f3d62f15fd"
     },
     {
       "path": "assets/branding/logo.svg",
       "bytes": 740,
-      "sha256": "a6dbc90557ce5a20e2fdb85bc8b561ebe7138edb802759d956a03f84479ff4de"
+      "sha256": "3d480e066bc70665f76957776b09160e37392cf86b23a8833ba2c0e0cccb1457"
     },
     {
       "path": "assets/environments/baxter.png",
-      "bytes": 2602,
-      "sha256": "5b47a4ef3d90f7351f842b39ac3fc97e8a107f28ce0e2c9ab6860bc05a18fc1b"
+      "bytes": 83144,
+      "sha256": "c88b7d4ebb34e5e1c2ece9ebf4823dbb15c3048d6e119661e287ed3354da95b7"
     },
     {
       "path": "assets/environments/burgers.png",
-      "bytes": 22306,
-      "sha256": "2ebe5f2b23d20ec12e175692d4bc31cda206f70c516082e66eae7f73f9151b01"
+      "bytes": 120135,
+      "sha256": "555e7e4b1d501d9f3e4ee33624ba8586825e759e96ccc58f25db5ab4d1e365d6"
     },
     {
       "path": "assets/environments/cards/baxter.svg",
-      "bytes": 3914,
-      "sha256": "294982d436df08936400e6f724fc0a1edc9787b5725a68897f169e75ead0cf7a"
+      "bytes": 111258,
+      "sha256": "9e654de7f14abca6c2afa457226daac3df2b119bdf002bbce028f4faa4833935"
     },
     {
       "path": "assets/environments/cards/burgers.svg",
-      "bytes": 30187,
-      "sha256": "dc34287aac3f5c2694bff2254fcb8d0b480c69c5ef21bec45b1c291ed710bee2"
+      "bytes": 160587,
+      "sha256": "4659b1a6a26a93846e079508ec25905150a3ba2d903ac1e30af7c11f55d01ce1"
+    },
+    {
+      "path": "assets/environments/cards/cophy_balls.svg",
+      "bytes": 5470,
+      "sha256": "91703da5c1f15d8e82a4afb46700e6e2a09cb59c19701d26590c2248931d32ce"
+    },
+    {
+      "path": "assets/environments/cards/cophy_blocktower.svg",
+      "bytes": 6330,
+      "sha256": "aee30078018d1ef940cfc2ec5f3d53e3f26510d9e4e9dc1a2bc185a008808e73"
+    },
+    {
+      "path": "assets/environments/cards/cophy_collision.svg",
+      "bytes": 5976,
+      "sha256": "d2a5e5d3d34a88795d31b86f9f1416ea807be01c918332d299f26995c1a7e275"
     },
     {
       "path": "assets/environments/cards/dclean.svg",
-      "bytes": 17610,
-      "sha256": "306389de51b957d422a113442e813be2ffebb5e807f2c233d939431be1c4d115"
+      "bytes": 133005,
+      "sha256": "c8a943c4a88cb656ae13583fe86bd0e6ad2df5ef561f54437aff6380e4ed79f4"
     },
     {
       "path": "assets/environments/cards/fhn.svg",
-      "bytes": 15413,
-      "sha256": "8cb1dc55f089a3b1d259ad8a1eaa490558e12813e06c79e097a249849af0bb59"
+      "bytes": 79642,
+      "sha256": "502b5270cb1a2d92baeef6e1a170cf918ab8214ec781e4f85ccffbde593edca7"
     },
     {
       "path": "assets/environments/cards/overcooked.svg",
-      "bytes": 10987,
-      "sha256": "97c29efdeb6f93b2a79030285d35224b5b3b37b211e57e2683132c43e60d55b9"
+      "bytes": 50927,
+      "sha256": "3022951deb544ac0301cb7a0aeb1f4ae2eb462d2b285d5f9429f34401f20aa3f"
     },
     {
       "path": "assets/environments/cards/pendulum.svg",
-      "bytes": 13277,
-      "sha256": "133de12b6540d58d0644e64df02298f9f114579ed9c42fc6353c260356125760"
+      "bytes": 68572,
+      "sha256": "24b0704505490a8705c3ebb6cbdf0561c81b02cbb7691d55fd87a3b77c8fb7b9"
     },
     {
       "path": "assets/environments/cards/pokeworld.svg",
-      "bytes": 3752,
-      "sha256": "7c7926a72ffa76c161e7d832a6ca665e56ed39dd68f92129d29eb127e3ed1046"
+      "bytes": 86086,
+      "sha256": "f98432506dde987e9174cf670e72c74938505064691ea5072cba952d5685ad4d"
     },
     {
       "path": "assets/environments/cards/rh20t.svg",
-      "bytes": 58746,
-      "sha256": "cee470f1a5dc8b0952c3c0ceb8d66f739918f1b2f21fbd3ef7720a2627a05156"
+      "bytes": 533666,
+      "sha256": "4fb6a5df3817948a5c932941a4fa5eeaba640f4b780f562b36590131dc117f81"
     },
     {
       "path": "assets/environments/cards/springworld.svg",
-      "bytes": 11620,
-      "sha256": "fc7c5c22dfe7e8624dc2bbec5aa3328ac7168b906b014b15e373722d9fe5df68"
+      "bytes": 60991,
+      "sha256": "344fb942be73941505de2119538c422e3a91dda6f5124f9362962e353cd0cc63"
     },
     {
       "path": "assets/environments/cards/swimmer.svg",
-      "bytes": 32076,
-      "sha256": "ae82b6d2d5f15bb20705cf09bd625cfed22803f90ae7f0e3391720721ee10a0e"
+      "bytes": 93691,
+      "sha256": "dcfe8c9dcfb53ec9b6194cbbfc625a2d67358abb2e83df0decd0951b0a91818e"
+    },
+    {
+      "path": "assets/environments/cophy_balls.svg",
+      "bytes": 5097,
+      "sha256": "4a9829bc71b42455070d2fb4aca004a36974599ee26742555402f49b7a5af86f"
+    },
+    {
+      "path": "assets/environments/cophy_blocktower.svg",
+      "bytes": 5947,
+      "sha256": "d33d713a153c374b6646d3f9a07364f47402ef1860c7703c41312a9a08c4546f"
+    },
+    {
+      "path": "assets/environments/cophy_collision.svg",
+      "bytes": 5596,
+      "sha256": "be6c8964f21a523dbd6f845d52477d72f6bde0b542c4773ca62c797cadc3f0ea"
     },
     {
       "path": "assets/environments/dclean.png",
-      "bytes": 12878,
-      "sha256": "6363beb8e2a6a015938c3338e4a74e5a12bcabb7f1c9bb810b6039add6457b7b"
+      "bytes": 99454,
+      "sha256": "1b0db96442e36fb6070e5b7d1a3b201c812ba94aa0a96c9af01d2d037deda8da"
     },
     {
       "path": "assets/environments/fhn.png",
-      "bytes": 11223,
-      "sha256": "2ea359f45a7cc29659c28e63ec4cd3a4f6c1c1a71a85e858e122b8b928b5d509"
+      "bytes": 59436,
+      "sha256": "1bae59c683870aaa5bf71ee7a403cc19e0b5fad63be5e79e71b031a557c1baff"
     },
     {
       "path": "assets/environments/gallery.json",
-      "bytes": 4610,
-      "sha256": "6433b907e2e8bb7d632418aad84593296a836e34c9c0883683b3a1880ad68218"
+      "bytes": 17356,
+      "sha256": "02dd9731af49d397d80796c4123d8aff911577b6b34ff42f2a86a55b19ec2013"
     },
     {
       "path": "assets/environments/overcooked.png",
-      "bytes": 7900,
-      "sha256": "0553fa298c37cb153c1c2dca26d02035bab0391b782494a83f883f98e95d70a0"
+      "bytes": 37884,
+      "sha256": "87c470ad504c126f2285511d1ed2b40c244b2ed03a40dbbe2a98a0b05c17156c"
     },
     {
       "path": "assets/environments/pendulum.png",
-      "bytes": 9625,
-      "sha256": "a2c2611237e34ee34854bde7ce1ac8fa73fb9487dc93f7c2644f7e4376fec412"
+      "bytes": 51124,
+      "sha256": "60c1ab1ce4a80964b35ca03ef5cdfea7877e8d6d55d31cfc09e98ba9db4204ee"
     },
     {
       "path": "assets/environments/pokeworld.png",
-      "bytes": 2486,
-      "sha256": "51bbc0efb04234eceacb3dbeefdba540f7e87201fe1c408760e7176c1dd82f24"
+      "bytes": 64265,
+      "sha256": "15d63db824d97b5d8c32f623eaa5dcb1ec918ac511feca7624333529334ffb78"
     },
     {
       "path": "assets/environments/rh20t.png",
-      "bytes": 43731,
-      "sha256": "e61e08a9cce8befc1320c548da973a6b3a6989e62b8cb00fa161e2c5f12ab9a8"
+      "bytes": 399945,
+      "sha256": "c0d37fc26351343a53188329441c21dac7a1c90c9e8b31ad0458b91494ee836c"
     },
     {
       "path": "assets/environments/springworld.png",
-      "bytes": 8382,
-      "sha256": "344401ad7fe88ce2da0b0d96cd5cd283e64157b9646441ec1084ad3f3ee552ee"
+      "bytes": 45438,
+      "sha256": "caa54abc0d34f1c356e73f05fbb3f1313a1a03cdb244b0610f2ca1ee651a5589"
     },
     {
       "path": "assets/environments/swimmer.png",
-      "bytes": 23726,
-      "sha256": "a70150604b48c88e7097f41873af9f5b4ccb1d777f5c0eed784d1b64c990636a"
+      "bytes": 69964,
+      "sha256": "58531b0e7c79f4b9338998969a5e428482ef83676c881cca07b25b92aa6a7fd3"
     },
     {
       "path": "benchmarks/additional_baselines/DALI-LICENSE",
@@ -3244,8 +3274,8 @@
     },
     {
       "path": "docs/cli_defaults.json",
-      "bytes": 451461,
-      "sha256": "1d4b6d78cd78d0efd52adee8c9fb57423853a799e9db48e54cc9afe759d50ab3"
+      "bytes": 451654,
+      "sha256": "55b5f83065286e183375f21da626b7072b3b59c2d7f0b1805fb189d081c5a3c3"
     },
     {
       "path": "docs/core.md",
@@ -3259,8 +3289,8 @@
     },
     {
       "path": "docs/gallery.md",
-      "bytes": 4036,
-      "sha256": "030c4358153ba713b5413dbed7c4ed6f251a94460edb99d408f70dd9887c160c"
+      "bytes": 4287,
+      "sha256": "7a0f543b5a9243286e1da59b8612041de5d07d6f4a06d22eb6beee072dc1dce0"
     },
     {
       "path": "docs/hyperparameters.md",
@@ -3274,8 +3304,8 @@
     },
     {
       "path": "docs/media-credits.md",
-      "bytes": 8188,
-      "sha256": "0587b7de3b6a25d74311f71598c94e9e6066cc36bb51ec117bcf77d050b05a34"
+      "bytes": 10286,
+      "sha256": "90474f0f52ce92baf35f24f57509e008af247df5a7be222ea4490344947681ca"
     },
     {
       "path": "docs/paper_recipes.md",
@@ -3309,8 +3339,8 @@
     },
     {
       "path": "docs/verification.md",
-      "bytes": 6709,
-      "sha256": "6b4948dfa11151b5f5da134ae581ebffaac7d7f278284af6103df6cc28ee0e5e"
+      "bytes": 8991,
+      "sha256": "09bd2028fdd64983cfcc97f91bd2fc5def18620822f9c863844605e950272613"
     },
     {
       "path": "examples/core_smoke.py",
@@ -3514,8 +3544,8 @@
     },
     {
       "path": "scripts/build_gallery.py",
-      "bytes": 12554,
-      "sha256": "004d2efb3f30c14f9be056fccdba93538bffb44fee52a72e16ca2a6219a8146c"
+      "bytes": 17382,
+      "sha256": "935d9c05646ba3ae6879f8dc783397e5a0c83ad21673f24040a877246cea22b9"
     },
     {
       "path": "scripts/fetch_external_sources.py",

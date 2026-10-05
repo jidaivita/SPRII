@@ -20324,11 +20324,20 @@
   },
   {
     "source": "scripts/build_gallery.py",
-    "line": 164,
+    "line": 242,
     "arguments": [
-      "'--registry'"
+      "'--site-root'"
     ],
     "type": "Path",
-    "help": "'Import ten previews from a frozen shared media registry; keep CoPhy text-only'"
+    "help": "'Import the current public project-page asset directory'"
+  },
+  {
+    "source": "scripts/build_gallery.py",
+    "line": 243,
+    "arguments": [
+      "'--check'"
+    ],
+    "action": "'store_true'",
+    "help": "'Verify bundled sources, cards and README without writing'"
   }
 ]

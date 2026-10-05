@@ -1,0 +1,75 @@
+{
+  "schema_version": "1.0",
+  "status": "SWIMMER_S0_CPU_DEVELOPMENT",
+  "development_revision": "v1.3: quadrature bank frozen after bounded screen; uniform sensor_std 0.015 to 0.0125 after quadrature S0 active-SNR-only NO-GO; no further waveform or measurement revision authorized",
+  "model": {
+    "timestep_s": 0.01,
+    "integrator": "RK4",
+    "link_length_m": [0.8, 0.7, 0.6],
+    "link_radius_m": 0.08,
+    "base_density": 900.0,
+    "base_joint_damping": [0.18, 0.18],
+    "fluid_density": 0.35,
+    "fluid_viscosity": 0.08,
+    "control_limit": 0.8
+  },
+  "persistent_prior": {
+    "mass_scale": [0.75, 1.25],
+    "damping_scale": [0.60, 1.40]
+  },
+  "transient_initial_state": {
+    "root_angle_rad": [-0.25, 0.25],
+    "joint_angle_rad": [-0.45, 0.45],
+    "velocity": [-0.20, 0.20]
+  },
+  "observation": {
+    "semantics": "relative_qpos_3_plus_qvel_5",
+    "sensor_std": 0.0125,
+    "landmark_count": 4
+  },
+  "waveforms": {
+    "history": ["j1_slow", "j1_chirp", "j2_slow", "j2_chirp", "in_phase", "quadrature"],
+    "query": ["j1_triangle", "j1_chirp", "j2_triangle", "j2_chirp", "in_phase_chirp", "anti_phase_chirp"],
+    "equal_action_energy": true
+  },
+  "s0": {
+    "seed": 58103,
+    "contexts": 128,
+    "candidate_horizons_s": [0.4, 0.8, 1.2],
+    "finite_difference_log_step": 0.025,
+    "effective_rank_trace_fraction": 0.95,
+    "effective_rank_relative_eigenvalue": 0.0001,
+    "pooled_subspace_max_principal_angle_deg": 15.0,
+    "minimum_snr_actuated": 10.0,
+    "minimum_snr_coupled": 3.0,
+    "maximum_single_probe_trace_reduction": 0.90,
+    "minimum_single_probe_trace_reduction": 0.02,
+    "minimum_practical_ratio_floor": 0.05
+  },
+  "s1": {
+    "seed": 61337,
+    "systems": 256,
+    "nuisance_realizations": 4,
+    "bootstrap_replicates": 2000,
+    "minimum_query_reversals": 10,
+    "minimum_history_reversals": 10,
+    "minimum_practical_contexts": 24,
+    "minimum_conditional_standalone_choice_disagreement": 12,
+    "maximum_posterior_condition_number": 100000000.0
+  },
+  "future": {
+    "s1_systems": 256,
+    "s1_nuisance_realizations": 4,
+    "s2_learner_train_systems": 2048,
+    "s2_learner_select_systems": 256,
+    "s3_discovery_systems": 256,
+    "s3_validation_systems": 128
+  },
+  "access": {
+    "protected_scope_1": false,
+    "protected_scope_2": false,
+    "sealed": false,
+    "nad": false,
+    "gpu_training": false
+  }
+}

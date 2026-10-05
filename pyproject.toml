@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sprii-research"
+version = "0.2.0"
+description = "Shaping Persistent Representations from Independent Interactions"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.26", "PyYAML>=6"]
+
+[project.urls]
+Homepage = "https://jidaivita.github.io/sprii/"
+Repository = "https://github.com/jidaivita/SPRII"
+Paper = "https://arxiv.org/abs/2609.34604"
+Issues = "https://github.com/jidaivita/SPRII/issues"
+
+[project.optional-dependencies]
+train = ["torch>=2.4", "scipy>=1.11", "scikit-learn>=1.4", "Pillow>=10", "matplotlib>=3.8"]
+cophy = ["torch>=2.4", "torchvision>=0.19", "scipy>=1.11", "imageio>=2.34", "Pillow>=10", "tqdm>=4.66"]
+dev = ["pytest>=8", "opencv-python-headless>=4.8"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+sprii_visuals = ["palette.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+

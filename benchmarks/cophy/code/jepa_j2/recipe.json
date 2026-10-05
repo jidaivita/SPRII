@@ -1,0 +1,30 @@
+{
+  "name": "Collision JEPA J2",
+  "source_seeds": [
+    0,
+    1,
+    2
+  ],
+  "reader_seeds": [
+    0,
+    1,
+    2
+  ],
+  "joint_seed_pairing": true,
+  "source_epochs": 50,
+  "reader_epochs": 100,
+  "supports": 3,
+  "query_frames": 3,
+  "scene": "collision",
+  "method": "Cross",
+  "route": "all",
+  "lambda_cross": 0.3,
+  "lambda_align": 0.0,
+  "source_batch_size": 32,
+  "source_optimizer": "AdamW",
+  "source_learning_rate": 0.0003,
+  "source_weight_decay": 0.0001,
+  "source_gradient_clip": 1.0,
+  "source_sigreg_weight": 0.2,
+  "selection": "Recipe selected on source seed 0 full validation, then fixed for seeds 1 and 2"
+}

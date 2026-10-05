@@ -1,0 +1,11 @@
+{
+  "scope": "Core unit and CPU smoke checks only; not a lockfile for all benchmarks",
+  "python": "3.13.12",
+  "packages": {
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "torch": "2.14.0",
+    "pytest": "9.1.1",
+    "opencv-python-headless": "5.0.0.93"
+  }
+}

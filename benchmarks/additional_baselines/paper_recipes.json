@@ -1,0 +1,82 @@
+{
+  "dclean_dali": {
+    "implementation": "PyTorch port of released context/forward components; not full Dreamer",
+    "upstream": "https://github.com/frankroeder/DALI",
+    "commit": "34374fbea258748b03e31977a68693ab040fab72",
+    "source_total_updates": 160000,
+    "continuation_endpoints": [
+      20000,
+      40000,
+      80000,
+      160000
+    ],
+    "source_seeds": [
+      0,
+      1,
+      2
+    ],
+    "reader_updates": 20000,
+    "reader_seeds": [
+      0,
+      1,
+      2
+    ],
+    "selection": "seed 0 selection-only 160k vs 80k diagnostic; all 3 fixed-budget seeds retained",
+    "selection_mean_horizon_ratio_max": 0.95,
+    "selection_max_horizon_ratio_max": 1.1,
+    "optimizer": "Adam",
+    "learning_rate": 0.0001,
+    "eps": 1e-08,
+    "grad_clip": 1000,
+    "context_dim": 8,
+    "width": 256,
+    "heads": 1,
+    "physical_labels_encoder_input": false
+  },
+  "dclean_fcrl": {
+    "implementation": "paper adaptation; transition-set mean pooling and nonlinear InfoNCE critic",
+    "source_updates": 20000,
+    "source_seeds": [
+      0,
+      1,
+      2
+    ],
+    "reader_updates": 20000,
+    "reader_seeds": [
+      0,
+      1,
+      2
+    ],
+    "latent_dim": 50,
+    "optimizer": "Adam",
+    "learning_rate": 0.0003,
+    "schedule": "CosineAnnealingLR 20000",
+    "grad_clip": 1,
+    "reader_horizons": [
+      1,
+      4,
+      16,
+      32
+    ],
+    "primary_horizon": 32,
+    "test_read": false
+  },
+  "cophy_dali": {
+    "implementation": "released context/forward component on frozen RGB features",
+    "source_epochs": 50,
+    "gate_epochs": 5,
+    "source_seeds": [
+      0,
+      1,
+      2
+    ],
+    "context_dim": 8,
+    "reader_representation_dim": 128,
+    "frames": 15,
+    "query_frames": 3,
+    "batch_size": 32,
+    "grad_clip": 1000,
+    "physical_labels_encoder_input": false
+  },
+  "burgers_scope": "No DALI implementation exists in the examined Burgers directory. Its contents are CoDA controls, encoder and continuation experiments; use the separately released CoDA implementation."
+}

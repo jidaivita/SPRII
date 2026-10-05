@@ -1,0 +1,306 @@
+{
+  "schema_version": "paper-a-revision-protocol-5.0",
+  "status": "PHASE0B_AND_SMOKE_PASSED_FORMAL_VALIDATION_AUTHORIZED",
+  "formal_training_allowed": true,
+  "test_read": false,
+  "paper_scope": "Paper A only",
+  "training_jobs": {
+    "world_model": {
+      "factorial": 12,
+      "relinfonce": 18,
+      "refinement": 15,
+      "fidelity": 9,
+      "total": 54
+    },
+    "supervised_diagnostics": {
+      "privileged": 1,
+      "actual_input": 3,
+      "total": 4
+    },
+    "grand_total": 58
+  },
+  "common_training": {
+    "steps": 20000,
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "batch_systems": 48,
+    "batch_interaction_views": 96,
+    "batch_relational_pairs": 48,
+    "views_per_system": 2,
+    "history_length": 24,
+    "optimizer": "AdamW",
+    "learning_rate": 0.0003,
+    "weight_decay": 0.05,
+    "warmup_steps": 500,
+    "precision": "bfloat16",
+    "sigreg_weight": 0.02,
+    "checkpoint_steps": [
+      3000,
+      20000
+    ],
+    "formal_checkpoint_step": 20000
+  },
+  "factorial": {
+    "rerun_complete_rectangle": true,
+    "legacy_role": "historical consistency only; no old/new result selection",
+    "conditions": [
+      "Split",
+      "Align",
+      "Cross",
+      "Both"
+    ],
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "lambda_p": {
+      "Split": 0.0,
+      "Align": 1.0,
+      "Cross": 0.0,
+      "Both": 1.0
+    },
+    "lambda_x": {
+      "Split": 0.0,
+      "Align": 0.0,
+      "Cross": 0.1,
+      "Both": 0.1
+    },
+    "oriented_scores": {
+      "prediction_error": "S_error=-E",
+      "replacement": "S_repl=-(E_matched-E_self)",
+      "specificity": "S_spec=E_shuffled-E_matched",
+      "utility": "S_util=E_B0split-E_candidate"
+    }
+  },
+  "relinfonce": {
+    "temperatures": [
+      0.07,
+      0.1,
+      0.2
+    ],
+    "loss_weights": [
+      0.1,
+      1.0
+    ],
+    "seeds_per_configuration": 3,
+    "representation": "raw persistent z_p",
+    "normalization": "L2 in loss only",
+    "similarity": "cosine",
+    "symmetric": true,
+    "projection_head": false,
+    "positives_per_anchor": 1,
+    "negatives_per_anchor": 94,
+    "negative_scope": "single-GPU local batch",
+    "loss_reduction": "mean over 96 anchors",
+    "selection_aggregation": "three-seed validation mean",
+    "selection_order": [
+      "exclude invalid/collapsed",
+      "maximize drag partial geometry",
+      "exact tie: maximize between/within ratio",
+      "exact tie: minimize train-selected-ridge self-h16",
+      "exact tie: lower lambda_nce",
+      "exact tie: higher temperature"
+    ],
+    "confirmation_used_for_selection": false
+  },
+  "refinement": {
+    "conditions": [
+      "Split",
+      "G1",
+      "G2",
+      "G3",
+      "Random"
+    ],
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "system_identity_fields": [
+      "mass",
+      "gamma",
+      "stiffness"
+    ],
+    "semantic_relations_nested": "R1 superset R2 superset R3",
+    "relation_semantics": {
+      "G1": [
+        "mass"
+      ],
+      "G2": [
+        "mass",
+        "drag"
+      ],
+      "G3": [
+        "mass",
+        "drag",
+        "stiffness"
+      ]
+    },
+    "training_distribution": "Pi_g(A,B)=P(A)Q_g(B|A)",
+    "pairing_kernel": {
+      "G1": "same mass; deliberately varies factors not declared shared: drag and stiffness",
+      "G2": "same mass and drag; deliberately varies factor not declared shared: stiffness",
+      "G3": "same exact system; deliberately varies rollout",
+      "Random": "exact-system derangement plus marginal-matched deterministic random pairing; accidental single-factor matches retained"
+    },
+    "k_pool": 3,
+    "k_used": 1,
+    "rollouts_per_system": 4,
+    "factorized_levels": {
+      "mass": 10,
+      "drag": 10,
+      "stiffness": 28
+    },
+    "per_mass_drag_block": {
+      "train": 20,
+      "validation": 4,
+      "confirmation": 4
+    },
+    "factor_levels_shared_across_splits": true,
+    "exact_tuples_split_disjoint": true,
+    "validation_systems": 400,
+    "probe_fit_train_systems": 400,
+    "seed0_role": "diagnostic only; never cancels seeds 1/2",
+    "gain_qualification": "at least two of three seed contrasts positive and three-seed mean positive",
+    "retention_fraction": 0.8,
+    "retention_prerequisite": "gain over Random positive in at least two seeds and three-seed mean positive",
+    "unidentifiable_retention": "report not identifiable",
+    "confirmation_trigger": "Delta_drag or Delta_stiffness satisfies gain qualification; then evaluate all five conditions"
+  },
+  "fidelity": {
+    "q_grid": [
+      0.0,
+      0.5,
+      1.0
+    ],
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "assignment_seed": 20260901,
+    "assignment_shared_across_training_seeds": true,
+    "training_stochasticity_varies_by_seed": true,
+    "primary_endpoints": [
+      "between/within ratio",
+      "drag partial geometry"
+    ],
+    "endpoint_effect": "both three-seed means satisfy M(1)>M(0)",
+    "graded_endpoint": "at least one endpoint satisfies M(1)>M(0.5)>M(0)",
+    "spearman_gate": false,
+    "gate_role": "headline wording only; all nine runs reported",
+    "no_additional_q_points": true
+  },
+  "actual_input_certificate": {
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "steps": 20000,
+    "random_initialization": true,
+    "checkpoint_weight_reuse": false,
+    "architecture_reuse_only": true,
+    "inputs": "actual model-visible 24-step rendered frame/difference and actions",
+    "targets": [
+      "log mass",
+      "drag",
+      "log stiffness"
+    ],
+    "target_standardization": "train mean/std",
+    "loss": "equal-weight standardized MSE",
+    "optimizer": "AdamW",
+    "learning_rate": 0.0003,
+    "weight_decay": 0.05,
+    "warmup_steps": 500,
+    "batch_interaction_budget": 96,
+    "formal_checkpoint_step": 20000,
+    "early_stopping": false,
+    "hyperparameter_search": false,
+    "validation_rollouts": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "validation_anchors": [
+      24,
+      32,
+      40,
+      47
+    ],
+    "aggregation": "window prediction to rollout mean to system mean to R2",
+    "role": "non-gating input recoverability diagnostic"
+  },
+  "evaluation": {
+    "standard_validation_systems": 200,
+    "factorized_validation_systems": 400,
+    "factorized_probe_fit_train_systems": 400,
+    "rollouts": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "anchors": [
+      24,
+      32,
+      40,
+      47
+    ],
+    "aggregation": "window to rollout mean to system centroid",
+    "training_relation_pairs_used_for_geometry": false,
+    "contact_target": "contact[a-1], transition a-1 to a",
+    "ridge": {
+      "unit": "system",
+      "inner_fit_fraction": 0.8,
+      "seed": 20260903,
+      "alpha_grid": [
+        1e-06,
+        1e-05,
+        0.0001,
+        0.001,
+        0.01,
+        0.1,
+        1.0,
+        10.0,
+        100.0
+      ],
+      "validation_selects_alpha": false
+    },
+    "bootstrap": {
+      "unit": "system",
+      "draws": 500,
+      "interval": 0.95,
+      "paired_indices_across_conditions": true,
+      "CI_is_qualification_gate": false
+    }
+  },
+  "confirmation": {
+    "generator_mechanism_frozen_before_validation": true,
+    "data_generated_after_scientific_freeze": true,
+    "standard_required": true,
+    "factorized_conditionally_triggered": true,
+    "no_regeneration": true,
+    "no_checkpoint_reselection": true,
+    "no_third_holdout": true
+  },
+  "execution": {
+    "run_root": "runs/pokeworld",
+    "one_GPU_job_at_a_time": true,
+    "no_overwrite": true
+  },
+  "freeze_order": [
+    "validation complete",
+    "scientific freeze",
+    "deterministic disjoint confirmation generation",
+    "common frozen-model evaluation",
+    "result freeze",
+    "paper finalization",
+    "publication snapshot"
+  ]
+}

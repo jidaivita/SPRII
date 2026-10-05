@@ -1,0 +1,3160 @@
+{
+  "scope": "CLI flags, defaults and top-level literal constants extracted from released source. These are entrypoint defaults, not a claim that every default is the paper-selected recipe.",
+  "entrypoints": [
+    {
+      "entrypoint": "benchmarks/baseline_adapters/cadm_dclean_common_reader_v2.py",
+      "arguments": [
+        {
+          "flags": [
+            "action"
+          ],
+          "choices": "('inspect', 'smoke', 'cache', 'fit', 'evaluate', 'probe', 'finalize', 'all')"
+        },
+        {
+          "flags": [
+            "--output"
+          ],
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--source-run"
+          ],
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--seed"
+          ],
+          "type": "int",
+          "choices": "(0, 1, 2)",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--reader"
+          ],
+          "type": "int",
+          "choices": "(0, 1, 2)",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--data-helper"
+          ],
+          "default": "str(here.parent / 'missing_blocks' / 'dclean_external.py')"
+        },
+        {
+          "flags": [
+            "--panel-module"
+          ],
+          "default": "str(here.parent / 'missing_blocks' / 'dclean_panel.py')"
+        },
+        {
+          "flags": [
+            "--pilot-module"
+          ],
+          "default": "str(here / 'cadm_dclean_source_v2.py')"
+        }
+      ],
+      "declared_constants": {}
+    },
+    {
+      "entrypoint": "benchmarks/baseline_adapters/cadm_dclean_pilot.py",
+      "arguments": [
+        {
+          "flags": [
+            "action"
+          ],
+          "choices": "('inspect', 'smoke', 'synthetic-smoke', 'train')"
+        },
+        {
+          "flags": [
+            "--output"
+          ],
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--data-helper"
+          ],
+          "default": "str(here.parent / 'missing_blocks' / 'dclean_external.py')"
+        },
+        {
+          "flags": [
+            "--data-root"
+          ]
+        },
+        {
+          "flags": [
+            "--source-manifest"
+          ],
+          "default": "str(here / 'sources.json')"
+        },
+        {
+          "flags": [
+            "--official-root"
+          ],
+          "default": "None"
+        },
+        {
+          "flags": [
+            "--seed"
+          ],
+          "type": "int",
+          "default": "0"
+        },
+        {
+          "flags": [
+            "--steps"
+          ],
+          "type": "int",
+          "default": "1000"
+        },
+        {
+          "flags": [
+            "--device"
+          ],
+          "default": "'cuda:0'"
+        }
+      ],
+      "declared_constants": {
+        "OFFICIAL_COMMIT": "38c11a58d959bfd597f9323e58f28b17f6bf4fd9",
+        "HISTORY_TRANSITIONS": 23,
+        "FUTURE_TRANSITIONS": 10,
+        "SOURCE_SYSTEMS_PER_BATCH": 48,
+        "BACK_COEFF": 0.5,
+        "LR": 0.001,
+        "DYNAMICS_DECAYS": [
+          2.5e-05,
+          5e-05,
+          7.5e-05,
+          7.5e-05,
+          0.0001
+        ],
+        "CONTEXT_DECAYS": [
+          2.5e-05,
+          5e-05,
+          7.5e-05,
+          7.5e-05
+        ]
+      }
+    },
+    {
+      "entrypoint": "benchmarks/baseline_adapters/cadm_dclean_source_v2.py",
+      "arguments": [
+        {
+          "flags": [
+            "action"
+          ],
+          "choices": "('inspect', 'smoke', 'synthetic-smoke', 'train')"
+        },
+        {
+          "flags": [
+            "--output"
+          ],
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--data-helper"
+          ],
+          "default": "str(here.parent / 'missing_blocks' / 'dclean_external.py')"
+        },
+        {
+          "flags": [
+            "--data-root"
+          ]
+        },
+        {
+          "flags": [
+            "--source-manifest"
+          ],
+          "default": "str(here / 'sources.json')"
+        },
+        {
+          "flags": [
+            "--official-root"
+          ],
+          "default": "None"
+        },
+        {
+          "flags": [
+            "--seed"
+          ],
+          "type": "int",
+          "default": "0"
+        },
+        {
+          "flags": [
+            "--steps"
+          ],
+          "type": "int",
+          "default": "20000"
+        },
+        {
+          "flags": [
+            "--device"
+          ],
+          "default": "'cuda:0'"
+        }
+      ],
+      "declared_constants": {
+        "OFFICIAL_COMMIT": "38c11a58d959bfd597f9323e58f28b17f6bf4fd9",
+        "HISTORY_TRANSITIONS": 23,
+        "FUTURE_TRANSITIONS": 10,
+        "SOURCE_SYSTEMS_PER_BATCH": 48,
+        "BACK_COEFF": 0.5,
+        "LR": 0.001,
+        "DYNAMICS_DECAYS": [
+          2.5e-05,
+          5e-05,
+          7.5e-05,
+          7.5e-05,
+          0.0001
+        ],
+        "CONTEXT_DECAYS": [
+          2.5e-05,
+          5e-05,
+          7.5e-05,
+          7.5e-05
+        ]
+      }
+    },
+    {
+      "entrypoint": "benchmarks/baseline_adapters/cadm_pendulum_engineering_gate.py",
+      "arguments": [
+        {
+          "flags": [
+            "action"
+          ],
+          "choices": "['validate', 'all']"
+        },
+        {
+          "flags": [
+            "--output"
+          ],
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--official-root"
+          ],
+          "default": "str(here / 'third_party/CaDM')"
+        },
+        {
+          "flags": [
+            "--gym-reference"
+          ],
+          "default": "str(here / 'third_party/gym_0_16_pendulum.py')"
+        },
+        {
+          "flags": [
+            "--seed"
+          ],
+          "type": "int",
+          "default": "0"
+        },
+        {
+          "flags": [
+            "--episodes"
+          ],
+          "type": "int",
+          "choices": "[1, 3]",
+          "default": "1"
+        }
+      ],
+      "declared_constants": {}
+    },
+    {
+      "entrypoint": "benchmarks/baseline_adapters/cadm_pendulum_online.py",
+      "arguments": [
+        {
+          "flags": [
+            "action"
+          ],
+          "choices": "['smoke', 'run']"
+        },
+        {
+          "flags": [
+            "--method"
+          ],
+          "choices": "['Vanilla', 'CaDM']",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--profile"
+          ],
+          "choices": "['gate', 'formal']",
+          "default": "'gate'"
+        },
+        {
+          "flags": [
+            "--output"
+          ],
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--device"
+          ],
+          "default": "'cuda:0'"
+        },
+        {
+          "flags": [
+            "--seed"
+          ],
+          "type": "int",
+          "default": "0"
+        },
+        {
+          "flags": [
+            "--ensemble-size"
+          ],
+          "type": "int",
+          "default": "1"
+        },
+        {
+          "flags": [
+            "--deterministic"
+          ],
+          "type": "int",
+          "default": "1"
+        },
+        {
+          "flags": [
+            "--official-root"
+          ],
+          "default": "str(HERE / 'third_party/CaDM')"
+        }
+      ],
+      "declared_constants": {
+        "HISTORY": 10,
+        "GRID": [
+          0.75,
+          0.8,
+          0.85,
+          0.9,
+          0.95,
+          1.0,
+          1.05,
+          1.1,
+          1.15,
+          1.2,
+          1.25
+        ]
+      }
+    },
+    {
+      "entrypoint": "benchmarks/baseline_adapters/cadm_pendulum_postrun_analysis.py",
+      "arguments": [
+        {
+          "flags": [
+            "--code-root"
+          ],
+          "default": "str(Path(__file__).resolve().parent)"
+        },
+        {
+          "flags": [
+            "--relation-root"
+          ]
+        },
+        {
+          "flags": [
+            "--output"
+          ],
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--device"
+          ],
+          "default": "'cpu'"
+        },
+        {
+          "flags": [
+            "--self-test"
+          ],
+          "action": "'store_true'"
+        }
+      ],
+      "declared_constants": {
+        "ARMS": [
+          "CaDM",
+          "SPRIIAlign",
+          "RandomAlign"
+        ],
+        "GROUPS": [
+          "ID",
+          "OOD_c0",
+          "OOD_c1",
+          "OOD_c2",
+          "OOD_c3"
+        ],
+        "ALPHAS": [
+          0.0001,
+          0.001,
+          0.01,
+          0.1,
+          1.0,
+          10.0
+        ],
+        "BASE_SHA": "ac458b321d0d3c78c4ab6d7bff193568706d633f680891fc133a32cf9166d9ad",
+        "V2_SHA": "1f0734f33f86d3da5a5cf2c49a2c25d5314426b5bafbfb22d683d7ceb063bf9b"
+      }
+    },
+    {
+      "entrypoint": "benchmarks/baseline_adapters/cadm_pendulum_relation_components_v5.py",
+      "arguments": [
+        {
+          "flags": [
+            "action"
+          ],
+          "choices": "['diagnose', 'smoke', 'run']"
+        },
+        {
+          "flags": [
+            "--arm"
+          ],
+          "choices": "['CaDM', 'SPRIIAlign', 'RandomAlign']",
+          "default": "'SPRIIAlign'"
+        },
+        {
+          "flags": [
+            "--profile"
+          ],
+          "choices": "['relation_gate', 'formal']",
+          "default": "'relation_gate'"
+        },
+        {
+          "flags": [
+            "--output"
+          ],
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--device"
+          ],
+          "default": "'cuda:0'"
+        },
+        {
+          "flags": [
+            "--seed"
+          ],
+          "type": "int",
+          "choices": "[0, 1, 2]",
+          "default": "0"
+        },
+        {
+          "flags": [
+            "--official-root"
+          ],
+          "default": "str(HERE / 'third_party/CaDM')"
+        },
+        {
+          "flags": [
+            "--align-weight"
+          ],
+          "type": "float",
+          "choices": "[0.0, 0.0003, 0.001, 0.003]",
+          "default": "0.003"
+        },
+        {
+          "flags": [
+            "--relation-variant"
+          ],
+          "choices": "['variance01', 'invariance_only']",
+          "required": "True"
+        }
+      ],
+      "declared_constants": {
+        "BASE_SHA": "ac458b321d0d3c78c4ab6d7bff193568706d633f680891fc133a32cf9166d9ad",
+        "ALIGN_WEIGHT": 0.003,
+        "MIN_SYSTEMS": 2,
+        "MAX_SYSTEMS": 32,
+        "RELATION_VARIANT": "variance01"
+      }
+    },
+    {
+      "entrypoint": "benchmarks/baseline_adapters/cadm_pendulum_relation_confirmation_v4.py",
+      "arguments": [
+        {
+          "flags": [
+            "action"
+          ],
+          "choices": "['diagnose', 'smoke', 'run']"
+        },
+        {
+          "flags": [
+            "--arm"
+          ],
+          "choices": "['CaDM', 'SPRIIAlign', 'RandomAlign']",
+          "default": "'SPRIIAlign'"
+        },
+        {
+          "flags": [
+            "--profile"
+          ],
+          "choices": "['relation_gate', 'formal']",
+          "default": "'relation_gate'"
+        },
+        {
+          "flags": [
+            "--output"
+          ],
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--device"
+          ],
+          "default": "'cuda:0'"
+        },
+        {
+          "flags": [
+            "--seed"
+          ],
+          "type": "int",
+          "choices": "[0, 1, 2]",
+          "default": "0"
+        },
+        {
+          "flags": [
+            "--official-root"
+          ],
+          "default": "str(HERE / 'third_party/CaDM')"
+        },
+        {
+          "flags": [
+            "--align-weight"
+          ],
+          "type": "float",
+          "choices": "[0.0, 0.0003, 0.001, 0.003]",
+          "default": "0.003"
+        }
+      ],
+      "declared_constants": {
+        "BASE_SHA": "ac458b321d0d3c78c4ab6d7bff193568706d633f680891fc133a32cf9166d9ad",
+        "ALIGN_WEIGHT": 0.003,
+        "MIN_SYSTEMS": 2,
+        "MAX_SYSTEMS": 32
+      }
+    },
+    {
+      "entrypoint": "benchmarks/baseline_adapters/coda_burgers_pilot.py",
+      "arguments": [
+        {
+          "flags": [
+            "--gpu"
+          ],
+          "type": "int",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--output"
+          ],
+          "type": "Path",
+          "required": "True"
+        }
+      ],
+      "declared_constants": {
+        "EXPECTED": {
+          "utils.py": "c1a6daf23aaf3b01de5caadeac90cc6c36111b62c009f08d9debb5534182e983",
+          "network.py": "e122604dc736011988fad1771db5b3c15cedf6d59da4acb6b365b756f8abd2dd",
+          "ode_model.py": "9b855da11ae5b423ec3431eb2bf3b60f34439674d80e797fec95488b546a6957"
+        }
+      }
+    },
+    {
+      "entrypoint": "benchmarks/baseline_adapters/coda_formal_three_seed.py",
+      "arguments": [
+        {
+          "flags": [
+            "--seed"
+          ],
+          "type": "int",
+          "required": "True",
+          "choices": "[1234, 5678, 9012]"
+        },
+        {
+          "flags": [
+            "--gpu"
+          ],
+          "type": "int",
+          "required": "True",
+          "choices": "[0, 1, 2, 3]"
+        },
+        {
+          "flags": [
+            "--output"
+          ],
+          "type": "Path",
+          "required": "True"
+        }
+      ],
+      "declared_constants": {
+        "PILOT_SHA": "934fd3c75a15eb77d153685edbe94e7452f1b5cb72f5e2b6cb91a0e442c91d77",
+        "COMPONENT_SHA": "acb8bec540220913ed7559c1e16af6e6536fa63e0d66f5f1e0d4d26e6900db3b",
+        "GATE_RUNNER_SHA": "45c95cfb4f74f45aa90db99179b8c96021a9e817178c587ea796d5575c680695",
+        "GEPS_FORMAL_SHA": "82535b32b57b5779d12379e67a4d79b5267ed08b1b0db8bf5e9583ad01ce371a",
+        "REUSE_SHA": "5057809f7a9cd7725b23194782334d36c6ed1a4cd71a228d9cae5df32229637b",
+        "GROUPS": [
+          "id_test",
+          "ood_viscous",
+          "ood_inviscid"
+        ]
+      }
+    },
+    {
+      "entrypoint": "benchmarks/baseline_adapters/coda_postrun_mechanisms.py",
+      "arguments": [
+        {
+          "flags": [
+            "--seed"
+          ],
+          "type": "int",
+          "choices": "[1234, 5678, 9012]",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--gpu"
+          ],
+          "type": "int",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--output"
+          ],
+          "type": "Path",
+          "required": "True"
+        }
+      ],
+      "declared_constants": {}
+    },
+    {
+      "entrypoint": "benchmarks/baseline_adapters/geps_burgers_pilot.py",
+      "arguments": [
+        {
+          "flags": [
+            "--mode"
+          ],
+          "choices": "('inspect', 'smoke', 'pilot')",
+          "default": "'inspect'"
+        },
+        {
+          "flags": [
+            "--nod-source"
+          ],
+          "type": "Path",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--geps-source"
+          ],
+          "type": "Path",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--data-root"
+          ],
+          "type": "Path",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--output"
+          ],
+          "type": "Path",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--device"
+          ],
+          "default": "'cuda'"
+        },
+        {
+          "flags": [
+            "--seed"
+          ],
+          "type": "int",
+          "default": "1234"
+        },
+        {
+          "flags": [
+            "--updates"
+          ],
+          "type": "int",
+          "default": "1000"
+        },
+        {
+          "flags": [
+            "--batch-size"
+          ],
+          "type": "int",
+          "default": "4"
+        },
+        {
+          "flags": [
+            "--eval-batch-size"
+          ],
+          "type": "int",
+          "default": "4"
+        },
+        {
+          "flags": [
+            "--code-dim"
+          ],
+          "type": "int",
+          "default": "4"
+        },
+        {
+          "flags": [
+            "--lr"
+          ],
+          "type": "float",
+          "default": "0.01"
+        },
+        {
+          "flags": [
+            "--adapt-lr"
+          ],
+          "type": "float",
+          "default": "0.01"
+        },
+        {
+          "flags": [
+            "--adapt-steps"
+          ],
+          "type": "int",
+          "default": "50"
+        },
+        {
+          "flags": [
+            "--max-seconds"
+          ],
+          "type": "float",
+          "default": "3600"
+        }
+      ],
+      "declared_constants": {}
+    },
+    {
+      "entrypoint": "benchmarks/baseline_adapters/geps_formal_mechanisms.py",
+      "arguments": [
+        {
+          "flags": [
+            "--seed"
+          ],
+          "type": "int",
+          "choices": "[1234, 5678, 9012]",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--gpu"
+          ],
+          "type": "int",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--output"
+          ],
+          "type": "Path",
+          "required": "True"
+        }
+      ],
+      "declared_constants": {}
+    },
+    {
+      "entrypoint": "benchmarks/baseline_adapters/geps_formal_three_seed.py",
+      "arguments": [
+        {
+          "flags": [
+            "--seed"
+          ],
+          "type": "int",
+          "choices": "[1234, 5678, 9012]",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--gpu"
+          ],
+          "type": "int",
+          "choices": "[0, 1, 2, 3]",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--output"
+          ],
+          "type": "Path",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--checkpoint"
+          ],
+          "type": "Path"
+        }
+      ],
+      "declared_constants": {
+        "PILOT_SHA": "934fd3c75a15eb77d153685edbe94e7452f1b5cb72f5e2b6cb91a0e442c91d77",
+        "LOADER_SHA": "9a9d9f65e549feca695723583ba6b72b1c153a125c255d3eee8af9bf7745e58e",
+        "NATIVE_SHA": "466dd40071d8f0c88b7a488e2d14c8acf5db3c59e0e4db5bfab11ec073081417",
+        "EVAL_SHA": "709bdb88c5c1484d2b799fbc3f57c3ccf9d5bf6871841a6f95e194ecb84f774b",
+        "REUSE_SHA": "46914867b96452a210fda71454e14eb79eccabed7f39a0a433c6104a511cee25",
+        "GROUPS": [
+          "id_test",
+          "ood_viscous",
+          "ood_inviscid"
+        ]
+      }
+    },
+    {
+      "entrypoint": "benchmarks/baseline_adapters/pendulum_id_control_development.py",
+      "arguments": [
+        {
+          "flags": [
+            "--gpu"
+          ],
+          "type": "int",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--source"
+          ],
+          "type": "Path",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--output"
+          ],
+          "type": "Path",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--name"
+          ],
+          "required": "True"
+        }
+      ],
+      "declared_constants": {
+        "BASE_SHA": "ac458b321d0d3c78c4ab6d7bff193568706d633f680891fc133a32cf9166d9ad"
+      }
+    },
+    {
+      "entrypoint": "benchmarks/baseline_adapters/sprii_support_code_formal_v3.py",
+      "arguments": [
+        {
+          "flags": [
+            "--seed"
+          ],
+          "type": "int",
+          "choices": "[1234, 5678, 9012]",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--gpu"
+          ],
+          "type": "int",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--output"
+          ],
+          "type": "Path",
+          "required": "True"
+        }
+      ],
+      "declared_constants": {
+        "SOURCES": {
+          "1234": [
+            "benchmarks/nod/runs/adapted_tuned/seed1234_refine/latest.pth",
+            "73f78af412b471ff895c0baee1bf6ad4ddba3e6714c7fd251590fbd03ceb8c37"
+          ],
+          "5678": [
+            "benchmarks/nod/runs/opt_refine/lr5e5/latest.pth",
+            "8553c8e142cd32a0141a9238078435cf66e7852b602f43d2942fd293ac5bac64"
+          ],
+          "9012": [
+            "benchmarks/nod/runs/adapted_tuned/seed9012_refine/latest.pth",
+            "392baa89edec2d9761d1ddd905cf5e6819b89aa68c1b375a6217337d182afb37"
+          ]
+        }
+      }
+    },
+    {
+      "entrypoint": "benchmarks/baseline_adapters/sprii_support_code_gate.py",
+      "arguments": [
+        {
+          "flags": [
+            "--gpu"
+          ],
+          "type": "int",
+          "required": "True"
+        }
+      ],
+      "declared_constants": {
+        "SOURCE_SHA": "73f78af412b471ff895c0baee1bf6ad4ddba3e6714c7fd251590fbd03ceb8c37"
+      }
+    },
+    {
+      "entrypoint": "benchmarks/missing_blocks/dclean_external.py",
+      "arguments": [
+        {
+          "flags": [
+            "action"
+          ],
+          "choices": "['smoke', 'train']"
+        },
+        {
+          "flags": [
+            "--method"
+          ],
+          "choices": "['NOD', 'FCRL']"
+        },
+        {
+          "flags": [
+            "--seed"
+          ],
+          "type": "int",
+          "choices": "[0, 1, 2]",
+          "default": "0"
+        }
+      ],
+      "declared_constants": {}
+    },
+    {
+      "entrypoint": "benchmarks/missing_blocks/dclean_panel.py",
+      "arguments": [
+        {
+          "flags": [
+            "action"
+          ],
+          "choices": "['smoke', 'cache', 'fit', 'evaluate', 'probe']"
+        },
+        {
+          "flags": [
+            "--method"
+          ],
+          "choices": "['NOD', 'FCRL', 'SPRII']",
+          "default": "'SPRII'"
+        },
+        {
+          "flags": [
+            "--seed"
+          ],
+          "type": "int",
+          "default": "0"
+        },
+        {
+          "flags": [
+            "--reader"
+          ],
+          "type": "int",
+          "default": "0"
+        },
+        {
+          "flags": [
+            "--arm"
+          ],
+          "choices": "['null', 'matched']",
+          "default": "'matched'"
+        }
+      ],
+      "declared_constants": {
+        "H": [
+          1,
+          4,
+          16,
+          32
+        ],
+        "REFS": [
+          [
+            "runs/wave2/b3_lp1.0_lx0.1_s0/checkpoints/step_020000.pt",
+            "bab118a8f3bb790ce89cfbdbc87f48285b9871599e9b3f7f0e0fd8d5260f9393"
+          ],
+          [
+            "runs/final_repeats/selected_lp1.0_lx0.1_s1/checkpoints/step_020000.pt",
+            "ef612f00f4410717ba589e81f7523cfa274845e51c04e994e72ab8699c7cc748"
+          ],
+          [
+            "runs/final_repeats/selected_lp1.0_lx0.1_s2/checkpoints/step_020000.pt",
+            "0c4b7abe66b63900644fe16d776c0a67cf19056ab41cef48011da4bc5882b25b"
+          ]
+        ]
+      }
+    },
+    {
+      "entrypoint": "benchmarks/nod/src/fhn_minimal/equivalence.py",
+      "arguments": [
+        {
+          "flags": [
+            "--official-code"
+          ],
+          "required": "True",
+          "type": "Path"
+        },
+        {
+          "flags": [
+            "--receipt"
+          ],
+          "required": "True",
+          "type": "Path"
+        },
+        {
+          "flags": [
+            "--device"
+          ],
+          "default": "'cuda'"
+        }
+      ],
+      "declared_constants": {}
+    },
+    {
+      "entrypoint": "benchmarks/nod/src/fhn_minimal/evaluate.py",
+      "arguments": [
+        {
+          "flags": [
+            "--data-dir"
+          ],
+          "required": "True",
+          "type": "Path"
+        },
+        {
+          "flags": [
+            "--official-code"
+          ],
+          "required": "True",
+          "type": "Path"
+        },
+        {
+          "flags": [
+            "--checkpoint"
+          ],
+          "required": "True",
+          "type": "Path"
+        },
+        {
+          "flags": [
+            "--output-json"
+          ],
+          "required": "True",
+          "type": "Path"
+        },
+        {
+          "flags": [
+            "--output-csv"
+          ],
+          "type": "Path"
+        },
+        {
+          "flags": [
+            "--device"
+          ],
+          "default": "'cuda'"
+        },
+        {
+          "flags": [
+            "--seed"
+          ],
+          "type": "int",
+          "default": "42"
+        },
+        {
+          "flags": [
+            "--condition-id"
+          ],
+          "type": "int",
+          "default": "36"
+        },
+        {
+          "flags": [
+            "--target-ids"
+          ],
+          "default": "'5,15,24,45'"
+        },
+        {
+          "flags": [
+            "--splits"
+          ],
+          "default": "'train,ood-intra,ood-extra'"
+        },
+        {
+          "flags": [
+            "--skip-probe"
+          ],
+          "action": "'store_true'"
+        },
+        {
+          "flags": [
+            "--probe-target-ids"
+          ],
+          "default": "'5,15,24,36,45'"
+        }
+      ],
+      "declared_constants": {}
+    },
+    {
+      "entrypoint": "benchmarks/nod/src/fhn_minimal/select_validation.py",
+      "arguments": [
+        {
+          "flags": [
+            "--validation-dir"
+          ],
+          "required": "True",
+          "type": "Path"
+        },
+        {
+          "flags": [
+            "--output"
+          ],
+          "required": "True",
+          "type": "Path"
+        }
+      ],
+      "declared_constants": {}
+    },
+    {
+      "entrypoint": "benchmarks/nod/src/fhn_minimal/train.py",
+      "arguments": [
+        {
+          "flags": [
+            "--data-dir"
+          ],
+          "required": "True",
+          "type": "Path"
+        },
+        {
+          "flags": [
+            "--official-code"
+          ],
+          "required": "True",
+          "type": "Path",
+          "help": "'released DR2D directory containing ngs/'"
+        },
+        {
+          "flags": [
+            "--output-dir"
+          ],
+          "required": "True",
+          "type": "Path"
+        },
+        {
+          "flags": [
+            "--run-name"
+          ],
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--method"
+          ],
+          "choices": "('nod', 'sprii')",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--seed"
+          ],
+          "type": "int",
+          "default": "42"
+        },
+        {
+          "flags": [
+            "--initial-ids"
+          ],
+          "default": "'50-89'"
+        },
+        {
+          "flags": [
+            "--max-systems"
+          ],
+          "type": "int"
+        },
+        {
+          "flags": [
+            "--batch-size"
+          ],
+          "type": "int",
+          "default": "8"
+        },
+        {
+          "flags": [
+            "--num-workers"
+          ],
+          "type": "int",
+          "default": "0"
+        },
+        {
+          "flags": [
+            "--cpu-threads"
+          ],
+          "type": "int",
+          "default": "4"
+        },
+        {
+          "flags": [
+            "--max-steps"
+          ],
+          "type": "int",
+          "default": "20000"
+        },
+        {
+          "flags": [
+            "--save-every"
+          ],
+          "type": "int",
+          "default": "2000"
+        },
+        {
+          "flags": [
+            "--log-every"
+          ],
+          "type": "int",
+          "default": "50"
+        },
+        {
+          "flags": [
+            "--lambda-align"
+          ],
+          "type": "float",
+          "default": "0.003"
+        },
+        {
+          "flags": [
+            "--align-warmup-steps"
+          ],
+          "type": "int",
+          "default": "2000"
+        },
+        {
+          "flags": [
+            "--align-stop-step"
+          ],
+          "type": "int"
+        },
+        {
+          "flags": [
+            "--device"
+          ],
+          "default": "'cuda'"
+        },
+        {
+          "flags": [
+            "--resume"
+          ],
+          "type": "Path"
+        }
+      ],
+      "declared_constants": {}
+    },
+    {
+      "entrypoint": "benchmarks/nod/src/fhn_minimal/tune_train.py",
+      "arguments": [
+        {
+          "flags": [
+            "--horizon-weight-power"
+          ],
+          "type": "float",
+          "default": "0.0"
+        },
+        {
+          "flags": [
+            "--freeze-encoder"
+          ],
+          "action": "'store_true'"
+        }
+      ],
+      "declared_constants": {}
+    },
+    {
+      "entrypoint": "benchmarks/nod/src/fhn_python/generate_fhn.py",
+      "arguments": [
+        {
+          "flags": [
+            "--output-dir"
+          ],
+          "type": "Path",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--split"
+          ],
+          "choices": "[*SPLITS, 'all']",
+          "default": "'all'"
+        },
+        {
+          "flags": [
+            "--initial-ids"
+          ],
+          "type": "parse_ids",
+          "default": "parse_ids('50-89')"
+        },
+        {
+          "flags": [
+            "--seed"
+          ],
+          "type": "int",
+          "default": "42"
+        },
+        {
+          "flags": [
+            "--initial-kind"
+          ],
+          "choices": "['grf', 'iid']",
+          "default": "'grf'"
+        },
+        {
+          "flags": [
+            "--backend"
+          ],
+          "choices": "['numpy', 'torch']",
+          "default": "'torch'"
+        },
+        {
+          "flags": [
+            "--device"
+          ],
+          "default": "'cuda'"
+        },
+        {
+          "flags": [
+            "--solver-dtype"
+          ],
+          "choices": "['float32', 'float64']",
+          "default": "'float64'"
+        },
+        {
+          "flags": [
+            "--output-dtype"
+          ],
+          "choices": "['float32', 'float64']",
+          "default": "'float32'"
+        },
+        {
+          "flags": [
+            "--grid-size"
+          ],
+          "type": "int",
+          "default": "128"
+        },
+        {
+          "flags": [
+            "--steps"
+          ],
+          "type": "int",
+          "default": "10000"
+        },
+        {
+          "flags": [
+            "--sample-every"
+          ],
+          "type": "int",
+          "default": "100"
+        },
+        {
+          "flags": [
+            "--dt"
+          ],
+          "type": "float",
+          "default": "0.001"
+        },
+        {
+          "flags": [
+            "--compress"
+          ],
+          "action": "'store_true'"
+        },
+        {
+          "flags": [
+            "--limit-systems"
+          ],
+          "type": "int",
+          "default": "None",
+          "help": "'development-only cap after applying --split'"
+        }
+      ],
+      "declared_constants": {
+        "TRAIN": [
+          [
+            0.03,
+            0.1
+          ],
+          [
+            0.02,
+            0.15
+          ],
+          [
+            0.04,
+            0.15
+          ],
+          [
+            0.01,
+            0.2
+          ],
+          [
+            0.03,
+            0.2
+          ],
+          [
+            0.05,
+            0.2
+          ],
+          [
+            0.02,
+            0.25
+          ],
+          [
+            0.04,
+            0.25
+          ],
+          [
+            0.03,
+            0.3
+          ]
+        ],
+        "OOD_INTRA": [
+          [
+            0.03,
+            0.15
+          ],
+          [
+            0.02,
+            0.2
+          ],
+          [
+            0.04,
+            0.2
+          ],
+          [
+            0.03,
+            0.25
+          ]
+        ],
+        "OOD_EXTRA": [
+          [
+            0.01,
+            0.1
+          ],
+          [
+            0.02,
+            0.1
+          ],
+          [
+            0.04,
+            0.1
+          ],
+          [
+            0.05,
+            0.1
+          ],
+          [
+            0.01,
+            0.15
+          ],
+          [
+            0.05,
+            0.15
+          ],
+          [
+            0.01,
+            0.25
+          ],
+          [
+            0.05,
+            0.25
+          ],
+          [
+            0.01,
+            0.3
+          ],
+          [
+            0.02,
+            0.3
+          ],
+          [
+            0.04,
+            0.3
+          ],
+          [
+            0.05,
+            0.3
+          ]
+        ]
+      }
+    },
+    {
+      "entrypoint": "benchmarks/nod/src/fhn_python/validate_fhn_dataset.py",
+      "arguments": [
+        {
+          "flags": [
+            "--data-dir"
+          ],
+          "required": "True",
+          "type": "Path"
+        },
+        {
+          "flags": [
+            "--receipt"
+          ],
+          "required": "True",
+          "type": "Path"
+        },
+        {
+          "flags": [
+            "--hash-all"
+          ],
+          "action": "'store_true'"
+        }
+      ],
+      "declared_constants": {
+        "TRAIN": [
+          [
+            0.03,
+            0.1
+          ],
+          [
+            0.02,
+            0.15
+          ],
+          [
+            0.04,
+            0.15
+          ],
+          [
+            0.01,
+            0.2
+          ],
+          [
+            0.03,
+            0.2
+          ],
+          [
+            0.05,
+            0.2
+          ],
+          [
+            0.02,
+            0.25
+          ],
+          [
+            0.04,
+            0.25
+          ],
+          [
+            0.03,
+            0.3
+          ]
+        ],
+        "OOD_INTRA": [
+          [
+            0.03,
+            0.15
+          ],
+          [
+            0.02,
+            0.2
+          ],
+          [
+            0.04,
+            0.2
+          ],
+          [
+            0.03,
+            0.25
+          ]
+        ],
+        "OOD_EXTRA": [
+          [
+            0.01,
+            0.1
+          ],
+          [
+            0.02,
+            0.1
+          ],
+          [
+            0.04,
+            0.1
+          ],
+          [
+            0.05,
+            0.1
+          ],
+          [
+            0.01,
+            0.15
+          ],
+          [
+            0.05,
+            0.15
+          ],
+          [
+            0.01,
+            0.25
+          ],
+          [
+            0.05,
+            0.25
+          ],
+          [
+            0.01,
+            0.3
+          ],
+          [
+            0.02,
+            0.3
+          ],
+          [
+            0.04,
+            0.3
+          ],
+          [
+            0.05,
+            0.3
+          ]
+        ],
+        "EVAL_IDS": [
+          5,
+          15,
+          24,
+          36,
+          45
+        ]
+      }
+    },
+    {
+      "entrypoint": "benchmarks/nod/src/nod_sprii/equivalence_real.py",
+      "arguments": [
+        {
+          "flags": [
+            "--root"
+          ],
+          "type": "Path",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--steps"
+          ],
+          "type": "int",
+          "default": "10"
+        }
+      ],
+      "declared_constants": {}
+    },
+    {
+      "entrypoint": "benchmarks/nod/src/nod_sprii/equivalence_test.py",
+      "arguments": [
+        {
+          "flags": [
+            "--steps"
+          ],
+          "type": "int",
+          "default": "10"
+        },
+        {
+          "flags": [
+            "--tolerance"
+          ],
+          "type": "float",
+          "default": "1e-06"
+        },
+        {
+          "flags": [
+            "--output"
+          ],
+          "type": "Path",
+          "required": "True"
+        }
+      ],
+      "declared_constants": {}
+    },
+    {
+      "entrypoint": "benchmarks/nod/src/nod_sprii/evaluate_frozen.py",
+      "arguments": [
+        {
+          "flags": [
+            "--checkpoint"
+          ],
+          "required": "True",
+          "type": "Path"
+        },
+        {
+          "flags": [
+            "--train-root"
+          ],
+          "required": "True",
+          "type": "Path"
+        },
+        {
+          "flags": [
+            "--truth-root"
+          ],
+          "required": "True",
+          "type": "Path"
+        },
+        {
+          "flags": [
+            "--output"
+          ],
+          "required": "True",
+          "type": "Path"
+        },
+        {
+          "flags": [
+            "--device"
+          ],
+          "default": "'auto'",
+          "choices": "['auto', 'cpu', 'cuda']"
+        },
+        {
+          "flags": [
+            "--batch-size"
+          ],
+          "type": "int",
+          "default": "8"
+        },
+        {
+          "flags": [
+            "--num-workers"
+          ],
+          "type": "int",
+          "default": "0"
+        },
+        {
+          "flags": [
+            "--deterministic-pairing"
+          ],
+          "action": "'store_true'"
+        }
+      ],
+      "declared_constants": {}
+    },
+    {
+      "entrypoint": "benchmarks/nod/src/nod_sprii/prepare_burgers_paths.py",
+      "arguments": [
+        {
+          "flags": [
+            "--release-root"
+          ],
+          "required": "True",
+          "type": "Path"
+        },
+        {
+          "flags": [
+            "--out-root"
+          ],
+          "required": "True",
+          "type": "Path"
+        }
+      ],
+      "declared_constants": {}
+    },
+    {
+      "entrypoint": "benchmarks/nod/src/nod_sprii/train_nod_clean.py",
+      "arguments": [
+        {
+          "flags": [
+            "--data_root"
+          ],
+          "type": "str",
+          "default": "'data/burgers/datagen_python/output_new/task1_viscous_main'"
+        },
+        {
+          "flags": [
+            "--include_output_add_train"
+          ],
+          "action": "'store_true'"
+        },
+        {
+          "flags": [
+            "--output_add_root"
+          ],
+          "type": "str",
+          "default": "'data/burgers/datagen_python/output_add/task1_viscous_main'"
+        },
+        {
+          "flags": [
+            "--save_dir"
+          ],
+          "type": "str",
+          "default": "'runs/burgers'"
+        },
+        {
+          "flags": [
+            "--resume_ckpt"
+          ],
+          "type": "str",
+          "default": "''"
+        },
+        {
+          "flags": [
+            "--seed"
+          ],
+          "type": "int",
+          "default": "1234"
+        },
+        {
+          "flags": [
+            "--device"
+          ],
+          "type": "str",
+          "default": "'auto'",
+          "choices": "['auto', 'cpu', 'cuda']"
+        },
+        {
+          "flags": [
+            "--batch_size"
+          ],
+          "type": "int",
+          "default": "8"
+        },
+        {
+          "flags": [
+            "--epochs"
+          ],
+          "type": "int",
+          "default": "200"
+        },
+        {
+          "flags": [
+            "--lr"
+          ],
+          "type": "float",
+          "default": "0.0001"
+        },
+        {
+          "flags": [
+            "--weight_decay"
+          ],
+          "type": "float",
+          "default": "0.0001"
+        },
+        {
+          "flags": [
+            "--clip_grad"
+          ],
+          "type": "float",
+          "default": "1.0"
+        },
+        {
+          "flags": [
+            "--save_every"
+          ],
+          "type": "int",
+          "default": "25"
+        },
+        {
+          "flags": [
+            "--num_workers"
+          ],
+          "type": "int",
+          "default": "4"
+        },
+        {
+          "flags": [
+            "--cache_mode"
+          ],
+          "type": "str",
+          "default": "'cond_init'",
+          "choices": "['none', 'cond_init', 'full']"
+        },
+        {
+          "flags": [
+            "--train_query_points"
+          ],
+          "type": "int",
+          "default": "TRAIN_QUERY_POINTS",
+          "help": "'Number of sampled (t,x) queries per sample for train supervision.'"
+        },
+        {
+          "flags": [
+            "--context_dim"
+          ],
+          "type": "int",
+          "default": "MODEL_DEFAULTS['context_dim']",
+          "help": "'Code dimension d. Used for the d-sweep that supports the dimension-gauging argument.'"
+        },
+        {
+          "flags": [
+            "--include_alignment_view"
+          ],
+          "action": "'store_true'",
+          "help": "'Load matched independent trajectory C for all methods; NOD leaves it unused.'"
+        },
+        {
+          "flags": [
+            "--lambda_align"
+          ],
+          "type": "float",
+          "default": "0.0"
+        },
+        {
+          "flags": [
+            "--random_relation"
+          ],
+          "action": "'store_true'"
+        }
+      ],
+      "declared_constants": {
+        "PREDICTION_HORIZON": 101,
+        "PRED_X": 401,
+        "PRED_T": 101,
+        "TRAIN_QUERY_POINTS": 8192,
+        "MIN_MODEL_PARAMS": 5000000,
+        "ARCH_VERSION": "plain_cnn2d_cond__deeponet_pred_pe__q8192_no_deriv_v2_trimmed"
+      }
+    },
+    {
+      "entrypoint": "benchmarks/pokeworld/revision/scripts/evaluate_pokeworld.py",
+      "arguments": [
+        {
+          "flags": [
+            "--checkpoint"
+          ],
+          "type": "Path",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--data-root"
+          ],
+          "type": "Path",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--output"
+          ],
+          "type": "Path",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--device"
+          ],
+          "default": "'cuda'"
+        }
+      ],
+      "declared_constants": {}
+    },
+    {
+      "entrypoint": "benchmarks/pokeworld/revision/scripts/evaluate_pokeworld_bridge.py",
+      "arguments": [
+        {
+          "flags": [
+            "--checkpoint"
+          ],
+          "type": "Path",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--data-root"
+          ],
+          "type": "Path",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--probe-fit-root"
+          ],
+          "type": "Path",
+          "help": "'correctly grouped train root used for probe/decoder fitting; defaults to data-root'"
+        },
+        {
+          "flags": [
+            "--split"
+          ],
+          "choices": "['val', 'test']",
+          "default": "'val'"
+        },
+        {
+          "flags": [
+            "--output"
+          ],
+          "type": "Path",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--selection-json"
+          ],
+          "type": "Path"
+        },
+        {
+          "flags": [
+            "--device"
+          ],
+          "default": "'cuda'"
+        },
+        {
+          "flags": [
+            "--batch-size"
+          ],
+          "type": "int",
+          "default": "128"
+        },
+        {
+          "flags": [
+            "--common-anchor-min"
+          ],
+          "type": "int",
+          "help": "'restrict train/eval windows to anchors >= this value (40 for the 24/32/40 ladder)'"
+        }
+      ],
+      "declared_constants": {
+        "PAIRING_SEED": 20260823,
+        "SPLIT_OFFSET": {
+          "train": 0,
+          "val": 100000,
+          "test": 200000
+        },
+        "RIDGE_SELECTION_SEED": 20260903
+      }
+    },
+    {
+      "entrypoint": "benchmarks/pokeworld/revision/scripts/evaluate_pokeworld_revision_geometry.py",
+      "arguments": [
+        {
+          "flags": [
+            "--checkpoint"
+          ],
+          "type": "Path",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--data-root"
+          ],
+          "type": "Path",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--output"
+          ],
+          "type": "Path",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--condition"
+          ],
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--device"
+          ],
+          "default": "'cuda'"
+        },
+        {
+          "flags": [
+            "--batch-size"
+          ],
+          "type": "int",
+          "default": "256"
+        },
+        {
+          "flags": [
+            "--bootstrap"
+          ],
+          "type": "int",
+          "default": "500"
+        },
+        {
+          "flags": [
+            "--train-systems"
+          ],
+          "type": "int",
+          "default": "200"
+        },
+        {
+          "flags": [
+            "--validation-systems"
+          ],
+          "type": "int",
+          "default": "200"
+        },
+        {
+          "flags": [
+            "--smoke-systems"
+          ],
+          "type": "int"
+        }
+      ],
+      "declared_constants": {
+        "EVAL_SEED": 20260903
+      }
+    },
+    {
+      "entrypoint": "benchmarks/pokeworld/revision/scripts/prepare_pokeworld_factorized.py",
+      "arguments": [
+        {
+          "flags": [
+            "--output"
+          ],
+          "type": "Path",
+          "required": "True"
+        }
+      ],
+      "declared_constants": {
+        "GENERATOR_SEED": 20260902,
+        "MASS_LEVELS": 10,
+        "DRAG_LEVELS": 10,
+        "STIFFNESS_LEVELS": 28,
+        "TRAIN_PER_BLOCK": 20,
+        "VALIDATION_PER_BLOCK": 4,
+        "CONFIRMATION_PER_BLOCK": 4,
+        "ROTATION_STEP": 9
+      }
+    },
+    {
+      "entrypoint": "benchmarks/pokeworld/revision/scripts/raw_gru_pokeworld_multifactor.py",
+      "arguments": [
+        {
+          "flags": [
+            "--data-root"
+          ],
+          "type": "Path",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--output"
+          ],
+          "type": "Path",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--steps"
+          ],
+          "type": "int",
+          "default": "5000"
+        },
+        {
+          "flags": [
+            "--device"
+          ],
+          "default": "'cuda'"
+        },
+        {
+          "flags": [
+            "--source-bundle-sha256"
+          ],
+          "required": "True"
+        }
+      ],
+      "declared_constants": {}
+    },
+    {
+      "entrypoint": "benchmarks/pokeworld/revision/scripts/train_actual_input_certificate.py",
+      "arguments": [
+        {
+          "flags": [
+            "--data-root"
+          ],
+          "type": "Path",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--run-dir"
+          ],
+          "type": "Path",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--seed"
+          ],
+          "type": "int",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--steps"
+          ],
+          "type": "int",
+          "default": "20000"
+        },
+        {
+          "flags": [
+            "--device"
+          ],
+          "default": "'cuda'"
+        },
+        {
+          "flags": [
+            "--batch-size"
+          ],
+          "type": "int",
+          "default": "96"
+        },
+        {
+          "flags": [
+            "--source-bundle-sha256"
+          ],
+          "required": "True"
+        }
+      ],
+      "declared_constants": {}
+    },
+    {
+      "entrypoint": "benchmarks/pokeworld/revision/scripts/train_pokeworld.py",
+      "arguments": [
+        {
+          "flags": [
+            "--data-root"
+          ],
+          "type": "Path",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--run-dir"
+          ],
+          "type": "Path",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--variant"
+          ],
+          "choices": "['B0', 'B0_split', 'B2', 'B3', 'Bx', 'Sup']",
+          "default": "'B0'"
+        },
+        {
+          "flags": [
+            "--seed"
+          ],
+          "type": "int",
+          "default": "0"
+        },
+        {
+          "flags": [
+            "--steps"
+          ],
+          "type": "int",
+          "default": "20000"
+        },
+        {
+          "flags": [
+            "--lambda-p"
+          ],
+          "type": "float",
+          "default": "0.0"
+        },
+        {
+          "flags": [
+            "--lambda-x"
+          ],
+          "type": "float",
+          "default": "0.0"
+        },
+        {
+          "flags": [
+            "--history-length"
+          ],
+          "type": "int",
+          "default": "24"
+        },
+        {
+          "flags": [
+            "--pairing-mode"
+          ],
+          "choices": "['cross_rollout', 'same_rollout_restricted', 'cross_rollout_restricted']",
+          "default": "'cross_rollout'"
+        },
+        {
+          "flags": [
+            "--device"
+          ],
+          "default": "'cuda'"
+        },
+        {
+          "flags": [
+            "--source-bundle-sha256"
+          ]
+        }
+      ],
+      "declared_constants": {}
+    },
+    {
+      "entrypoint": "benchmarks/pokeworld/revision/scripts/train_pokeworld_revision.py",
+      "arguments": [
+        {
+          "flags": [
+            "--data-root"
+          ],
+          "type": "Path",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--run-dir"
+          ],
+          "type": "Path",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--family"
+          ],
+          "choices": "['relinfonce', 'refinement', 'fidelity']",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--condition"
+          ],
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--seed"
+          ],
+          "type": "int",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--steps"
+          ],
+          "type": "int",
+          "default": "20000"
+        },
+        {
+          "flags": [
+            "--history-length"
+          ],
+          "type": "int",
+          "default": "24"
+        },
+        {
+          "flags": [
+            "--temperature"
+          ],
+          "type": "float",
+          "default": "0.1"
+        },
+        {
+          "flags": [
+            "--lambda-nce"
+          ],
+          "type": "float",
+          "default": "1.0"
+        },
+        {
+          "flags": [
+            "--fidelity-q"
+          ],
+          "type": "float"
+        },
+        {
+          "flags": [
+            "--fidelity-assignment-seed"
+          ],
+          "type": "int",
+          "default": "20260901"
+        },
+        {
+          "flags": [
+            "--donor-pools"
+          ],
+          "type": "Path"
+        },
+        {
+          "flags": [
+            "--protocol-manifest"
+          ],
+          "type": "Path",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--source-bundle-sha256"
+          ],
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--device"
+          ],
+          "default": "'cuda'"
+        }
+      ],
+      "declared_constants": {}
+    },
+    {
+      "entrypoint": "experiments/coda_frozen/coda_four_arm_eval_recovery_v2.py",
+      "arguments": [
+        {
+          "flags": [
+            "phase"
+          ],
+          "choices": "['smoke', 'prepare', 'train', 'evaluate']"
+        },
+        {
+          "flags": [
+            "--seed"
+          ],
+          "type": "int",
+          "choices": "[1234, 5678, 9012]",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--gpu"
+          ],
+          "type": "int",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--output"
+          ],
+          "type": "pathlib.Path",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--shared"
+          ],
+          "type": "pathlib.Path"
+        },
+        {
+          "flags": [
+            "--trained"
+          ],
+          "type": "pathlib.Path"
+        },
+        {
+          "flags": [
+            "--arm"
+          ],
+          "choices": "['plain', 'sprii_cross', 'random_cross', 'duplicate_self']"
+        }
+      ],
+      "declared_constants": {}
+    },
+    {
+      "entrypoint": "experiments/coda_frozen/coda_four_arm_external.py",
+      "arguments": [
+        {
+          "flags": [
+            "phase"
+          ],
+          "choices": "['smoke', 'prepare', 'train', 'evaluate']"
+        },
+        {
+          "flags": [
+            "--seed"
+          ],
+          "type": "int",
+          "choices": "[1234, 5678, 9012]",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--gpu"
+          ],
+          "type": "int",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--output"
+          ],
+          "type": "pathlib.Path",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--shared"
+          ],
+          "type": "pathlib.Path"
+        },
+        {
+          "flags": [
+            "--trained"
+          ],
+          "type": "pathlib.Path"
+        },
+        {
+          "flags": [
+            "--arm"
+          ],
+          "choices": "['plain', 'sprii_cross', 'random_cross', 'duplicate_self']"
+        }
+      ],
+      "declared_constants": {}
+    },
+    {
+      "entrypoint": "experiments/coda_frozen/coda_frozen_encoder_gate.py",
+      "arguments": [
+        {
+          "flags": [
+            "phase"
+          ],
+          "choices": "['prepare', 'train', 'evaluate']"
+        },
+        {
+          "flags": [
+            "--code-root"
+          ],
+          "type": "Path",
+          "default": "Path('benchmarks/baseline_adapters')"
+        },
+        {
+          "flags": [
+            "--gpu"
+          ],
+          "type": "int"
+        },
+        {
+          "flags": [
+            "--lock-dir"
+          ],
+          "type": "Path"
+        },
+        {
+          "flags": [
+            "--output"
+          ],
+          "type": "Path",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--shared"
+          ],
+          "type": "Path"
+        },
+        {
+          "flags": [
+            "--arm"
+          ],
+          "choices": "['plain', 'sprii_cross']"
+        },
+        {
+          "flags": [
+            "--plain"
+          ],
+          "type": "Path"
+        },
+        {
+          "flags": [
+            "--cross"
+          ],
+          "type": "Path"
+        }
+      ],
+      "declared_constants": {
+        "SOURCE_SHA": "69e21e714a8ee221cd2c59e0473aa77246f7a14195e36c324c6ef25b4b178be8",
+        "TEACHER_SHA": "5365820fc1ab22b5ae68bccba67136922fc276cc7c9775cd6e3c84cfe39a37d8",
+        "COMPONENT_SHA": "acb8bec540220913ed7559c1e16af6e6536fa63e0d66f5f1e0d4d26e6900db3b",
+        "DATA_API_SHA": "934fd3c75a15eb77d153685edbe94e7452f1b5cb72f5e2b6cb91a0e442c91d77",
+        "POSTRUN_SHA": "a448cd0b96fbda128bfab22aa657f51191e90dd2eebb81e677184807db62aaf1",
+        "SEED": 1234,
+        "BUDGETS": [
+          0,
+          5,
+          10,
+          50
+        ]
+      }
+    },
+    {
+      "entrypoint": "experiments/poke_controls/poke_inferred.py",
+      "arguments": [
+        {
+          "flags": [
+            "phase"
+          ],
+          "choices": "['prepare', 'audit', 'train']"
+        },
+        {
+          "flags": [
+            "--seed"
+          ],
+          "type": "int",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--mode"
+          ],
+          "choices": "['inferred', 'random']"
+        },
+        {
+          "flags": [
+            "--output"
+          ],
+          "type": "pathlib.Path"
+        }
+      ],
+      "declared_constants": {}
+    },
+    {
+      "entrypoint": "experiments/poke_controls/poke_native_postrun.py",
+      "arguments": [
+        {
+          "flags": [
+            "--stage"
+          ],
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--output"
+          ],
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--batch-size"
+          ],
+          "type": "int",
+          "default": "128"
+        },
+        {
+          "flags": [
+            "--smoke"
+          ],
+          "action": "'store_true'"
+        }
+      ],
+      "declared_constants": {}
+    },
+    {
+      "entrypoint": "experiments/poke_controls/poke_native_postrun_generic.py",
+      "arguments": [
+        {
+          "flags": [
+            "--stage"
+          ],
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--output"
+          ],
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--batch-size"
+          ],
+          "type": "int",
+          "default": "128"
+        },
+        {
+          "flags": [
+            "--smoke"
+          ],
+          "action": "'store_true'"
+        }
+      ],
+      "declared_constants": {}
+    },
+    {
+      "entrypoint": "experiments/poke_controls/poke_structured.py",
+      "arguments": [
+        {
+          "flags": [
+            "--mode"
+          ],
+          "choices": "['true', 'uniform50', 'drag50', 'mass50']"
+        },
+        {
+          "flags": [
+            "--seed"
+          ],
+          "type": "int",
+          "default": "0"
+        },
+        {
+          "flags": [
+            "--output"
+          ]
+        },
+        {
+          "flags": [
+            "--audit"
+          ],
+          "action": "'store_true'"
+        }
+      ],
+      "declared_constants": {}
+    },
+    {
+      "entrypoint": "experiments/spring_postrun/reader/scripts/prepare_spring_references.py",
+      "arguments": [
+        {
+          "flags": [
+            "--legacy-root"
+          ],
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--output"
+          ],
+          "required": "True"
+        }
+      ],
+      "declared_constants": {}
+    },
+    {
+      "entrypoint": "experiments/spring_postrun/reader/scripts/run_grid.py",
+      "arguments": [
+        {
+          "flags": [
+            "--devices"
+          ],
+          "nargs": "'+'",
+          "default": "['cuda:0']"
+        },
+        {
+          "flags": [
+            "--gate"
+          ]
+        },
+        {
+          "flags": [],
+          "required": "True"
+        }
+      ],
+      "declared_constants": {}
+    },
+    {
+      "entrypoint": "experiments/spring_postrun/reader/sprii_next/__main__.py",
+      "arguments": [
+        {
+          "flags": []
+        }
+      ],
+      "declared_constants": {}
+    },
+    {
+      "entrypoint": "experiments/spring_postrun/reader/sprii_next/contrastive.py",
+      "arguments": [
+        {
+          "flags": [
+            "--legacy-root"
+          ],
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--output"
+          ],
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--seed"
+          ],
+          "type": "int",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--temperature"
+          ],
+          "type": "float"
+        },
+        {
+          "flags": [
+            "--selection"
+          ]
+        },
+        {
+          "flags": [
+            "--device"
+          ],
+          "default": "'cuda:0'"
+        },
+        {
+          "flags": [
+            "--smoke-steps"
+          ],
+          "type": "int"
+        },
+        {
+          "flags": [
+            "--completions"
+          ],
+          "nargs": "3",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--output"
+          ],
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--legacy-root"
+          ],
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--completion"
+          ],
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--output"
+          ],
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--device"
+          ],
+          "default": "'cuda:0'"
+        }
+      ],
+      "declared_constants": {
+        "TEMPERATURES": [
+          0.05,
+          0.1,
+          0.2
+        ]
+      }
+    },
+    {
+      "entrypoint": "experiments/spring_postrun/spring_postrun_v1.py",
+      "arguments": [
+        {
+          "flags": [
+            "phase"
+          ],
+          "choices": "['export', 'fit', 'evaluate', 'probe']"
+        },
+        {
+          "flags": [
+            "--source"
+          ],
+          "type": "pathlib.Path",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--output"
+          ],
+          "type": "pathlib.Path",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--seed"
+          ],
+          "type": "int",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--lp"
+          ],
+          "type": "float",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--lx"
+          ],
+          "type": "float",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--reader-seed"
+          ],
+          "type": "int",
+          "default": "0"
+        },
+        {
+          "flags": [
+            "--smoke"
+          ],
+          "action": "'store_true'"
+        },
+        {
+          "flags": [
+            "--smoke-checkpoint"
+          ],
+          "type": "int",
+          "default": "2500"
+        }
+      ],
+      "declared_constants": {}
+    },
+    {
+      "entrypoint": "experiments/spring_postrun/spring_sensitivity_resume_v3.py",
+      "arguments": [
+        {
+          "flags": [
+            "--mode"
+          ],
+          "choices": "['smoke', 'train', 'audit']",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--seed"
+          ],
+          "type": "int",
+          "default": "0"
+        },
+        {
+          "flags": [
+            "--lp"
+          ],
+          "type": "float",
+          "default": "1"
+        },
+        {
+          "flags": [
+            "--lx"
+          ],
+          "type": "float",
+          "default": "0.1"
+        },
+        {
+          "flags": [
+            "--output"
+          ],
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--resume-commit"
+          ],
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--resume-commit-sha256"
+          ],
+          "required": "True"
+        }
+      ],
+      "declared_constants": {}
+    },
+    {
+      "entrypoint": "scripts/fetch_external_sources.py",
+      "arguments": [
+        {
+          "flags": [
+            "sources"
+          ],
+          "nargs": "'+'",
+          "choices": "['nod', 'cadm', 'geps', 'coda', 'gym']"
+        }
+      ],
+      "declared_constants": {
+        "SOURCES": {
+          "cadm": [
+            "https://github.com/younggyoseo/CaDM.git",
+            "38c11a58d959bfd597f9323e58f28b17f6bf4fd9",
+            "CaDM"
+          ],
+          "geps": [
+            "https://github.com/itsakk/geps.git",
+            "e9a865218ecffacb7007ac7d719f3741afcf8c02",
+            "geps_original"
+          ],
+          "coda": [
+            "https://github.com/yuan-yin/CoDA.git",
+            "17b73521394f2a5986e5418c32ad2965c97cd8c0",
+            "coda_original"
+          ]
+        }
+      }
+    },
+    {
+      "entrypoint": "benchmarks/nod/src/fhn_continuation/fhn_lr_restart.py",
+      "arguments": [
+        {
+          "flags": [
+            "--restart-lr"
+          ],
+          "required": "True",
+          "type": "float"
+        }
+      ],
+      "declared_constants": {}
+    },
+    {
+      "entrypoint": "benchmarks/nod/src/fhn_continuation/fhn_multi_history.py",
+      "arguments": [
+        {
+          "flags": [
+            "--checkpoint"
+          ],
+          "required": "True",
+          "type": "Path"
+        },
+        {
+          "flags": [
+            "--output"
+          ],
+          "required": "True",
+          "type": "Path"
+        },
+        {
+          "flags": [
+            "--data-dir"
+          ],
+          "required": "True",
+          "type": "Path"
+        },
+        {
+          "flags": [
+            "--official-code"
+          ],
+          "required": "True",
+          "type": "Path"
+        },
+        {
+          "flags": [
+            "--device"
+          ],
+          "default": "'cuda'"
+        }
+      ],
+      "declared_constants": {}
+    },
+    {
+      "entrypoint": "benchmarks/nod/src/fhn_continuation/fhn_report_probe.py",
+      "arguments": [
+        {
+          "flags": [
+            "checkpoint"
+          ],
+          "type": "Path"
+        },
+        {
+          "flags": [
+            "source"
+          ],
+          "type": "Path"
+        },
+        {
+          "flags": [
+            "output"
+          ],
+          "type": "Path"
+        },
+        {
+          "flags": [
+            "--data-dir"
+          ],
+          "required": "True",
+          "type": "Path"
+        },
+        {
+          "flags": [
+            "--official-code"
+          ],
+          "required": "True",
+          "type": "Path"
+        },
+        {
+          "flags": [
+            "--device"
+          ],
+          "default": "'cuda'"
+        }
+      ],
+      "declared_constants": {}
+    },
+    {
+      "entrypoint": "benchmarks/nod/src/fhn_continuation/replay_selected.py",
+      "arguments": [
+        {
+          "flags": [
+            "--method"
+          ],
+          "choices": "['nod', 'sprii']",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--seed"
+          ],
+          "type": "int",
+          "choices": "[42, 43, 44]",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--data-dir"
+          ],
+          "type": "Path",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--official-code"
+          ],
+          "type": "Path",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--output"
+          ],
+          "type": "Path",
+          "required": "True"
+        },
+        {
+          "flags": [
+            "--recipe"
+          ],
+          "type": "Path",
+          "default": "NOD / 'configs/fhn_selected_three_seed.json'"
+        },
+        {
+          "flags": [
+            "--device"
+          ],
+          "default": "'cuda'"
+        },
+        {
+          "flags": [
+            "--execute"
+          ],
+          "action": "'store_true'"
+        }
+      ],
+      "declared_constants": {}
+    }
+  ]
+}

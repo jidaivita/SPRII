@@ -1,0 +1,144 @@
+{
+  "schema_version": "2.0",
+  "status": "D1A_DUAL_ARCHITECTURE_PROSPECTIVE_FROZEN",
+  "canonical_config_path": "configs/d1a_same_checkpoint_prospective_v1.json",
+  "output_root": "runs/diagnostics/transport_alignment_repair_v1/d1a_prospective_block_v2",
+  "branch_authorization": {
+    "definition_config": "configs/transport_alignment_d1_v1.json",
+    "definition_protocol": "protocol/PAPER_C_TRANSPORT_INTERVENTION_ALIGNMENT_REPAIR_V1.md",
+    "d1a_old_result": "runs/diagnostics/transport_alignment_repair_v1/d1a_old/RESULTS.json",
+    "d1a_old_receipt": "runs/diagnostics/transport_alignment_repair_v1/d1a_old/RESULTS_RECEIPT.json",
+    "d1a_fresh_result": "runs/diagnostics/transport_alignment_repair_v1/d1a_fresh/RESULTS.json",
+    "d1a_fresh_receipt": "runs/diagnostics/transport_alignment_repair_v1/d1a_fresh/RESULTS_RECEIPT.json",
+    "d1b_fresh_result": "runs/diagnostics/transport_alignment_repair_v1/d1b_fresh/RESULTS.json",
+    "d1b_fresh_receipt": "runs/diagnostics/transport_alignment_repair_v1/d1b_fresh/RESULTS_RECEIPT.json",
+    "expected": {
+      "d1a_old": {
+        "result_sha256": "aeda523172855b1a707f24b329df9e229be794f718f7c704d3270a2632f9dc0c",
+        "result_status": "PAPER_C_TRANSPORT_ALIGNMENT_D1A_OLD_COMPLETE",
+        "evidence_identity": "post_result_exploratory_no_retraining",
+        "receipt_status": "PAPER_C_TRANSPORT_ALIGNMENT_D1A_OLD_RECEIPT_COMPLETE"
+      },
+      "d1a_fresh": {
+        "result_sha256": "cdc70cbed0baa69d1c8fa81b72dc3a919c16845fe9e8921d4b5de4651590bfce",
+        "result_status": "PAPER_C_TRANSPORT_ALIGNMENT_D1A_COMPLETE",
+        "evidence_identity": "post_result_exploratory_no_retraining",
+        "receipt_status": "PAPER_C_TRANSPORT_ALIGNMENT_D1A_RECEIPT_COMPLETE"
+      },
+      "d1b_fresh": {
+        "result_sha256": "0517fc0eb63de0a76eca014a76e53195243afa4c8de335e35f53671ab19c0f68",
+        "result_status": "PAPER_C_D1B_FRESH_EVALUATION_COMPLETE",
+        "evidence_identity": "post_result_exploratory_old_fit_fresh_once",
+        "receipt_status": "PAPER_C_D1B_FRESH_RECEIPT_COMPLETE"
+      }
+    }
+  },
+  "fresh_design": {
+    "systems": 512,
+    "system_seed": 89101,
+    "context_seed": 89103,
+    "queries": 6,
+    "candidates": 6,
+    "candidate_rows": 18432,
+    "identity_round_decimals": 12
+  },
+  "forbidden_system_pools": {
+    "train": "runs/formal/swimmer_s2r_learner_v1/data/train_systems.npy",
+    "select": "runs/formal/swimmer_s2r_learner_v1/data/select_systems.npy",
+    "original_formal_regenerated": {
+      "systems": 512,
+      "seed": 69101
+    },
+    "e1_fresh_manifest": "runs/intervention/fresh_articulated_prospective_v1/frozen/fresh_system_manifest.csv.gz",
+    "joint_fresh_systems": "runs/extension/prospective_evidence_packet_v1/frozen/fresh_systems.npy"
+  },
+  "reference_config_template": "configs/articulated_lqa_prospective_v1.json",
+  "canonical_learner": {
+    "checkpoint": "runs/formal/swimmer_s2r_learner_v1/models/persistent_jepa_frozen.pt",
+    "checkpoint_sha256": "9faf15415873af7307274ed30b7bc2b639a5ecc2b5c131f095a67877d86cbbbd",
+    "normalization": "runs/formal/swimmer_s2r_learner_v1/models/train_only_normalization.npz",
+    "normalization_sha256": "4aa6839f31250d7fc84a3c9e44c74c2c4bd46c4afe4968f70d738479d08ceec6",
+    "optimization_seeds": [
+      86101,
+      86103,
+      86107
+    ],
+    "true_checkpoints": [
+      {
+        "optimization_seed": 86101,
+        "path": "runs/intervention/articulated_delta_gated_isolation_v1/jobs/articulated_delta_gated_true_s86101_lr1e-3/adapter_best.pt",
+        "sha256": "a8a11d372ac0b74d27ed83c2209f678ad3e3597ce304cd1b28e2cef08db756e9"
+      },
+      {
+        "optimization_seed": 86103,
+        "path": "runs/intervention/articulated_delta_gated_isolation_v1/jobs/articulated_delta_gated_true_s86103_lr1e-3/adapter_best.pt",
+        "sha256": "49661ca136d63ceb43bf4993d143179ae0b271b5fcb16457914b3ffbd993d6a7"
+      },
+      {
+        "optimization_seed": 86107,
+        "path": "runs/intervention/articulated_delta_gated_isolation_v1/jobs/articulated_delta_gated_true_s86107_lr1e-3/adapter_best.pt",
+        "sha256": "2b606a4a3f99b6118a07b86d98382cbb84a81ff3ed7fa5113789a44dc3fc74c5"
+      }
+    ]
+  },
+  "masked_gru": {
+    "upstream_config": "configs/masked_gru_cross_architecture_v1.json",
+    "base_seeds": [
+      64101,
+      64103
+    ],
+    "optimization_seeds": [
+      86101,
+      86103,
+      86107
+    ],
+    "role": "key_confirmatory_secondary",
+    "support_rule": "both_predeclared_base_seed_system_bootstrap_95pct_ci_lower_bounds_gt_0"
+  },
+  "donor": {
+    "salt": 89511,
+    "cell": [
+      "history_index",
+      "query_index",
+      "candidate_index"
+    ],
+    "cross_system": true,
+    "same_exact_map_across_architectures_checkpoints_and_shards": true,
+    "must_be_materialized_before_any_target_or_learner_forward": true
+  },
+  "primary": {
+    "architecture": "canonical_persistent_jepa",
+    "estimand": "mean_over_three_frozen_true_checkpoints_then_36_rows_within_system_then_system_equal",
+    "contrast": "same_checkpoint_gain_self_minus_gain_cell_matched_cross_system_donor",
+    "support_rule": "system_bootstrap_95pct_ci_lower_bound_gt_0",
+    "bootstrap_replicates": 4000,
+    "bootstrap_seed": 89201
+  },
+  "secondary": {
+    "architecture": "masked_gru",
+    "estimand_per_base_seed": "mean_over_three_frozen_true_checkpoints_then_36_rows_within_system_then_system_equal",
+    "contrast": "same_checkpoint_gain_self_minus_gain_cell_matched_cross_system_donor",
+    "bootstrap_replicates": 4000,
+    "bootstrap_seed": 89211,
+    "no_pooling_to_rescue": true
+  },
+  "execution": {
+    "host": "worker_b",
+    "physical_shards": 2,
+    "feature_shards": 2,
+    "evaluation_shards": 2,
+    "fixed_merge_order": [
+      0,
+      1
+    ],
+    "parity_systems": 8,
+    "batch_size": 1024,
+    "maximum_new_blocks": 1,
+    "model_training": false,
+    "checkpoint_selection": false,
+    "reference_geometry": false,
+    "protected_scope_2_untouched": true,
+    "run_identity": null
+  },
+  "calendar_stop": null
+}

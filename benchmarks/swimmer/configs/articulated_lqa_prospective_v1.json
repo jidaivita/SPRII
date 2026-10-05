@@ -1,0 +1,81 @@
+{
+  "schema_version": "1.0",
+  "status": "FROZEN_FOR_LAUNCH_READINESS",
+  "base_config": "configs/swimmer_external_assay_v1.json",
+  "s0_receipt": "runs/development/swimmer_s0_v1_3_quadrature/s0_receipt.json",
+  "s2_config": "configs/swimmer_s2r_learner_v1.json",
+  "s2_models": "runs/formal/swimmer_s2r_learner_v1/models",
+  "protocol": "protocol/ARTICULATED_LQA_PROSPECTIVE_V1.md",
+  "development": {
+    "system_seed": 68101,
+    "context_seed": 68103,
+    "systems": 128,
+    "nuisance_realizations": 4,
+    "benchmark_contexts": 32
+  },
+  "formal": {
+    "system_seed": 69101,
+    "context_seed": 69103,
+    "contexts_per_system": 1,
+    "context_selection": "deterministic_hash_over_4_nuisance_x_6_history_within_each_system",
+    "nuisance_candidates_per_system": 4,
+    "target_systems": 512,
+    "desired_contributing_systems": 256,
+    "absolute_confirmatory_floor": 128,
+    "pool_max": 1024,
+    "generation_block": 128,
+    "stopping_rule": {
+      "initial_systems": 512,
+      "continue_when_contributing_below": 256,
+      "additional_block_systems": 128,
+      "maximum_systems": 1024,
+      "normal_scope_minimum_contributing": 256,
+      "limited_scope_minimum_contributing": 128,
+      "below_absolute_floor_at_maximum": "LOW_COVERAGE_ASSAY_NO_GO",
+      "learner_outcomes_must_remain_unread_until_stop": true,
+      "seed_or_prior_changes_after_start": false
+    }
+  },
+  "reference": {
+    "particle_levels": [256, 1024, 4096],
+    "geometry_particles": 512,
+    "outcome_levels": [256, 1024, 4096],
+    "ref_a_scramble_seeds": [70111, 70121, 70131, 70141],
+    "ref_b_scramble_seeds": [70211, 70221, 70231, 70241],
+    "geometry_scramble_seed": 70311,
+    "finite_difference_log_step": 0.025,
+    "ref_a_proposal_matching_fraction_of_sesoi": 0.50,
+    "pair_matching_fraction_of_sesoi": 0.25,
+    "local_value_floor_multiplier": 5.0
+  },
+  "primary": {
+    "learner": "frozen_persistent_jepa_s2r",
+    "score": "weighted_linear_cka",
+    "raw_cka_role": "supporting_only",
+    "statistical_unit": "physical_system",
+    "bootstrap_replicates": 4000,
+    "sesoi_binding": "0.20_times_median_system_SD_of_all_unoriented_candidate_pair_contrasts_from_frozen_Articulated_validation",
+    "sesoi_absolute": 0.00013879770995117724,
+    "sesoi_standardized_effect": 0.20,
+    "variance_source": "runs/formal/swimmer_s3r_v1/validation/validation_diagnostic_system_values.npz",
+    "variance_source_median_pair_system_sd": 0.0006939885206520557
+  },
+  "outcome_blindness": {
+    "development_learner_outcomes_read": false,
+    "formal_learner_outcomes_before_manifest": false,
+    "sealed_access": false,
+    "protected_scope_1_access": false,
+    "protected_scope_2_access": false
+  },
+  "execution": {
+    "atomic_resume_unit": "physical_system",
+    "formal_named_axis_rows_per_system": 36,
+    "outcome_qmc_seed_binding": "scramble_seed_plus_1000003_times_system_index",
+    "initial_remote_workers": 12,
+    "threads_per_worker": 1,
+    "memory_dispatch_pause_gib": 24,
+    "memory_drain_to_four_workers_gib": 27,
+    "remote_primary_host": "worker_b",
+    "remote_secondary_host_requires_memory_below_gib": 12
+  }
+}

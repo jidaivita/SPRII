@@ -1,0 +1,5 @@
+job_id,environment,base_seed,logical_host,gpu_id
+masked_gru_articulated_s64101,articulated,64101,worker_b,2
+masked_gru_articulated_s64103,articulated,64103,worker_b,3
+masked_gru_coupled_s47001,coupled,47001,worker_b,2
+masked_gru_coupled_s47003,coupled,47003,worker_b,3

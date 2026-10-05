@@ -1,0 +1,21 @@
+# Python 3.11. GPU execution additionally requires a compatible CUDA JAX wheel.
+jax==0.5.3
+chex==0.1.88
+flax==0.10.2
+ml_dtypes==0.4.0
+optax==0.2.4
+orbax-checkpoint==0.11.1
+orbax-export==0.0.6
+numpy
+h5py
+gymnax
+distrax
+safetensors
+moviepy
+ffmpeg
+prettytable
+rliable
+matplotlib
+hydra-core
+huggingface-hub
+jaxmarl==0.0.7

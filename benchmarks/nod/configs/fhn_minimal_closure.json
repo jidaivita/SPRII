@@ -1,0 +1,192 @@
+{
+  "status": "COMPLETE_ONE_SEED_MINIMAL_CLOSURE_2026-09-23",
+  "data": {
+    "generator": "src/fhn_python/generate_fhn.py",
+    "grid_size": 128,
+    "dt": 0.001,
+    "steps": 10000,
+    "sample_every": 100,
+    "initial_condition": "paper-consistent GRF port of GaussianRF_2D.m",
+    "initial_seed": 42,
+    "training_initial_ids": "50-89",
+    "evaluation_initial_ids": [
+      5,
+      15,
+      24,
+      36,
+      45
+    ],
+    "solver_dtype": "float64",
+    "saved_dtype": "float32",
+    "parameter_splits": {
+      "train": [
+        [
+          0.03,
+          0.1
+        ],
+        [
+          0.02,
+          0.15
+        ],
+        [
+          0.04,
+          0.15
+        ],
+        [
+          0.01,
+          0.2
+        ],
+        [
+          0.03,
+          0.2
+        ],
+        [
+          0.05,
+          0.2
+        ],
+        [
+          0.02,
+          0.25
+        ],
+        [
+          0.04,
+          0.25
+        ],
+        [
+          0.03,
+          0.3
+        ]
+      ],
+      "ood_intra": [
+        [
+          0.03,
+          0.15
+        ],
+        [
+          0.02,
+          0.2
+        ],
+        [
+          0.04,
+          0.2
+        ],
+        [
+          0.03,
+          0.25
+        ]
+      ],
+      "ood_extra": [
+        [
+          0.01,
+          0.1
+        ],
+        [
+          0.02,
+          0.1
+        ],
+        [
+          0.04,
+          0.1
+        ],
+        [
+          0.05,
+          0.1
+        ],
+        [
+          0.01,
+          0.15
+        ],
+        [
+          0.05,
+          0.15
+        ],
+        [
+          0.01,
+          0.25
+        ],
+        [
+          0.05,
+          0.25
+        ],
+        [
+          0.01,
+          0.3
+        ],
+        [
+          0.02,
+          0.3
+        ],
+        [
+          0.04,
+          0.3
+        ],
+        [
+          0.05,
+          0.3
+        ]
+      ]
+    }
+  },
+  "training": {
+    "seeds": [
+      42
+    ],
+    "development_runs": [
+      {
+        "model": "NOD-Hier",
+        "lambda_align": 0.0
+      },
+      {
+        "model": "SPRII-Hier",
+        "lambda_align": 0.001
+      },
+      {
+        "model": "SPRII-Hier",
+        "lambda_align": 0.003
+      },
+      {
+        "model": "SPRII-Hier",
+        "lambda_align": 0.01
+      },
+      {
+        "model": "SPRII-Hier",
+        "lambda_align": 1e-05
+      },
+      {
+        "model": "SPRII-Hier",
+        "lambda_align": 3e-05
+      },
+      {
+        "model": "SPRII-Hier",
+        "lambda_align": 0.0001
+      },
+      {
+        "model": "SPRII-Hier curriculum",
+        "pretrain_lambda_align": 0.01,
+        "pretrain_steps": 20000,
+        "refine_lambda_align": 0.0,
+        "refine_steps": 10000
+      }
+    ],
+    "latent_dim": 2,
+    "batch_size": 8,
+    "max_steps": 20000,
+    "checkpoint_steps": [
+      5000,
+      10000,
+      15000,
+      20000
+    ],
+    "align_warmup_steps": 2000,
+    "selection": "29 checkpoint candidates ranked using initial_id=5 on the 9 ID systems only; selected SPRII curriculum at step 30000; final ID targets are 15,24,45 and conditioning id is 36",
+    "comparison_rule": "same generated files, architecture, optimizer, schedule, and evaluator",
+    "scope": "one-seed external breadth result; no FHN Random control and no full mechanism suite"
+  },
+  "required_outputs": [
+    "ID/OOD-Intra/OOD-Extra H=1,5,50 L2 relative error",
+    "2D latent-to-(k,beta) accessibility probe",
+    "lambda_align=0 path equivalence receipt",
+    "data generation manifest and hashes"
+  ],
+  "release_role": "Historical one-seed minimal precursor only; current paper recipe is fhn_selected_three_seed.json."
+}

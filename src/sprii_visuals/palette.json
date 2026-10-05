@@ -1,0 +1,23 @@
+{
+  "id": "sprii-wine-olive-times-v1",
+  "status": "frozen",
+  "ink": "#302D2B",
+  "muted": "#746E68",
+  "grid": "#D9D3CC",
+  "canvas": "#FFFFFF",
+  "panel": "#FAF9F7",
+  "body1": "#7A263A",
+  "body2": "#596B45",
+  "spring": "#837365",
+  "force": "#596B45",
+  "history": "#7A263A",
+  "current": "#746E68",
+  "model": "#71635D",
+  "intervention": "#596B45",
+  "persistent": "#7A263A",
+  "decode": "#596B45",
+  "oracle": "#9A8649",
+  "null": "#8D8781",
+  "heat_low": "#596B45",
+  "heat_high": "#7A263A"
+}

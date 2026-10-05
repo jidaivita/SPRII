@@ -1,0 +1,8 @@
+{
+  "repository": "https://github.com/AHT-Hub/ICRL4AHT",
+  "commit": "22f6c1783e4fdc2153a84e57e197cbfabd0eace3",
+  "archive_url": "https://codeload.github.com/AHT-Hub/ICRL4AHT/tar.gz/22f6c1783e4fdc2153a84e57e197cbfabd0eace3",
+  "archive_sha256": "b353b5b28270191ce6963e247b92ff1f1bda5ff2983518b393809a5504439db7",
+  "distribution": "External dependency; unmodified upstream files are not bundled.",
+  "license_note": "The pinned pyproject declares the MIT classifier; its archive contains no standalone LICENSE file. Obtain the upstream source from its original publisher. The release MIT license applies to our additions only."
+}

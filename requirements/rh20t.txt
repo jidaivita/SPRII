@@ -1,0 +1,2 @@
+-r core.txt
+opencv-python-headless>=4.8

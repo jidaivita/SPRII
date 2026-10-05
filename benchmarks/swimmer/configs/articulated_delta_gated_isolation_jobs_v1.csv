@@ -1,0 +1,7 @@
+job_id,environment,arm,seed,learning_rate
+articulated_delta_gated_true_s86101_lr1e-3,articulated,true,86101,0.001
+articulated_delta_gated_true_s86103_lr1e-3,articulated,true,86103,0.001
+articulated_delta_gated_true_s86107_lr1e-3,articulated,true,86107,0.001
+articulated_delta_gated_shuffled_s86101_lr1e-3,articulated,shuffled,86101,0.001
+articulated_delta_gated_shuffled_s86103_lr1e-3,articulated,shuffled,86103,0.001
+articulated_delta_gated_shuffled_s86107_lr1e-3,articulated,shuffled,86107,0.001

@@ -1,0 +1,44 @@
+cff-version: 1.2.0
+message: "If you use SPRII, please cite the accompanying paper."
+type: software
+title: "SPRII: Shaping Persistent Representations from Independent Interactions"
+version: 0.2.0
+url: "https://jidaivita.github.io/sprii/"
+repository-code: "https://github.com/jidaivita/SPRII"
+authors:
+  - family-names: Dai
+    given-names: Ji
+  - family-names: Fang
+    given-names: Quan
+  - family-names: Gao
+    given-names: Junyu
+  - family-names: Guo
+    given-names: Rongfeng
+  - family-names: Rong
+    given-names: Haoyan
+  - family-names: Huang
+    given-names: Yiping
+  - family-names: Li
+    given-names: Yongxi
+preferred-citation:
+  type: article
+  title: "Shaping Persistent Representations from Independent Interactions"
+  authors:
+    - family-names: Dai
+      given-names: Ji
+    - family-names: Fang
+      given-names: Quan
+    - family-names: Gao
+      given-names: Junyu
+    - family-names: Guo
+      given-names: Rongfeng
+    - family-names: Rong
+      given-names: Haoyan
+    - family-names: Huang
+      given-names: Yiping
+    - family-names: Li
+      given-names: Yongxi
+  journal: arXiv
+  year: 2026
+  doi: "10.48550/arXiv.2609.34604"
+  url: "https://arxiv.org/abs/2609.34604"

@@ -1,0 +1,8 @@
+numpy>=1.26
+scipy>=1.10
+pyyaml>=6.0
+torch>=2.4
+scikit-learn>=1.4
+matplotlib>=3.8
+Pillow>=10
+pytest>=8

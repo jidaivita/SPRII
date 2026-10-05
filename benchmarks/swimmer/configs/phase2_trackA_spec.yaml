@@ -1,0 +1,123 @@
+{
+  "schema_version": "1.0",
+  "status": "DEVELOPMENT_CANONICAL",
+  "track": "A_COUPLED_SLED",
+  "authority": {
+    "numeric_source": "configs/phase2_trackA_spec.yaml",
+    "math_source": "protocol/PHASE2_TRACK_A_MATH_SPEC.md",
+    "cpu_physics_source": "reference_linear_dynamics",
+    "learner_execution_source": "mujoco_parity_validated"
+  },
+  "dynamics": {
+    "state": ["x_L", "x_R", "v_L", "v_R"],
+    "parameters": ["m_L", "m_R", "b_L", "b_R", "k_c", "d_c"],
+    "initial_state": [0.0, 0.0, 0.0, 0.0],
+    "reference_dt_s": 0.0005,
+    "mujoco_dt_s": 0.0005
+  },
+  "development_prior_envelope": {
+    "m_L": {"distribution": "uniform", "low": 0.7, "high": 1.3, "unit": "kg"},
+    "m_R": {"distribution": "uniform", "low": 0.7, "high": 1.3, "unit": "kg"},
+    "b_L": {"distribution": "uniform", "low": 0.25, "high": 1.0, "unit": "N_s_per_m"},
+    "b_R": {"distribution": "uniform", "low": 0.25, "high": 1.0, "unit": "N_s_per_m"},
+    "k_c_candidates": [[4.0, 12.0], [8.0, 24.0], [12.0, 36.0]],
+    "d_c_candidates": [[0.15, 0.6], [0.3, 1.0], [0.5, 1.5]],
+    "positive_scale_distribution": "log_uniform"
+  },
+  "splits": {
+    "development": 256,
+    "discovery": 256,
+    "design_validation": 128,
+    "sealed": 256,
+    "posterior_particles": 4096,
+    "sobol_scramble": true,
+    "development_seed": 42001,
+    "discovery_seed": 42002,
+    "design_validation_seed": 42003,
+    "posterior_seed_blocks": [42100, 42101, 42102, 42103, 42104, 42105, 42106, 42107],
+    "sealed_seed_in_workspace": false
+  },
+  "actuator_gain": {
+    "distribution": "lognormal",
+    "mean": 1.0,
+    "cv": 0.015,
+    "quadrature_points": 7
+  },
+  "development_candidates": {
+    "experience_duration_s": [0.2, 0.3, 0.4],
+    "history_landmarks": [6, 8, 12],
+    "observation_semantics": ["both_positions", "actuated_side_position"],
+    "sensor_std_m": [0.00025, 0.0005, 0.001]
+  },
+  "development_v0_1": {
+    "experience_duration_s": 0.3,
+    "query_duration_s": 0.6,
+    "history_landmarks": 8,
+    "query_landmarks": 12,
+    "observation_semantics": "both_positions",
+    "sensor_std_m": 0.0005,
+    "k_c_range": [8.0, 24.0],
+    "d_c_range": [0.3, 1.0],
+    "history_energy": 0.02,
+    "query_energy": 0.04,
+    "peak_force_n": 2.0,
+    "query_chirp_hz": [1.0, 5.0]
+  },
+  "posterior": {
+    "particles": 4096,
+    "quadrature_points": 7,
+    "resample": false,
+    "rejuvenate": false,
+    "median_ess_min": 256,
+    "p05_ess_min": 64
+  },
+  "risk": {
+    "definition": "oracle_floor_empirical_risk_v1",
+    "covariance_diagnostic": true,
+    "clamp_fraction": false,
+    "realizations_per_system": 4,
+    "cluster_bootstrap_replicates": 2000,
+    "common_random_query_nuisance": true
+  },
+  "overlap": {
+    "definition": "directional_query_fisher_v1",
+    "rank_trace_fraction": 0.95,
+    "relative_eigenvalue_floor": 0.0001,
+    "pairwise_delta_used_for_selection": false,
+    "standalone_iq_match_tolerance": 0.05
+  },
+  "development_targets": {
+    "single_iq_fraction_low": 0.15,
+    "single_iq_fraction_high": 0.85,
+    "minimum_nonsaturated_probes": 4,
+    "minimum_legal_anchors": 3,
+    "target_median_comp_minus_red": 0.1
+  },
+  "learner_development": {
+    "split_system_counts": {"train": 160, "select": 48, "holdout": 48},
+    "realizations_per_system": 1,
+    "seed": 44001,
+    "batch_size": 512,
+    "epochs": 60,
+    "minimum_epochs": 10,
+    "early_stopping_patience": 8,
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001,
+    "history_embedding_dim": 64,
+    "persistent_dim": 32,
+    "query_embedding_dim": 32,
+    "hidden_dim": 128,
+    "jepa_latent_weight": 1.0,
+    "jepa_target_reconstruction_weight": 0.5,
+    "jepa_prediction_weight": 1.0,
+    "selection_metric": "aggregate_query_mse_blind_to_condition_contrast",
+    "conditions": ["query_only", "anchor", "repeated", "redundant", "complementary", "wrong_system"]
+  },
+  "access": {
+    "development": true,
+    "discovery": false,
+    "design_validation": false,
+    "sealed": false,
+    "formal_training": false
+  }
+}

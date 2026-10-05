@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0",
+  "status": "FORMAL_TRACK_A_LIFE_OR_DEATH",
+  "base_spec": "configs/phase2_trackA_spec.yaml",
+  "fixed_seed": 46000,
+  "system_pools": {
+    "learner_train": {"count": 2048, "seed": 46001},
+    "learner_select": {"count": 256, "seed": 46002},
+    "discovery": {"count": 256, "seed": 46003},
+    "validation": {"count": 128, "seed": 46004}
+  },
+  "training_conditions": ["query_only", "anchor", "repeated", "redundant", "complementary"],
+  "evaluation_conditions": ["query_only", "anchor", "repeated", "redundant", "complementary", "wrong_system"],
+  "evaluation_realizations_per_system": 4,
+  "learner": {
+    "epochs": 40,
+    "minimum_epochs": 10,
+    "early_stopping_patience": 8,
+    "batch_size": 512
+  },
+  "wrong_system_derangement_seeds": {"discovery": 46103, "validation": 46104},
+  "primary": {
+    "definition": "system_mean_mse_redundant_minus_complementary",
+    "strong_effect_target": 0.004,
+    "bootstrap_replicates": 10000,
+    "positive_system_fraction_target": 0.70,
+    "positive_anchor_count_target": 5
+  },
+  "access": {"sealed": false, "swimmer": false, "nad": false}
+}

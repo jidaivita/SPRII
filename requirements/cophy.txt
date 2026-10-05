@@ -1,0 +1,4 @@
+-r core.txt
+torchvision
+tqdm
+imageio

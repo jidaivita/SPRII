@@ -1,0 +1,65 @@
+{
+  "manifest_id": "burgers_available_released_v1",
+  "status": "predeclared_before_formal_training",
+  "methods": [
+    "NOD_clean",
+    "SPRII",
+    "SPRII-Random"
+  ],
+  "seeds": [
+    1234,
+    5678,
+    9012
+  ],
+  "run_count": {
+    "NOD_clean": 3,
+    "SPRII": 3,
+    "SPRII-Random": 3
+  },
+  "data": {
+    "train_root": "data/burgers_normalized/train",
+    "train_add_root": "data/burgers_normalized/train_add",
+    "truth_root": "data/burgers_normalized/truth",
+    "evaluation_manifest": "available_released_manifest",
+    "missing_truth_nu": [
+      0.003
+    ],
+    "same_ab_c_budget": true
+  },
+  "official_path": {
+    "context_dim": 1,
+    "batch_size": 8,
+    "epochs": 200,
+    "lr": 0.0001,
+    "weight_decay": 0.0001,
+    "clip_grad": 1.0,
+    "train_query_points": 8192,
+    "checkpoint_metric": "validation_loss",
+    "final_set_loaded_during_training": false
+  },
+  "sprii_selection": {
+    "lambda_align_search_space": [
+      0.01,
+      0.03,
+      0.1,
+      0.3
+    ],
+    "selection_split": "validation",
+    "selection_metric": "base_prediction_loss",
+    "selected_lambda_reused_for_random": true,
+    "pair": "A-C_alignment_with_A-B_prediction",
+    "relation": "same_system_independent_history",
+    "selected_lambda_align": 0.03
+  },
+  "random_control": {
+    "only_relation_permuted": true,
+    "prediction_path_unchanged": true,
+    "same_batch_ids_and_access_budget": true
+  },
+  "final_groups": [
+    "id_test",
+    "ood_viscous",
+    "ood_inviscid"
+  ],
+  "test_selection_peeking": false
+}

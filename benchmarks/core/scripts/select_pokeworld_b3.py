@@ -1,0 +1,88 @@
+#!/usr/bin/env python3
+"""Equal-budget seed-0 selection for the R0/PokeWorld B3 bridge."""
+
+from __future__ import annotations
+
+import argparse
+import json
+from datetime import datetime, timezone
+from pathlib import Path
+
+from persistent_jepa.runtime import sha256_file
+from persistent_jepa.test_seal import write_immutable_selection
+
+
+def ranking(report: dict) -> tuple[float, float, float, float]:
+    config = report["training_config"]
+    return (
+        -float(report["probes"]["drag"]["system_r2"]),
+        float(report["donor"]["correct_h16"]["object"]["state"]),
+        -float(report["donor"]["object_state_mse_gap"]),
+        float(config["lambda_p"]) + float(config["lambda_x"]),
+    )
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--metrics", nargs="+", type=Path, required=True)
+    parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--decision-log", type=Path, required=True)
+    parser.add_argument("--code-revision", required=True)
+    args = parser.parse_args()
+    candidates = []
+    for path in args.metrics:
+        report = json.loads(path.read_text(encoding="utf-8"))
+        config = report["training_config"]
+        if report["split"] != "val" or report["variant"] != "B3":
+            raise ValueError(f"not a B3 validation report: {path}")
+        if report["checkpoint_step"] != 20000 or int(config["seed"]) != 0:
+            raise ValueError(f"equal-budget violation: {path}")
+        candidates.append((ranking(report), path, report))
+    candidates.sort(key=lambda item: item[0])
+    _, best_path, best = candidates[0]
+    payload = {
+        "variant": "B3",
+        "full_config": best["training_config"],
+        "checkpoint": best["checkpoint"],
+        "checkpoint_sha256": best["checkpoint_sha256"],
+        "dataset_manifest_sha256": best["dataset_manifest_sha256"],
+        "primary_metric": {
+            "name": "validation_system_drag_ridge_r2",
+            "value": best["probes"]["drag"]["system_r2"],
+        },
+        "tie_breakers": {
+            "correct_donor_h16_object_state_mse": best["donor"]["correct_h16"]["object"]["state"],
+            "random_shuffled_minus_correct_object_state_mse": best["donor"]["object_state_mse_gap"],
+            "lambda_sum": best["training_config"]["lambda_p"] + best["training_config"]["lambda_x"],
+        },
+        "decoder_ridge": best["decoder_ridge"],
+        "probe_ridge": {name: value["ridge_alpha"] for name, value in best["probes"].items()},
+        "pairing_seed": best["pairing_seed"],
+        "code_revision": args.code_revision,
+        "source_validation_report": str(best_path),
+        "source_validation_report_sha256": sha256_file(best_path),
+        "created_at": datetime.now(timezone.utc).isoformat(),
+    }
+    write_immutable_selection(args.output, payload)
+    decision = {
+        "rule": "seed0@20k only; drag R2 desc, correct object MSE asc, donor gap desc, lambda sum asc",
+        "ranked_candidates": [
+            {
+                "rank": index + 1,
+                "metrics": str(path),
+                "lambda_p": report["training_config"]["lambda_p"],
+                "lambda_x": report["training_config"]["lambda_x"],
+                "ranking_tuple": list(rank),
+            }
+            for index, (rank, path, report) in enumerate(candidates)
+        ],
+        "selected": str(best_path),
+        "selection_json": str(args.output),
+    }
+    args.decision_log.parent.mkdir(parents=True, exist_ok=True)
+    args.decision_log.write_text(json.dumps(decision, indent=2) + "\n", encoding="utf-8")
+    print(json.dumps(decision, indent=2))
+
+
+if __name__ == "__main__":
+    main()

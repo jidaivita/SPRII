@@ -1,0 +1,180 @@
+{
+  "schema_version": "1.0",
+  "status": "FROZEN_SPEC_AWAITING_REMOTE_EXECUTION",
+  "protocol": "protocol/DOWNSTREAM_ROUTING_INTERVENTION_V1.md",
+  "implementation": "code/paper_c/stage2/routing_intervention.py",
+  "queue_implementation": "code/paper_c/stage2/routing_queue.py",
+  "remote_worker_launcher": "work/launch_downstream_routing_workers_v1.sh",
+  "remote_host_registration": "work/register_downstream_routing_remote_host_v1.sh",
+  "job_manifest": "configs/downstream_routing_intervention_jobs_v1.csv",
+  "output_root": "runs/intervention/downstream_routing_v1",
+  "evidence_identity": "outcome_informed_explanatory_on_existing_formal_systems",
+  "prerequisites": [
+    {
+      "path": "runs/diagnostics/stage1_pair_closure_v1/stage1d_pair_closure_receipt.json",
+      "allowed_status": ["STAGE1D_PAIR_CLOSURE_COMPLETE"]
+    },
+    {
+      "path": "runs/diagnostics/coupled_relation_decomposition_v1/COUPLED_RELATION_DECOMPOSITION_RECEIPT_V1.json",
+      "allowed_status": ["COUPLED_RELATION_DECOMPOSITION_COMPLETE"]
+    }
+  ],
+  "environments": {
+    "articulated": {
+      "role": "primary",
+      "active_condition_indices": [2],
+      "train_arrays": "runs/formal/swimmer_s2r_learner_v1/data/train_arrays.npz",
+      "select_arrays": "runs/formal/swimmer_s2r_learner_v1/data/select_arrays.npz",
+      "train_manifest": "runs/formal/swimmer_s2r_learner_v1/data/train_sample_manifest.csv",
+      "select_manifest": "runs/formal/swimmer_s2r_learner_v1/data/select_sample_manifest.csv",
+      "checkpoint": "runs/formal/swimmer_s2r_learner_v1/models/persistent_jepa_frozen.pt",
+      "normalization": "runs/formal/swimmer_s2r_learner_v1/models/train_only_normalization.npz",
+      "training_receipt": "runs/formal/swimmer_s2r_learner_v1/models/s2_training_receipt.json",
+      "training_receipt_status": "S2_LEARNER_SUFFICIENCY_GO",
+      "training_receipt_hash_field": "checkpoint_hashes",
+      "candidate_column": "candidate_index"
+    },
+    "coupled": {
+      "role": "supporting",
+      "active_condition_indices": [2, 3, 4],
+      "train_arrays": "runs/formal/phase2_track_a_life_or_death_v1/learner_train_arrays.npz",
+      "select_arrays": "runs/formal/phase2_track_a_life_or_death_v1/learner_select_arrays.npz",
+      "train_manifest": "runs/formal/phase2_track_a_life_or_death_v1/learner_train_sample_manifest.csv",
+      "select_manifest": "runs/formal/phase2_track_a_life_or_death_v1/learner_select_sample_manifest.csv",
+      "checkpoint": "runs/formal/phase2_track_a_life_or_death_v1/models/persistent_jepa_formal_frozen.pt",
+      "normalization": "runs/formal/phase2_track_a_life_or_death_v1/models/train_only_normalization.npz",
+      "training_receipt": "runs/formal/phase2_track_a_life_or_death_v1/models/formal_training_receipt.json",
+      "training_receipt_status": "FORMAL_LEARNERS_FROZEN",
+      "training_receipt_hash_field": "hashes",
+      "candidate_column": "added_probe"
+    }
+  },
+  "adapter": {
+    "dimension_rule": "input=2*latent_dim,output=latent_dim",
+    "latent_dim_by_environment": {
+      "articulated": 64,
+      "coupled": 32
+    },
+    "hidden_dim": 64,
+    "activation": "GELU",
+    "final_layer_initialization": "exact_zero",
+    "residual_target": "frozen_predicted_query_latent"
+  },
+  "arms": ["true", "shuffled", "query_only"],
+  "optimization": {
+    "optimizer": "AdamW",
+    "learning_rates": [0.0001, 0.0003, 0.001],
+    "weight_decay": 0.0001,
+    "batch_size": 1024,
+    "maximum_epochs": 20,
+    "minimum_epochs": 5,
+    "early_stopping_patience": 3,
+    "seeds": [86101, 86103, 86107],
+    "objective": "immutable_select_normalized_prediction_mse",
+    "selection": "minimum_select_mse_within_environment_arm_seed",
+    "formal_outcome_selection_forbidden": true
+  },
+  "cache": {
+    "dtype": "float32",
+    "system_shards_per_environment": 4,
+    "canonical_shard_count_is_mandatory": true,
+    "parity_namespace": "runs/intervention/downstream_routing_v1/dev/parity",
+    "system_assignment": "system_index_mod_shard_count",
+    "batch_boundaries": "system_local",
+    "required_features": [
+      "delta_persistent",
+      "query_embedding",
+      "predicted_latent_full",
+      "prediction_original",
+      "prediction_anchor",
+      "normalized_target"
+    ],
+    "hash_every_shard_and_merged_cache": true
+  },
+  "formal_manifest": {
+    "canonical_anchor_axis": "anchor_index",
+    "articulated_alias": "anchor_index := history_index",
+    "coupled_invariant": "anchor_index == history_index",
+    "stage1_key_coverage_required": true
+  },
+  "correctness": {
+    "static_receipt_template": "runs/intervention/downstream_routing_v1/dev/correctness/REMOTE_STATIC_CORRECTNESS_RECEIPT_{logical_host}.json",
+    "freeze_receipt_template": "runs/intervention/downstream_routing_v1/INTERVENTION_FROZEN_{logical_host}.json",
+    "cache_parity_receipts": {
+      "articulated": "runs/intervention/downstream_routing_v1/dev/parity/CACHE_PARITY_articulated.json",
+      "coupled": "runs/intervention/downstream_routing_v1/dev/parity/CACHE_PARITY_coupled.json"
+    },
+    "formal_parity_receipts": {
+      "articulated": "runs/intervention/downstream_routing_v1/dev/parity/FORMAL_PARITY_articulated.json",
+      "coupled": "runs/intervention/downstream_routing_v1/dev/parity/FORMAL_PARITY_coupled.json"
+    },
+    "formal_parity_systems_per_modulo_shard": 1,
+    "formal_parity_independent_forward_count": 5,
+    "global_job_authentication_binds_current_config_and_environment_selection": true,
+    "canonical_outputs_forbidden_in_parity_namespace": true
+  },
+  "shuffled_control": {
+    "cell": ["anchor_index", "query_index", "candidate_identity"],
+    "permutation_scope": "across_physical_systems_only",
+    "hold_candidate_fixed": true,
+    "derangement_required": true,
+    "same_seed_for_train_select_formal_rule": true
+  },
+  "formal_evaluation": {
+    "selection_receipt_required_before_formal_materialization": true,
+    "selection_receipt_required_before_formal_cache": true,
+    "system_sharded": true,
+    "bayes_correction_required": true,
+    "statistics_dtype": "float64",
+    "fixed_merge_order": ["environment", "system_index", "arm", "seed"],
+    "bootstrap_replicates": 4000,
+    "bootstrap_seed": 86201,
+    "primary": "system_equal_mean_candidate_gain",
+    "routing_rescue": "lower_CI(G_true-G_original)>0",
+    "specificity_shuffle": "lower_CI(G_true-G_shuffled)>0",
+    "specificity_query": "lower_CI(G_true-G_query_only)>0",
+    "mediator": "a",
+    "mediator_is_hard_gate": false,
+    "zero_update_cosine_convention": 0.0,
+    "nonfinite_formal_metric_policy": "hard_fail_before_aggregation"
+  },
+  "remote_execution": {
+    "hosts": ["worker_a", "worker_b"],
+    "shared_workspace": true,
+    "go_writer_logical_host": "worker_a",
+    "logical_host_environment": {
+      "worker_a": "articulated",
+      "worker_b": "coupled"
+    },
+    "host_partition": {
+      "worker_a": 0,
+      "worker_b": 1
+    },
+    "sentinel_relative_directory": ".paper_c_remote",
+    "require_linux": true,
+    "allowed_gpu_ids_per_host": [0, 1, 2, 3],
+    "cpu_threads_per_worker": 1,
+    "container_memory_limit_gib": 30,
+    "maximum_workers_per_host": 4,
+    "gpu_memory_fraction_per_worker": 0.2,
+    "record_peak_cpu_and_gpu_memory": true,
+    "gpus_per_host": 4,
+    "total_l20_gpus": 8,
+    "queue_mode": "deterministic_two_host_partition_then_atomic_dynamic_claim_per_host",
+    "training_jobs": 54,
+    "expected_training_waves_at_eight_gpus": 7,
+    "local_mac_compute_forbidden": true,
+    "protected_scope_2_processes_and_files_untouched": true,
+    "host_ownership_receipt_required": true,
+    "two_host_equivalence_go_required_before_training": true
+  },
+  "access": {
+    "official": false,
+    "nad": false,
+    "mit_push": false,
+    "new_environment": false,
+    "new_base_model_training": false,
+    "adapter_training": true,
+    "original_model_parameters_mutable": false
+  }
+}

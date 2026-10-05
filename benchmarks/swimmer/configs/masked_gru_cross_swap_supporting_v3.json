@@ -1,0 +1,116 @@
+{
+  "schema_version": "1.0",
+  "status": "IMPLEMENTED_DO_NOT_EXECUTE_BEFORE_INDEPENDENT_REVIEW",
+  "execution_revision": "v3_dual_numerical_compatibility_gate",
+  "protocol": "protocol/PAPER_C_MASKED_GRU_CROSS_SWAP_SUPPORTING_V3_NUMERICAL_COMPATIBILITY_ADDENDUM.md",
+  "prior_execution_protocol": "protocol/PAPER_C_MASKED_GRU_CROSS_SWAP_SUPPORTING_V2_EXECUTION_ADDENDUM.md",
+  "prior_execution_protocol_sha256": "ee9ada2433a172697597dfd041e57a1b65c18293d0793f2a8652544aa60a6d49",
+  "scientific_protocol": "protocol/PAPER_C_MASKED_GRU_CROSS_SWAP_SUPPORTING_V1.md",
+  "scientific_protocol_sha256": "67ea430eb4a38dad14fc2990dcaa4ce9aa37032b0a4e00424550af215b6f6d21",
+  "implementation": "code/paper_c/stage2/masked_gru_cross_swap.py",
+  "tests": "tests/unit/test_masked_gru_cross_swap.py",
+  "command_matrix": "work/MASKED_GRU_CROSS_SWAP_REMOTE_MATRIX_V3.md",
+  "output_root": "runs/supporting/masked_gru_cross_swap_v3",
+  "superseded_executions": [
+    {
+      "revision": "v1",
+      "output_root": "runs/supporting/masked_gru_cross_swap_v1",
+      "implementation_freeze_path": "runs/supporting/masked_gru_cross_swap_v1/IMPLEMENTATION_FROZEN.json",
+      "implementation_freeze_sha256": "66d50e50dd9e0dde7d5eed1601b05ae413f2fb13deba9b355a97323197bb8494",
+      "command_matrix_freeze_path": "runs/supporting/masked_gru_cross_swap_v1/COMMAND_MATRIX_FROZEN.json",
+      "command_matrix_freeze_sha256": "5dcfbac509e5c8315a864f76ab7aa2edfb5da2f82cd959379cff8bf296c4d54e",
+      "failed_parity_jobs": [
+        "parity-v1-seed-64101",
+        "parity-v1-seed-64103"
+      ],
+      "scientific_artifacts_created": false,
+      "reason": "V1 parity exposed a one-ULP reduction-order mismatch before any scientific artifact was written."
+    },
+    {
+      "revision": "v2",
+      "output_root": "runs/supporting/masked_gru_cross_swap_v2",
+      "implementation_freeze_path": "runs/supporting/masked_gru_cross_swap_v2/IMPLEMENTATION_FROZEN.json",
+      "implementation_freeze_sha256": "dd97bc84b6bd2e82e97e5b6ae0ffeee29935dbc05eec519d003343adc094befc",
+      "command_matrix_freeze_path": "runs/supporting/masked_gru_cross_swap_v2/COMMAND_MATRIX_FROZEN.json",
+      "command_matrix_freeze_sha256": "8c2894f61ecaa06881ae2a9c88d631843cc0d862925fc883774821296972941f",
+      "failed_parity_jobs": [
+        "parity-v2-seed-64101",
+        "parity-v2-seed-64103"
+      ],
+      "scientific_artifacts_created": false,
+      "reason": "V2 matched the current upstream evaluator exactly but the historical CSV retained sub-1e-16 runtime/serialization differences."
+    }
+  ],
+  "numerical_compatibility": {
+    "same_runtime_upstream_array_exact": true,
+    "historical_absolute_tolerance": 1e-15,
+    "historical_relative_tolerance": 0.0,
+    "maximum_per_system_e_input_perturbation": 2.777777777777778e-17,
+    "historical_statistic_columns": ["sum_loss", "sum_gain", "sum2_loss", "sum2_gain"]
+  },
+  "upstream": {
+    "config": "configs/masked_gru_cross_architecture_v1.json",
+    "config_sha256": "b504f48ecf1881c4edbbaed14bff60586148ad54f0993be51d05daaa6ee30732",
+    "final_result": "runs/replication/masked_gru_cross_architecture_v1/formal_pipeline/FINAL_RESULT.json",
+    "final_result_sha256": "be7e68b972388c3346b197c07e88e20f69d977660cc0620b8bc612676f95030b",
+    "final_result_status": "MASKED_GRU_COMPETENT_ARCHITECTURE_CONTRADICTION",
+    "articulated_result_keys": ["64101", "64103"],
+    "base_seeds": [64101, 64103],
+    "optimization_seeds": [86101, 86103, 86107],
+    "existing_statistics": {
+      "64101": {
+        "path": "runs/replication/masked_gru_cross_architecture_v1/formal_pipeline/formal_eval/articulated_s64101/merged_sufficient_statistics.csv.gz",
+        "sha256": "cd996aa35eb3e446ade148c37ad4492641275137ea465437aa361126aa787557"
+      },
+      "64103": {
+        "path": "runs/replication/masked_gru_cross_architecture_v1/formal_pipeline/formal_eval/articulated_s64103/merged_sufficient_statistics.csv.gz",
+        "sha256": "e770d6b77d5fa8d681d4fdeae68870b46ea4d1593d36692cf0592fad38024471"
+      }
+    }
+  },
+  "design": {
+    "cells": ["TT", "TS", "ST", "SS"],
+    "training_arms": ["true", "shuffled"],
+    "input_roles": ["self", "shuffled"],
+    "rows_per_system": 36,
+    "systems": 512,
+    "formal_shards": 2,
+    "fixed_merge_order": [0, 1],
+    "primary": "E_input=0.5*((G_TT-G_TS)+(G_ST-G_SS))",
+    "secondary": "E_interaction=(G_TT-G_TS)-(G_ST-G_SS)",
+    "descriptive": ["I_true_train", "I_shuffle_train", "W_self", "W_shuffle", "cell_means"]
+  },
+  "inference": {
+    "scientific_unit": "physical_system",
+    "bootstrap_replicates": 4000,
+    "bootstrap_seed": 86211,
+    "interval": "two_sided_percentile_95",
+    "same_resample_matrix_for_all_estimands": true,
+    "optimization_seeds_are_scientific_samples": false,
+    "base_seeds_are_scientific_samples": false,
+    "fixed_panel_summary_is_supporting_only": true
+  },
+  "execution": {
+    "remote_only": true,
+    "runtime_root": "runs/cross_swap_runtime",
+    "allowed_hosts": ["worker_b"],
+    "allowed_gpu_ids": [2, 3],
+    "threads_per_worker": 1,
+    "statistics_dtype": "float64",
+    "protected_scope_2_untouched": true,
+    "fresh_packet_mutation_forbidden": true,
+    "upstream_artifact_mutation_forbidden": true
+  },
+  "forbidden": [
+    "model_training",
+    "checkpoint_selection",
+    "hyperparameter_search",
+    "result_dependent_metric_selection",
+    "fresh_packet_mutation",
+    "upstream_gru_artifact_mutation",
+    "base_seed_as_scientific_sample",
+    "optimization_seed_as_scientific_sample",
+    "historical_statistic_substitution",
+    "post_failure_tolerance_tuning"
+  ]
+}

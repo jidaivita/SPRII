@@ -1,0 +1,119 @@
+{
+  "version": "cophy-pt16-v3",
+  "upstream_commit": "170fe463c9e80ddf0978110438a710cabb4997e2",
+  "scenes": {
+    "collision": {
+      "split": "normal",
+      "metric_dims": 3
+    },
+    "balls": {
+      "objects": 4,
+      "metric_dims": 2
+    },
+    "blocktower": {
+      "objects": 3,
+      "split": "normal",
+      "metric_dims": 3
+    }
+  },
+  "methods": [
+    "Native",
+    "A",
+    "Param-known",
+    "Random"
+  ],
+  "random_unconditional": true,
+  "final_seeds_for_all_eligible_scenes": [
+    0,
+    1,
+    2
+  ],
+  "parameter_reference_seeds": [
+    0
+  ],
+  "batch_size": 32,
+  "learning_rate": 0.001,
+  "initial_epochs": 25,
+  "extended_epochs": 50,
+  "extension_rule": "Native OR A improves >=1% from epoch20 to25",
+  "checkpoints": [
+    10,
+    15,
+    20,
+    25,
+    30,
+    35,
+    40,
+    45,
+    50
+  ],
+  "selection": "minimum primary validation MSE; earliest tie",
+  "lambda_x": 0.1,
+  "lambda_p": 1.0,
+  "max_additional_configs": 2,
+  "assay": "single focal conditional reuse",
+  "bootstrap_repeats": 10000,
+  "bootstrap_seed": 20260911,
+  "oracle_failure_is_environment_failure": false,
+  "oracle_fraction_reported": false,
+  "unverified": [
+    "published-data audit",
+    "RelationIndex and actual donor manifests",
+    "real derenderer checkpoint equivalence",
+    "GPU smoke",
+    "full baseline run",
+    "sealed test",
+    "real-data end-to-end execution of all adapter paths"
+  ],
+  "backbone_version": "corrected-v2",
+  "representation": {
+    "U_dim": 32,
+    "P_slice": [
+      0,
+      16
+    ],
+    "T_slice": [
+      16,
+      32
+    ],
+    "alignment": "P_only",
+    "swap": "focal_P_only",
+    "retain": "recipient_T_and_nonfocal_U",
+    "probes": [
+      "P16",
+      "T16",
+      "U32"
+    ],
+    "dimension_search": false
+  },
+  "random_pairing": "full_epoch_stratified_donor_multiset_permutation; independent_seed_epoch; max_256_attempts; same_eligibility_A_Random",
+  "parameter_reference": "MLP(all_audited_parameters,32,16) concatenated with recipient T16; train_standardization",
+  "first_wave": [
+    "Collision Native",
+    "Collision A",
+    "Collision Random",
+    "Collision Param-known"
+  ],
+  "preparation_stages": [
+    "raw_field_and_split_audit",
+    "frontend_AB_C_cache",
+    "relation_index_and_validation_manifests",
+    "training_preflight",
+    "gpu_smoke",
+    "formal_training"
+  ],
+  "underused_p_response": {
+    "validation_signature": "some varying attribute T_BA >= max(P_BA, slot_type_prior_BA)+0.05 AND Use_CI95_lower <=0",
+    "requires": "technical checks pass; no overcontraction signature",
+    "lambda_p": 3.0,
+    "lambda_x": 0.1,
+    "attempts": 1,
+    "within_existing_extra_config_budget": true,
+    "dimension_search": false
+  },
+  "evaluation_donor_pool": "same held-out split; shared manifest across all training seeds",
+  "metadata_layout": {
+    "blocktower_physics": "object ID mapped through AB/colors.txt",
+    "blocktower_states": "color slots"
+  }
+}

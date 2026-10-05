@@ -1,0 +1,25 @@
+{
+  "training_spec": {
+    "steps": 10000,
+    "pairs_per_batch": 48,
+    "history_frames": 96,
+    "learning_rate": 0.0003,
+    "weight_decay": 0.05,
+    "warmup_steps": 500,
+    "gradient_clip": 1.0,
+    "model_seed": 0,
+    "sampling_seed": 0,
+    "stochastic_seed": 0,
+    "precision": "bfloat16_cuda",
+    "save_every": 250,
+    "log_every": 25,
+    "milestone_steps": [
+      1000,
+      2500,
+      5000,
+      10000
+    ]
+  },
+  "test_read": false,
+  "bank_snapshot_sha256": "c7582007714458682e88211df775781d66d41dae005d533f367fcd58c82781dc"
+}

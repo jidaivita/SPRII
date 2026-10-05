@@ -1,0 +1,103 @@
+{
+  "ad": {
+    "attention_dropout": 0.1,
+    "embedding_dim": 64,
+    "embedding_dropout": 0.1,
+    "hidden_dim": 256,
+    "normalize_qk": false,
+    "num_actions": 6,
+    "num_heads": 4,
+    "num_layers": 4,
+    "obs_shape": [
+      5,
+      5,
+      40
+    ],
+    "pre_norm": true,
+    "residual_dropout": 0.1,
+    "seq_len": 500,
+    "use_teammate_actions": false
+  },
+  "batch_audit": "full first batch; every update stores ordered row-plan SHA256 and policy/counts; checkpoint sampler RNG enables replay",
+  "batch_size": 1024,
+  "code_sha256": {
+    "benchmarks/baselines/ad/model.py": "92b232713bcc2459d8f6c7baa4fe1149ea8ee73e1ae271b84fc4ceb37dc3988d",
+    "native_a/history_subset.py": "766c87230497dcbaa11d064021ff86618608de1761366d0b931c0a7c87c11d87",
+    "native_a/joint_batch.py": "e3736de12c764e03bae1c5c6d2d1f22c62719c03781a0c1040aab26b2ad64424",
+    "native_a/large_batch.py": "fc15b1be19ef831e6ecf03ed94233da28d3706eece376bd3a522f2cc7c056bfd",
+    "native_a/losses.py": "4ef104f52255406cae9c4f45ad1d628048d1d76c9b44270659e8b50eeb0f03b2",
+    "native_a/mapped_history.py": "437564224e638de8c8d1ae76f8bc470b07595c88365a0813d573958495cc9eec",
+    "native_a/model.py": "21a8ac628da4451a977d3b62c9f03c72ff7cde5580738444709516b464c10634",
+    "native_a/sampler.py": "13d6bfe792462bdd4bc40b68d9fbf68cb16587bbb4d02ca8bc4da757a397bd95",
+    "native_a/train.py": "27601232f662031aa50377c658af06779f5c5f28b0a2381012320d8ef965c2a7",
+    "runners/history_adapter.py": "4066cf6539d3c1c199169a81b37dccb555e6e15a7616f4a1e5759663c4a2099a"
+  },
+  "comparison": "paired_history_budget; upstream original-sampler AD remains a separate reference",
+  "cross_weight": 0.0,
+  "data": {
+    "episode_index": {
+      "path": "data/native_episode_index.jsonl",
+      "sha256": "0ef0ea5f4adcda7cf453bd4de1581045b8d4ab6fecdb23a9916fc762d567fa5c"
+    },
+    "h5": {
+      "path": "data/histories.h5",
+      "sha256": "2c3cba37a168ac3f88bb217d6a8596bd8acea62b8ded8af6b44762e3ffba2513"
+    },
+    "history_allowlist": {
+      "path": "data/25.json",
+      "sha256": "04c9cfd0ddd5f1b46c067686ed31168ff2061ed9dea6929f2e75c4d023c42abc"
+    },
+    "index": {
+      "path": "data/histories_index.jsonl",
+      "sha256": "2d25126ce111a62bc885493a7f4a6c2c20617f1c320e6949386990397bdda335"
+    },
+    "task_manifest": {
+      "path": "data/train_manifest.jsonl",
+      "sha256": "ee66a06ee7bad5366f1e571c1a4280e34b1b647866b7970b5d79d98e306e15e9"
+    }
+  },
+  "format": "native-ad-a/1",
+  "lambda_p": 0.001,
+  "mode": "I+VC",
+  "num_steps": 20000,
+  "numerics": {
+    "dropout": "same split/fold_in key per microbatch replay",
+    "dtype": "float32",
+    "effective_batch": 1024,
+    "matmul_precision": "highest",
+    "optimizer_updates_per_batch": 1,
+    "physical_microbatch": 128,
+    "replay_max_abs_tolerance": 1e-05,
+    "statistics": "joint1024"
+  },
+  "optimizer": {
+    "learning_rate": 0.0003,
+    "max_grad_norm": 1.0,
+    "schedule": "warmup_cosine",
+    "warmup_steps": 1000,
+    "weight_decay": 0.0
+  },
+  "persistent_dim": 32,
+  "sampler": {
+    "distinct_partners_per_batch": false,
+    "large_batch_policy": {
+      "batch_statistic_unit": "episode pair, not distinct partner identity or query token",
+      "cross_row_episode_reuse": "allowed except the exact two-episode support pair",
+      "distinct_partners_per_batch": false,
+      "duplicate_support_episode_pair_in_batch": "rejected and resampled",
+      "identity_sampling": "uniform_with_replacement",
+      "one_row": "same fixed partner; two distinct earlier support episodes; one later query",
+      "query_support_overlap": "forbidden within each row"
+    },
+    "query_len": 300,
+    "query_loss_only": true,
+    "split": "train",
+    "support_count": 2,
+    "support_len": 100,
+    "support_policy": "independent explicitly annotated episodes before the query's first episode",
+    "target": "recorded_ego_actions",
+    "total_history_tokens": 500
+  },
+  "seed": 4200,
+  "release_condition": "A25"
+}

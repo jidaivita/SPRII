@@ -1,0 +1,9 @@
+--- a/teammate_generation/train_ippo_overcooked_v2.py
++++ b/teammate_generation/train_ippo_overcooked_v2.py
+@@ -203 +203,2 @@
+-    num_updates = config["NUM_UPDATES"]
++    # CLI accepts scientific-notation floats; array slice bounds require ints.
++    num_updates = int(config["NUM_UPDATES"])
+@@ -429,0 +431,2 @@
++    # CPU JAX dispatch is asynchronous; finish computation before timing it.
++    jax.block_until_ready(out)

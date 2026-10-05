@@ -1,0 +1,95 @@
+{
+  "schema_version": "1.0",
+  "status": "FROZEN_SPEC_AWAITING_REMOTE_EXECUTION",
+  "protocol": "protocol/ARTICULATED_DELTA_GATED_ISOLATION_V1.md",
+  "implementation": "code/paper_c/stage2/delta_gated_isolation.py",
+  "tests": "tests/unit/test_delta_gated_isolation.py",
+  "job_manifest": "configs/articulated_delta_gated_isolation_jobs_v1.csv",
+  "output_root": "runs/intervention/articulated_delta_gated_isolation_v1",
+  "evidence_identity": "post_hoc_explanatory_on_existing_formal_systems",
+  "environment": "articulated",
+  "systems": 512,
+  "upstream": {
+    "v1_config": "configs/downstream_routing_intervention_v1.json",
+    "v1_selection": "runs/intervention/downstream_routing_v1/selection/articulated/SELECTION_FROZEN.json",
+    "v1_selected_table": "runs/intervention/downstream_routing_v1/selection/articulated/selected_checkpoints.csv",
+    "v1_final_result": "runs/intervention/downstream_routing_v1/formal_eval/articulated/FINAL_RESULT.json",
+    "train_cache_receipt": "runs/intervention/downstream_routing_v1/cache/articulated/train/merged.receipt.json",
+    "select_cache_receipt": "runs/intervention/downstream_routing_v1/cache/articulated/select/merged.receipt.json",
+    "formal_cache_receipt": "runs/intervention/downstream_routing_v1/cache/articulated/formal/merged.receipt.json",
+    "formal_shuffle_receipt": "runs/intervention/downstream_routing_v1/formal_shuffle_maps/articulated/FORMAL_SHUFFLE_MAPS_FROZEN.json",
+    "train_arrays": "runs/formal/swimmer_s2r_learner_v1/data/train_arrays.npz"
+  },
+  "architecture": {
+    "name": "delta_gated_persistent_only",
+    "latent_dim": 64,
+    "hidden_dim": 64,
+    "delta_projection_bias": false,
+    "delta_activation": "GELU",
+    "query_gate": "sigmoid_linear",
+    "output_projection_bias": false,
+    "output_initialization": "exact_zero",
+    "structural_invariant": "A(0,q)=0"
+  },
+  "arms": ["true", "shuffled"],
+  "structural_controls": {
+    "original": "frozen_base_prediction",
+    "query_only": "exactly_original_by_A(0,q)=0"
+  },
+  "optimization": {
+    "optimizer": "AdamW",
+    "learning_rate": 0.001,
+    "learning_rate_grid": false,
+    "learning_rate_provenance": "minimum mean immutable-select MSE across V1 articulated true-arm optimization seeds",
+    "v1_mean_select_mse_by_lr": {
+      "0.0001": 0.009560615565903761,
+      "0.0003": 0.009554444605277644,
+      "0.001": 0.009550686914151833
+    },
+    "weight_decay": 0.0001,
+    "batch_size": 1024,
+    "maximum_epochs": 20,
+    "minimum_epochs": 5,
+    "early_stopping_patience": 3,
+    "seeds": [86101, 86103, 86107],
+    "objective": "immutable_select_normalized_prediction_mse",
+    "formal_outcome_selection_forbidden": true,
+    "seed_selection_forbidden": true
+  },
+  "formal_evaluation": {
+    "system_shards": 2,
+    "system_assignment": "system_index_mod_2",
+    "batch_boundaries": "system_local",
+    "statistics_dtype": "float64",
+    "fixed_merge_order": [0, 1],
+    "bootstrap_replicates": 4000,
+    "bootstrap_seed": 87201,
+    "primary": "system_equal_mean_candidate_gain",
+    "route_gate": "lower_CI(G_true-G_original)>0",
+    "specificity_gate": "lower_CI(G_true-G_shuffled)>0",
+    "mediator": "a",
+    "mediator_is_hard_gate": false
+  },
+  "remote_execution": {
+    "logical_host": "worker_b",
+    "require_linux": true,
+    "sentinel": ".paper_c_remote/worker_b.json",
+    "allowed_gpu_ids": [2, 3],
+    "cpu_threads_per_worker": 1,
+    "gpu_memory_fraction_per_worker": 0.2,
+    "maximum_parallel_workers": 2,
+    "local_mac_compute_forbidden": true,
+    "protected_scope_2_untouched": true,
+    "e1_gpu_ids_reserved": [0, 1]
+  },
+  "scope": {
+    "new_base_model_training": false,
+    "new_environment": false,
+    "official": false,
+    "nad": false,
+    "mit_push": false,
+    "e4": false,
+    "e5": false,
+    "canonical_v1_outputs_mutable": false
+  }
+}

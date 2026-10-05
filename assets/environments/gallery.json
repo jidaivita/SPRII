@@ -1,0 +1,137 @@
+{
+  "schema_version": 2,
+  "card_size": [
+    720,
+    480
+  ],
+  "source_registry": {
+    "version": "shared-environment-media-20260926",
+    "sha256": "5ec18cad4cfdb86de9691fa4d7830b46211df300e93fbfceeb0f788ba30e433d"
+  },
+  "items": [
+    {
+      "id": "springworld",
+      "environment_id": "spring",
+      "label": "SpringWorld",
+      "image": "springworld.png",
+      "guide": "benchmarks/springworld/README.md",
+      "kind": "Physics demonstration",
+      "caption": "Physics demonstration · force and release",
+      "thumbnail_sha256": "344401ad7fe88ce2da0b0d96cd5cd283e64157b9646441ec1084ad3f3ee552ee"
+    },
+    {
+      "id": "pokeworld",
+      "environment_id": "poke",
+      "label": "PokeWorld",
+      "image": "pokeworld.png",
+      "guide": "benchmarks/pokeworld/revision/README.md",
+      "kind": "History replay",
+      "caption": "History replay · applied actions · ¼ speed",
+      "thumbnail_sha256": "51bbc0efb04234eceacb3dbeefdba540f7e87201fe1c408760e7176c1dd82f24"
+    },
+    {
+      "id": "dclean",
+      "environment_id": "dclean",
+      "label": "D-Clean",
+      "image": "dclean.png",
+      "guide": "benchmarks/core/README.md",
+      "kind": "Recorded trajectory",
+      "caption": "Recorded trajectory · external force and drag · ½ speed",
+      "thumbnail_sha256": "6363beb8e2a6a015938c3338e4a74e5a12bcabb7f1c9bb810b6039add6457b7b"
+    },
+    {
+      "id": "cophy_collision",
+      "environment_id": "cophy_collision",
+      "label": "CoPhy Collision",
+      "guide": "benchmarks/cophy/README.md",
+      "kind": "Implementation guide",
+      "presentation": "text"
+    },
+    {
+      "id": "cophy_balls",
+      "environment_id": "cophy_balls",
+      "label": "CoPhy Balls",
+      "guide": "benchmarks/cophy/README.md",
+      "kind": "Implementation guide",
+      "presentation": "text"
+    },
+    {
+      "id": "cophy_blocktower",
+      "environment_id": "cophy_blocktower",
+      "label": "CoPhy Blocktower",
+      "guide": "benchmarks/cophy/README.md",
+      "kind": "Implementation guide",
+      "presentation": "text"
+    },
+    {
+      "id": "burgers",
+      "environment_id": "nod1d",
+      "label": "Burgers",
+      "image": "burgers.png",
+      "guide": "benchmarks/nod/README.md",
+      "kind": "Burgers field trajectory",
+      "caption": "Burgers field trajectory",
+      "thumbnail_sha256": "2ebe5f2b23d20ec12e175692d4bc31cda206f70c516082e66eae7f73f9151b01"
+    },
+    {
+      "id": "fhn",
+      "environment_id": "nod2d",
+      "label": "FHN",
+      "image": "fhn.png",
+      "guide": "benchmarks/nod/README.md",
+      "kind": "FitzHugh–Nagumo field evolution",
+      "caption": "FitzHugh–Nagumo field evolution",
+      "thumbnail_sha256": "2ea359f45a7cc29659c28e63ec4cd3a4f6c1c1a71a85e858e122b8b928b5d509"
+    },
+    {
+      "id": "swimmer",
+      "environment_id": "swimmer",
+      "label": "Swimmer",
+      "image": "swimmer.png",
+      "guide": "benchmarks/swimmer/README.md",
+      "kind": "Physics demonstration",
+      "caption": "Physics demonstration · joint drive and reversal",
+      "thumbnail_sha256": "a70150604b48c88e7097f41873af9f5b4ccb1d777f5c0eed784d1b64c990636a"
+    },
+    {
+      "id": "overcooked",
+      "environment_id": "overcooked",
+      "label": "Overcooked",
+      "image": "overcooked.png",
+      "guide": "benchmarks/overcooked/README.md",
+      "kind": "Overcooked environment replay",
+      "caption": "Overcooked environment replay",
+      "thumbnail_sha256": "0553fa298c37cb153c1c2dca26d02035bab0391b782494a83f883f98e95d70a0"
+    },
+    {
+      "id": "baxter",
+      "environment_id": "baxter",
+      "label": "Baxter",
+      "image": "baxter.png",
+      "guide": "docs/datasets.md",
+      "kind": "Recorded tactile signals",
+      "caption": "Recorded tactile signals",
+      "thumbnail_sha256": "5b47a4ef3d90f7351f842b39ac3fc97e8a107f28ce0e2c9ab6860bc05a18fc1b"
+    },
+    {
+      "id": "rh20t",
+      "environment_id": "rh20t",
+      "label": "RH20T",
+      "image": "rh20t.png",
+      "guide": "benchmarks/rh20t/README.md",
+      "kind": "RH20T dataset example",
+      "caption": "RH20T dataset example · drawer manipulation",
+      "thumbnail_sha256": "e61e08a9cce8befc1320c548da973a6b3a6989e62b8cb00fa161e2c5f12ab9a8"
+    },
+    {
+      "id": "pendulum",
+      "environment_id": "pendulum",
+      "label": "Pendulum",
+      "image": "pendulum.png",
+      "guide": "benchmarks/baseline_adapters/README.md#pendulum",
+      "kind": "Torque demonstration",
+      "caption": "Torque demonstration · Pendulum",
+      "thumbnail_sha256": "a2c2611237e34ee34854bde7ce1ac8fa73fb9487dc93f7c2644f7e4376fec412"
+    }
+  ]
+}

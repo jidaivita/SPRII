@@ -1,0 +1,22 @@
+{
+  "cadm": {
+    "url": "https://github.com/younggyoseo/CaDM",
+    "commit": "38c11a58d959bfd597f9323e58f28b17f6bf4fd9",
+    "license": "No LICENSE file present at pinned revision; upstream source is not redistributed."
+  },
+  "geps": {
+    "url": "https://github.com/itsakk/geps",
+    "commit": "e9a865218ecffacb7007ac7d719f3741afcf8c02",
+    "license": "No LICENSE file present at pinned revision; upstream source is not redistributed."
+  },
+  "coda": {
+    "url": "https://github.com/yuan-yin/CoDA",
+    "commit": "17b73521394f2a5986e5418c32ad2965c97cd8c0",
+    "license": "MIT; see third_party/licenses/CoDA-MIT.txt"
+  },
+  "gym_pendulum": {
+    "url": "https://github.com/openai/gym/blob/0.16.0/gym/envs/classic_control/pendulum.py",
+    "commit": "0.16.0",
+    "license": "MIT; fetched separately."
+  }
+}

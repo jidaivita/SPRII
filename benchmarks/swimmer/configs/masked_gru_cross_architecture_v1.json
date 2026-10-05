@@ -1,0 +1,112 @@
+{
+  "schema_version": "1.0",
+  "status": "IMPLEMENTED_DO_NOT_EXECUTE_BEFORE_REMOTE_FREEZE",
+  "protocol": "protocol/PAPER_C_MASKED_GRU_CROSS_ARCHITECTURE_V1_DRAFT.md",
+  "probe_protocol": "protocol/PAPER_C_PROSPECTIVE_EVIDENCE_PACKET_V1_DRAFT.md",
+  "probe_protocol_sha256": "773d2af165265da3d8a2ffcdbe7c465a1040708713ca32135f02e07d95f48145",
+  "implementation": "code/paper_c/stage2/masked_gru_cross_architecture.py",
+  "tests": "tests/unit/test_masked_gru_cross_architecture.py",
+  "job_manifest": "configs/masked_gru_cross_architecture_jobs_v1.csv",
+  "source_files": [
+    "code/paper_c/coupled_sled/learner.py",
+    "code/paper_c/stage1/symptom_localization.py",
+    "code/paper_c/stage1/bayes_alignment.py",
+    "code/paper_c/stage2/delta_gated_isolation.py",
+    "code/paper_c/stage2/routing_intervention.py",
+    "code/paper_c/swimmer/lqa_prospective.py",
+    "code/paper_c/coupled_sled/lqa_diagnostic.py",
+    "code/paper_c/swimmer/model.py",
+    "code/paper_c/swimmer/waveforms.py",
+    "code/paper_c/coupled_sled/batch.py",
+    "code/paper_c/coupled_sled/waveforms.py",
+    "configs/swimmer_external_assay_v1.json"
+  ],
+  "output_root": "runs/replication/masked_gru_cross_architecture_v1",
+  "aggregator_type": "masked_gru",
+  "architecture_tag": "masked_gru_v1",
+  "select_split": {
+    "salt": 84501,
+    "checkpoint_fraction": 0.5,
+    "assignment": "exact_hash_order_half_split",
+    "checkpoint_tie_break": "earliest_epoch"
+  },
+  "competence": {
+    "bootstrap_replicates": 4000,
+    "bootstrap_seed": 84503,
+    "trivial_gate": "lower_CI(trivial_MSE-model_MSE)>0",
+    "history_gate": "lower_CI(masked_K1_MSE-K2_MSE)>0",
+    "scientific_unit": "physical_system"
+  },
+  "environments": {
+    "articulated": {
+      "role": "primary",
+      "base_seeds": [64101, 64103],
+      "training_config": "configs/swimmer_s2r_learner_v1.json",
+      "train_arrays": "runs/formal/swimmer_s2r_learner_v1/data/train_arrays.npz",
+      "select_arrays": "runs/formal/swimmer_s2r_learner_v1/data/select_arrays.npz",
+      "normalization": "runs/formal/swimmer_s2r_learner_v1/models/train_only_normalization.npz",
+      "base_batch_size": 1024,
+      "history_embedding_dim": 128,
+      "gru_hidden_dim": 160,
+      "persistent_dim": 64
+    },
+    "coupled": {
+      "role": "supporting",
+      "base_seeds": [47001, 47003],
+      "base_spec": "configs/phase2_trackA_spec.yaml",
+      "formal_config": "configs/phase2_trackA_formal_v1.yaml",
+      "training_receipt": "runs/formal/phase2_track_a_life_or_death_v1/models/formal_training_receipt.json",
+      "train_arrays": "runs/formal/phase2_track_a_life_or_death_v1/learner_train_arrays.npz",
+      "select_arrays": "runs/formal/phase2_track_a_life_or_death_v1/learner_select_arrays.npz",
+      "normalization": "runs/formal/phase2_track_a_life_or_death_v1/models/train_only_normalization.npz",
+      "base_batch_size": 512,
+      "history_embedding_dim": 64,
+      "gru_hidden_dim": 80,
+      "persistent_dim": 32
+    }
+  },
+  "adapter": {
+    "arms": ["true", "shuffled"],
+    "seeds": [86101, 86103, 86107],
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001,
+    "batch_size": 1024,
+    "minimum_epochs": 5,
+    "maximum_epochs": 20,
+    "early_stopping_patience": 3,
+    "articulated_base_learners": 2,
+    "fits": 12
+  },
+  "formal": {
+    "enabled_in_this_implementation_stage": false,
+    "bootstrap_replicates": 4000,
+    "bootstrap_seed": 86201,
+    "articulated_primary_requires_both_competent": true,
+    "per_base_gate": "LCB95(true-original)>0 and LCB95(true-shuffled)>0",
+    "coupled_intervention": false
+  },
+  "execution": {
+    "remote_only": true,
+    "sentinel_template": ".paper_c_remote/{logical_host}.json",
+    "allowed_hosts": ["worker_b"],
+    "allowed_gpu_ids": [2, 3],
+    "reserved_worker_unavailable": true,
+    "threads_per_worker": 1,
+    "articulated_base_batch_size": 1024,
+    "coupled_base_batch_size": 512,
+    "adapter_batch_size": 1024,
+    "maximum_parallel_base_workers": 2,
+    "protected_scope_2_untouched": true,
+    "local_training_forbidden": true
+  },
+  "forbidden": [
+    "formal_outcome_before_competence",
+    "architecture_search",
+    "learning_rate_search",
+    "seed_selection",
+    "canonical_checkpoint_reuse_for_gru",
+    "canonical_cache_reuse_for_gru",
+    "protected_scope_2_mutation",
+    "fresh_packet_mutation"
+  ]
+}
